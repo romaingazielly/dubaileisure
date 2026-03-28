@@ -31,9 +31,9 @@ class DlhHeroCarousel extends HTMLElement {
     this.#dots = /** @type {HTMLButtonElement[]} */ ([...this.querySelectorAll('.dlh-hero__dot')]);
     this.#slides = /** @type {HTMLElement[]} */ ([...this.querySelectorAll('.dlh-hero__slide')]);
 
-    for (let i = 0; i < this.#dots.length; i++) {
-      this.#dots[i]?.addEventListener('click', () => this.#goTo(i));
-    }
+    this.#dots.forEach((dot, index) => {
+      dot?.addEventListener('click', () => this.#goTo(index));
+    });
 
     this.#onScroll = () => this.#syncDots();
     this.#track.addEventListener('scroll', this.#onScroll, { passive: true });
