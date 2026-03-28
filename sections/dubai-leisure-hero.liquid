@@ -1,0 +1,314 @@
+{% liquid
+  assign slide_count = 0
+  for block in section.blocks
+    if block.type == 'slide'
+      assign slide_count = slide_count | plus: 1
+    endif
+  endfor
+%}
+
+{{ 'dubai-leisure-hero.css' | asset_url | stylesheet_tag }}
+
+<div
+  class="dlh-landing"
+  id="shopify-section-{{ section.id }}"
+  style="
+    --dlh-accent: {{ section.settings.accent_color }};
+    --dlh-hero-min-height-mobile: {{ section.settings.hero_min_height_mobile }}px;
+    --dlh-hero-min-height: {{ section.settings.hero_min_height }}px;
+    --dlh-content-max-width: {{ section.settings.content_max_width }}px;
+  "
+>
+  {% if slide_count > 0 %}
+    <dlh-hero-carousel
+      class="dlh-hero"
+      data-section-id="{{ section.id }}"
+      data-autoplay-seconds="{{ section.settings.autoplay_seconds }}"
+      role="region"
+      aria-label="{{ section.settings.slides_aria_label | escape }}"
+      {% if slide_count < 2 %}
+        data-single-slide
+      {% endif %}
+    >
+      <div class="dlh-hero__viewport">
+        <div class="dlh-hero__track" data-dlh-track tabindex="0">
+          {% assign dlh_slide_i = 0 %}
+          {% for block in section.blocks %}
+            {% if block.type == 'slide' %}
+              {% assign dlh_slide_i = dlh_slide_i | plus: 1 %}
+              <div
+                class="dlh-hero__slide"
+                id="dlh-slide-{{ section.id }}-{{ block.id }}"
+                {{ block.shopify_attributes }}
+              >
+                <div class="dlh-hero__media">
+                  {% if block.settings.image != blank %}
+                    {% liquid
+                      assign dlh_loading = 'lazy'
+                      assign dlh_fetch = 'auto'
+                      if dlh_slide_i == 1 and section.index == 1
+                        assign dlh_loading = 'eager'
+                        assign dlh_fetch = 'high'
+                      endif
+                    %}
+                    {% liquid
+                      if dlh_slide_i == 1 and section.index == 1
+                        assign dlh_decoding = 'sync'
+                      else
+                        assign dlh_decoding = 'async'
+                      endif
+                    %}
+                    {{
+                      block.settings.image
+                      | image_url: width: 3840
+                      | image_tag:
+                        loading: dlh_loading,
+                        decoding: dlh_decoding,
+                        widths: '375, 550, 750, 1100, 1500, 2200, 3000, 3840',
+                        sizes: '100vw',
+                        class: 'dlh-hero__img',
+                        alt: block.settings.image.alt | default: block.settings.heading_line_1,
+                        fetchpriority: dlh_fetch,
+                        width: block.settings.image.width,
+                        height: block.settings.image.height
+                    }}
+                  {% else %}
+                    {{ 'hero-apparel-1' | placeholder_svg_tag: 'dlh-hero__img dlh-hero__img--placeholder' }}
+                  {% endif %}
+                  <div class="dlh-hero__scrim" aria-hidden="true"></div>
+                </div>
+                <div class="dlh-hero__inner">
+                  <div class="dlh-hero__content">
+                    {% if block.settings.badge != blank %}
+                      <p class="dlh-hero__badge">{{ block.settings.badge }}</p>
+                    {% endif %}
+                    {% if block.settings.heading_line_1 != blank %}
+                      <h2 class="dlh-hero__title">
+                        <span class="dlh-hero__title-line">{{ block.settings.heading_line_1 }}</span>
+                        {% if block.settings.heading_accent != blank %}
+                          <span class="dlh-hero__title-accent">{{ block.settings.heading_accent }}</span>
+                        {% endif %}
+                      </h2>
+                    {% endif %}
+                    {% if block.settings.text != blank %}
+                      <p class="dlh-hero__text">{{ block.settings.text }}</p>
+                    {% endif %}
+                    {% if block.settings.button_label != blank %}
+                      {% if block.settings.button_link != blank %}
+                        <a class="dlh-hero__btn" href="{{ block.settings.button_link }}">
+                          <span class="dlh-hero__btn-label">{{ block.settings.button_label }}</span>
+                          <span class="dlh-hero__btn-arrow" aria-hidden="true">→</span>
+                        </a>
+                      {% else %}
+                        <span class="dlh-hero__btn dlh-hero__btn--non-nav">
+                          <span class="dlh-hero__btn-label">{{ block.settings.button_label }}</span>
+                          <span class="dlh-hero__btn-arrow" aria-hidden="true">→</span>
+                        </span>
+                      {% endif %}
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+
+        {% if slide_count > 1 %}
+          <div
+            class="dlh-hero__dots"
+            role="tablist"
+            aria-label="{% if section.settings.slide_dots_label != blank %}{{ section.settings.slide_dots_label | escape }}{% else %}{{ section.settings.slides_aria_label | escape }}{% endif %}"
+          >
+            {% assign dot_i = 0 %}
+            {% for block in section.blocks %}
+              {% if block.type == 'slide' %}
+                <button
+                  type="button"
+                  class="dlh-hero__dot"
+                  role="tab"
+                  aria-selected="{% if dot_i == 0 %}true{% else %}false{% endif %}"
+                  aria-controls="dlh-slide-{{ section.id }}-{{ block.id }}"
+                  {% if dot_i != 0 %}
+                    tabindex="-1"
+                  {% endif %}
+                >
+                  <span class="visually-hidden">
+                    {{- section.settings.slide_indicator_label }} {{ dot_i | plus: 1 -}}
+                  </span>
+                </button>
+                {% assign dot_i = dot_i | plus: 1 %}
+              {% endif %}
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+    </dlh-hero-carousel>
+  {% endif %}
+</div>
+
+{% if slide_count > 0 %}
+  <script src="{{ 'dubai-leisure-hero.js' | asset_url }}" type="module" fetchpriority="low"></script>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Dubai Leisure carousel",
+  "tag": "section",
+  "class": "section-wrapper",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Couleur accent",
+      "default": "#c41e3a"
+    },
+    {
+      "type": "range",
+      "id": "hero_min_height_mobile",
+      "min": 320,
+      "max": 800,
+      "step": 10,
+      "unit": "px",
+      "label": "Hauteur min. hero (mobile)",
+      "default": 480
+    },
+    {
+      "type": "range",
+      "id": "hero_min_height",
+      "min": 400,
+      "max": 900,
+      "step": 10,
+      "unit": "px",
+      "label": "Hauteur min. hero (bureau)",
+      "default": 640
+    },
+    {
+      "type": "range",
+      "id": "content_max_width",
+      "min": 960,
+      "max": 1920,
+      "step": 20,
+      "unit": "px",
+      "label": "Largeur max. bloc texte + CTA",
+      "default": 1440,
+      "info": "L’image reste pleine largeur ; seul le bloc contenu est limité."
+    },
+    {
+      "type": "range",
+      "id": "autoplay_seconds",
+      "min": 0,
+      "max": 12,
+      "step": 1,
+      "unit": "s",
+      "label": "Autoplay des slides (0 = désactivé)",
+      "default": 0
+    },
+    {
+      "type": "text",
+      "id": "slides_aria_label",
+      "label": "Libellé accessibilité du carrousel",
+      "default": "Carrousel principal"
+    },
+    {
+      "type": "text",
+      "id": "slide_dots_label",
+      "label": "Libellé des pastilles (navigation)",
+      "default": "Choisir une diapositive"
+    },
+    {
+      "type": "text",
+      "id": "slide_indicator_label",
+      "label": "Préfixe des pastilles (lecteurs d’écran)",
+      "default": "Slide"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide hero",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "badge",
+          "label": "Badge",
+          "default": "AUTHENTIC HERITAGE"
+        },
+        {
+          "type": "text",
+          "id": "heading_line_1",
+          "label": "Titre (ligne 1)",
+          "default": "A Journey Through"
+        },
+        {
+          "type": "text",
+          "id": "heading_accent",
+          "label": "Titre accent (ligne 2, italique)",
+          "default": "Timeless Sands"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Texte",
+          "default": "Create unforgettable memories with your loved ones as you traverse the majestic dunes on a traditional camel trek."
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Bouton",
+          "default": "Explore Traditions"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Lien du bouton"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Dubai Leisure carousel",
+      "blocks": [
+        {
+          "type": "slide",
+          "settings": {
+            "badge": "AUTHENTIC HERITAGE",
+            "heading_line_1": "A Journey Through",
+            "heading_accent": "Timeless Sands",
+            "text": "Create unforgettable memories with your loved ones as you traverse the majestic dunes on a traditional camel trek.",
+            "button_label": "Explore Traditions"
+          }
+        },
+        {
+          "type": "slide",
+          "settings": {
+            "badge": "DESERT ADVENTURE",
+            "heading_line_1": "Where Golden",
+            "heading_accent": "Horizons Meet",
+            "text": "From sunrise safaris to starlit camps, every moment is crafted for wonder and togetherness.",
+            "button_label": "Plan Your Trip"
+          }
+        },
+        {
+          "type": "slide",
+          "settings": {
+            "badge": "CURATED FOR YOU",
+            "heading_line_1": "Luxury in the",
+            "heading_accent": "Heart of the Dunes",
+            "text": "Private guides, refined comfort, and authentic encounters — tailored to your family.",
+            "button_label": "View Experiences"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

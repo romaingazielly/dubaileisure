@@ -1,0 +1,233 @@
+/* Dubai Leisure hero carousel — section dubai-leisure-hero */
+
+.dlh-landing {
+  --dlh-accent: #c41e3a;
+  --dlh-content-max-width: 1440px;
+  --dlh-hero-min-height: min(85svh, 720px);
+  --dlh-hero-min-height-mobile: min(75svh, 560px);
+}
+
+.dlh-hero {
+  display: block;
+  position: relative;
+  color: #fff;
+}
+
+.dlh-hero__viewport {
+  position: relative;
+  min-height: var(--dlh-hero-min-height-mobile);
+  overflow: hidden;
+}
+
+@media screen and (min-width: 750px) {
+  .dlh-hero__viewport {
+    min-height: var(--dlh-hero-min-height);
+  }
+}
+
+.dlh-hero__track {
+  display: flex;
+  min-height: inherit;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  touch-action: pan-x pinch-zoom;
+  -webkit-overflow-scrolling: touch;
+  outline: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .dlh-hero__track {
+    scroll-behavior: smooth;
+  }
+}
+
+.dlh-hero__track::-webkit-scrollbar {
+  display: none;
+}
+
+.dlh-hero__slide {
+  position: relative;
+  flex: 0 0 100%;
+  width: 100%;
+  min-height: var(--dlh-hero-min-height-mobile);
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  display: grid;
+  align-items: end;
+}
+
+@media screen and (min-width: 750px) {
+  .dlh-hero__slide {
+    min-height: var(--dlh-hero-min-height);
+    align-items: center;
+  }
+}
+
+.dlh-hero__media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.dlh-hero__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.dlh-hero__img--placeholder {
+  background: #2a2a2a;
+  object-fit: contain;
+  padding: 2rem;
+  opacity: 0.5;
+}
+
+.dlh-hero__scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(10, 10, 12, 0.82) 0%,
+    rgba(10, 10, 12, 0.35) 55%,
+    rgba(10, 10, 12, 0.2) 100%
+  );
+  pointer-events: none;
+}
+
+/* Outer shell: caps copy + CTA at max width; image stays full-bleed behind. */
+.dlh-hero__inner {
+  position: relative;
+  z-index: 1;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: var(--dlh-content-max-width);
+  margin-inline: auto;
+  padding-inline: var(--page-margin);
+  padding-block: 3rem 5rem;
+}
+
+@media screen and (min-width: 750px) {
+  .dlh-hero__inner {
+    padding-block: 4rem;
+  }
+}
+
+.dlh-hero__content {
+  max-width: 100%;
+}
+
+.dlh-hero__badge {
+  display: inline-block;
+  margin: 0 0 1rem;
+  padding: 0.35rem 0.75rem;
+  font-family: var(--font-body--family);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background: var(--dlh-accent);
+  color: #fff;
+  border-radius: 4px;
+}
+
+.dlh-hero__title {
+  margin: 0 0 1rem;
+  font-family: var(--font-heading--family);
+  font-weight: var(--font-heading--weight);
+  font-size: clamp(2.25rem, 5vw, 3.75rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.dlh-hero__title-line {
+  display: block;
+  color: #fff;
+}
+
+.dlh-hero__title-accent {
+  display: block;
+  font-style: italic;
+  color: var(--dlh-accent);
+}
+
+.dlh-hero__text {
+  margin: 0 0 1.5rem;
+  font-family: var(--font-body--family);
+  font-size: 1rem;
+  line-height: 1.6;
+  max-width: min(42rem, 100%);
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.dlh-hero__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.35rem;
+  background: var(--dlh-accent);
+  color: #fff;
+  font-family: var(--font-body--family);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+a.dlh-hero__btn:hover {
+  opacity: 0.92;
+  color: #fff;
+}
+
+a.dlh-hero__btn:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+
+.dlh-hero__btn--non-nav {
+  cursor: default;
+}
+
+.dlh-hero__btn-arrow {
+  font-size: 1.1em;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.dlh-hero__dots {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.5rem;
+  z-index: 2;
+  padding: 0.25rem;
+}
+
+.dlh-hero__dot {
+  width: 1.75rem;
+  height: 3px;
+  padding: 0;
+  border: none;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.35);
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.dlh-hero__dot[aria-selected='true'] {
+  background: #fff;
+  transform: scaleX(1.15);
+}
+
+.dlh-hero__dot:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
