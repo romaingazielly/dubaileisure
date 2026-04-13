@@ -5,7 +5,7 @@
   {{ block.shopify_attributes }}
 >
   {% liquid
-    assign social_links = 'facebook_url,instagram_url,youtube_url,tiktok_url,twitter_url,threads_url,linkedin_url,bluesky_url,snapchat_url,pinterest_url,tumblr_url,vimeo_url,custom_url' | split: ','
+    assign social_links = 'facebook_url,instagram_url,youtube_url,tiktok_url,twitter_url,threads_url,linkedin_url,bluesky_url,snapchat_url,pinterest_url,tripadvisor_url,tumblr_url,vimeo_url,custom_url' | split: ','
   %}
 
   {% for link_key in social_links %}
@@ -36,6 +36,8 @@
             assign platform = 'snapchat'
           when 'pinterest_url'
             assign platform = 'pinterest'
+          when 'tripadvisor_url'
+            assign platform = 'tripadvisor'
           when 'tumblr_url'
             assign platform = 'tumblr'
           when 'vimeo_url'
@@ -47,6 +49,8 @@
             case platform
               when 'x'
                 assign platform = 'twitter'
+              when 'tripadvisor'
+                assign platform = 'tripadvisor'
               else
                 assign render_icon = false
             endcase
@@ -215,6 +219,11 @@
       "type": "url",
       "id": "pinterest_url",
       "label": "t:options.pinterest"
+    },
+    {
+      "type": "url",
+      "id": "tripadvisor_url",
+      "label": "t:options.tripadvisor"
     },
     {
       "type": "url",
