@@ -9,86 +9,61 @@
  */
 {
   "sections": {
-    "hero_jVaWmY": {
-      "type": "hero",
+    "dubai_leisure_hero_iWD8GD": {
+      "type": "dubai-leisure-hero",
       "blocks": {
-        "text_YLPk4p": {
-          "type": "text",
-          "name": "t:names.heading",
+        "slide_RdyNiN": {
+          "type": "slide",
           "settings": {
-            "text": "<p>Browse our latest products</p>",
-            "width": "fit-content",
-            "max_width": "normal",
-            "alignment": "left",
-            "type_preset": "h2",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "color": "var(--color-foreground-heading)",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
+            "image": "shopify://shop_images/camels.jpg",
+            "badge": "AUTHENTIC HERITAGE",
+            "heading_line_1": "A Journey Through",
+            "heading_accent": "Timeless Sands",
+            "text": "Create unforgettable memories with your loved ones as you traverse the majestic dunes on a traditional camel trek.",
+            "button_label": "Discover Desert Magic",
+            "button_link": ""
+          }
         },
-        "button_H9gpTf": {
-          "type": "button",
-          "name": "t:names.button",
+        "slide_nJtNqA": {
+          "type": "slide",
           "settings": {
-            "label": "Shop all",
-            "link": "shopify://collections/all",
-            "open_in_new_tab": false,
-            "style_class": "button-secondary",
-            "width": "fit-content",
-            "custom_width": 100,
-            "width_mobile": "fit-content",
-            "custom_width_mobile": 100
-          },
-          "blocks": {}
+            "image": "shopify://shop_images/desert-safari-dune-bashing.png",
+            "badge": "DESERT ADVENTURE",
+            "heading_line_1": "Where Golden",
+            "heading_accent": "Horizons Meet",
+            "text": "Chase the golden hour across an endless sea of sand in the heart of the Arabian desert.",
+            "button_label": "Chase the Dunes",
+            "button_link": ""
+          }
+        },
+        "slide_XRRhzM": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/camp.png",
+            "badge": "CURATED FOR YOU",
+            "heading_line_1": "Luxury in the",
+            "heading_accent": "Heart of the Dunes",
+            "text": "Feast on fire, bask in stars, let the desert show ignite your night!",
+            "button_label": "Dinner Under the Stars",
+            "button_link": ""
+          }
         }
       },
       "block_order": [
-        "text_YLPk4p",
-        "button_H9gpTf"
+        "slide_RdyNiN",
+        "slide_nJtNqA",
+        "slide_XRRhzM"
       ],
-      "name": "t:names.hero",
+      "name": "Dubai Leisure carousel",
       "settings": {
-        "media_type_1": "image",
-        "image_1": "shopify://shop_images/camels.jpg",
-        "media_type_2": "image",
-        "stack_media_on_mobile": false,
-        "custom_mobile_media": false,
-        "media_type_1_mobile": "image",
-        "media_type_2_mobile": "image",
-        "link": "",
-        "open_in_new_tab": false,
-        "content_direction": "column",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "space-between",
-        "vertical_alignment": "flex-end",
-        "align_baseline": true,
-        "horizontal_alignment_flex_direction_column": "center",
-        "vertical_alignment_flex_direction_column": "flex-end",
-        "gap": 24,
-        "section_width": "page-width",
-        "section_height": "medium",
-        "section_height_custom": 50,
-        "color_scheme": "scheme-6",
-        "toggle_overlay": true,
-        "overlay_color": "#12121266",
-        "overlay_style": "solid",
-        "gradient_direction": "to bottom",
-        "blurred_reflection": false,
-        "reflection_opacity": 75,
-        "padding-block-start": 100,
-        "padding-block-end": 72
+        "accent_color": "#c41e3a",
+        "hero_min_height_mobile": 480,
+        "hero_min_height": 640,
+        "content_max_width": 1440,
+        "autoplay_seconds": 0,
+        "slides_aria_label": "Carrousel principal",
+        "slide_dots_label": "Choisir une diapositive",
+        "slide_indicator_label": "Slide"
       }
     },
     "product_list_fa6P9H": {
@@ -287,7 +262,7 @@
     }
   },
   "order": [
-    "hero_jVaWmY",
+    "dubai_leisure_hero_iWD8GD",
     "product_list_fa6P9H"
   ]
 }
