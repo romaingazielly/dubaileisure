@@ -154,6 +154,19 @@
     }
   }
 
+  .social-icons__icon-wrapper a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: currentColor;
+    transition: color 0.25s ease, transform 0.25s ease;
+  }
+
+  .social-icons__icon-wrapper a:hover {
+    color: var(--color-primary);
+    transform: translateY(-2px);
+  }
+
   /* Disabled state for editor */
   .shopify-design-mode .social-icons__icon-wrapper--disabled {
     opacity: var(--disabled-opacity, 0.5);
