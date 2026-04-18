@@ -7,7 +7,7 @@
   endfor
 %}
 
-{{ 'dubai-leisure-hero.css' | asset_url | stylesheet_tag }}
+{{ 'dubai-leisure-hero.css' | asset_url | stylesheet_tag: preload: true }}
 
 <div
   class="dlh-landing"
@@ -46,31 +46,34 @@
                     {% liquid
                       assign dlh_loading = 'lazy'
                       assign dlh_fetch = 'auto'
+                      assign dlh_decoding = 'async'
+                      assign dlh_preload = false
                       if dlh_slide_i == 1 and section.index == 1
                         assign dlh_loading = 'eager'
                         assign dlh_fetch = 'high'
-                      endif
-                    %}
-                    {% liquid
-                      if dlh_slide_i == 1 and section.index == 1
                         assign dlh_decoding = 'sync'
-                      else
-                        assign dlh_decoding = 'async'
+                        assign dlh_preload = true
+                      endif
+                      assign dlh_img_style = ''
+                      if block.settings.image.width and block.settings.image.height and block.settings.image.width > 0
+                        assign dlh_img_style = 'aspect-ratio: ' | append: block.settings.image.width | append: ' / ' | append: block.settings.image.height | append: ';'
                       endif
                     %}
                     {{
                       block.settings.image
-                      | image_url: width: 3840
+                      | image_url: width: 2880
                       | image_tag:
                         loading: dlh_loading,
                         decoding: dlh_decoding,
-                        widths: '375, 550, 750, 1100, 1500, 2200, 3000, 3840',
+                        preload: dlh_preload,
+                        widths: '375, 550, 750, 1100, 1500, 2000, 2880',
                         sizes: '100vw',
                         class: 'dlh-hero__img',
                         alt: block.settings.image.alt | default: block.settings.heading_line_1,
                         fetchpriority: dlh_fetch,
                         width: block.settings.image.width,
-                        height: block.settings.image.height
+                        height: block.settings.image.height,
+                        style: dlh_img_style
                     }}
                   {% else %}
                     {{ 'hero-apparel-1' | placeholder_svg_tag: 'dlh-hero__img dlh-hero__img--placeholder' }}

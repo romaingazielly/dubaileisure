@@ -24,6 +24,15 @@ class DlhHeroCarousel extends HTMLElement {
   /** @type {(() => void) | null} */
   #onScroll = null;
 
+  /** @type {boolean} */
+  #hydrated = false;
+
+  /** @type {IntersectionObserver | null} */
+  #visibilityObserver = null;
+
+  /** @type {number | null} */
+  #idleHandle = null;
+
   connectedCallback() {
     this.#track = this.querySelector('[data-dlh-track]');
     if (!this.#track) return;
@@ -31,12 +40,62 @@ class DlhHeroCarousel extends HTMLElement {
     this.#dots = /** @type {HTMLButtonElement[]} */ ([...this.querySelectorAll('.dlh-hero__dot')]);
     this.#slides = /** @type {HTMLElement[]} */ ([...this.querySelectorAll('.dlh-hero__slide')]);
 
+    const hydrate = () => this.#hydrate();
+
+    if ('IntersectionObserver' in window) {
+      this.#visibilityObserver = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) {
+              hydrate();
+              break;
+            }
+          }
+        },
+        { rootMargin: '200px' }
+      );
+      this.#visibilityObserver.observe(this);
+    }
+
+    const scheduleIdle =
+      /** @type {((cb: () => void, opts?: { timeout?: number }) => number) | undefined} */ (
+        /** @type {any} */ (window).requestIdleCallback
+      );
+    if (typeof scheduleIdle === 'function') {
+      this.#idleHandle = scheduleIdle(hydrate, { timeout: 2000 });
+    } else {
+      this.#idleHandle = window.setTimeout(hydrate, 1500);
+    }
+  }
+
+  #hydrate() {
+    if (this.#hydrated) return;
+    const track = this.#track;
+    if (!track) return;
+    this.#hydrated = true;
+
+    if (this.#visibilityObserver) {
+      this.#visibilityObserver.disconnect();
+      this.#visibilityObserver = null;
+    }
+    if (this.#idleHandle !== null) {
+      const cancelIdle = /** @type {((id: number) => void) | undefined} */ (
+        /** @type {any} */ (window).cancelIdleCallback
+      );
+      if (typeof cancelIdle === 'function') {
+        cancelIdle(this.#idleHandle);
+      } else {
+        window.clearTimeout(this.#idleHandle);
+      }
+      this.#idleHandle = null;
+    }
+
     this.#dots.forEach((dot, index) => {
       dot?.addEventListener('click', () => this.#goTo(index));
     });
 
     this.#onScroll = () => this.#syncDots();
-    this.#track.addEventListener('scroll', this.#onScroll, { passive: true });
+    track.addEventListener('scroll', this.#onScroll, { passive: true });
 
     const sec = Number.parseInt(this.dataset.autoplaySeconds || '0', 10);
     if (sec > 0 && this.#slides.length > 1 && !dlhPrefersReducedMotion()) {
@@ -50,6 +109,21 @@ class DlhHeroCarousel extends HTMLElement {
   }
 
   disconnectedCallback() {
+    if (this.#visibilityObserver) {
+      this.#visibilityObserver.disconnect();
+      this.#visibilityObserver = null;
+    }
+    if (this.#idleHandle !== null) {
+      const cancelIdle = /** @type {((id: number) => void) | undefined} */ (
+        /** @type {any} */ (window).cancelIdleCallback
+      );
+      if (typeof cancelIdle === 'function') {
+        cancelIdle(this.#idleHandle);
+      } else {
+        window.clearTimeout(this.#idleHandle);
+      }
+      this.#idleHandle = null;
+    }
     if (this.#track && this.#onScroll) {
       this.#track.removeEventListener('scroll', this.#onScroll);
     }

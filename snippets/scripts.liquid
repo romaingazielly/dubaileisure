@@ -138,22 +138,7 @@
   fetchpriority="low"
 ></script>
 <script
-  src="{{ 'variant-picker.js' | asset_url }}"
-  type="module"
-  fetchpriority="low"
-></script>
-<script
   src="{{ 'product-card.js' | asset_url }}"
-  type="module"
-  fetchpriority="low"
-></script>
-<script
-  src="{{ 'product-form.js' | asset_url }}"
-  type="module"
-  fetchpriority="low"
-></script>
-<script
-  src="{{ 'fly-to-cart.js' | asset_url }}"
   type="module"
   fetchpriority="low"
 ></script>
@@ -164,26 +149,6 @@
 ></script>
 <script
   src="{{ 'media.js' | asset_url }}"
-  type="module"
-  fetchpriority="low"
-></script>
-<script
-  src="{{ 'product-price.js' | asset_url }}"
-  type="module"
-  fetchpriority="low"
-></script>
-<script
-  src="{{ 'product-sku.js' | asset_url }}"
-  type="module"
-  fetchpriority="low"
-></script>
-<script
-  src="{{ 'product-title-truncation.js' | asset_url }}"
-  type="module"
-  fetchpriority="low"
-></script>
-<script
-  src="{{ 'product-inventory.js' | asset_url }}"
   type="module"
   fetchpriority="low"
 ></script>
@@ -222,41 +187,80 @@
   type="module"
   fetchpriority="low"
 ></script>
-<script
-  src="{{ 'media-gallery.js' | asset_url }}"
-  type="module"
-  fetchpriority="low"
-></script>
-<script
-  src="{{ 'rte-formatter.js' | asset_url }}"
-  type="module"
-  fetchpriority="low"
-></script>
-<script
-  src="{{ 'volume-pricing.js' | asset_url }}"
-  type="module"
-  fetchpriority="low"
-></script>
-<script
-  src="{{ 'price-per-item.js' | asset_url }}"
-  type="module"
-  fetchpriority="low"
-></script>
-<script
-  src="{{ 'volume-pricing-info.js' | asset_url }}"
-  type="module"
-  fetchpriority="low"
-></script>
 
-{% if localization.available_countries.size > 1 or localization.available_languages.size > 1 %}
+{% liquid
+  assign dl_is_product = false
+  assign dl_is_collection_like = false
+  if template.name == 'product' or template == 'product' or request.page_type == 'product'
+    assign dl_is_product = true
+  endif
+  if template.name == 'collection' or template.name == 'search' or template.name == 'cart' or request.page_type == 'collection' or request.page_type == 'search' or request.page_type == 'cart'
+    assign dl_is_collection_like = true
+  endif
+%}
+
+{% comment %}
+  Product-card price/title helpers are needed on collection/search/cart and product pages.
+{% endcomment %}
+{% if dl_is_product or dl_is_collection_like %}
   <script
-    src="{{ 'localization.js' | asset_url }}"
+    src="{{ 'product-price.js' | asset_url }}"
+    type="module"
+    fetchpriority="low"
+  ></script>
+  <script
+    src="{{ 'product-title-truncation.js' | asset_url }}"
     type="module"
     fetchpriority="low"
   ></script>
 {% endif %}
 
-{% if template == 'product' or template.name == 'product' or request.page_type == 'product' %}
+{% if dl_is_product %}
+  <script
+    src="{{ 'variant-picker.js' | asset_url }}"
+    type="module"
+    fetchpriority="low"
+  ></script>
+  <script
+    src="{{ 'product-form.js' | asset_url }}"
+    type="module"
+    fetchpriority="low"
+  ></script>
+  <script
+    src="{{ 'product-sku.js' | asset_url }}"
+    type="module"
+    fetchpriority="low"
+  ></script>
+  <script
+    src="{{ 'product-inventory.js' | asset_url }}"
+    type="module"
+    fetchpriority="low"
+  ></script>
+  <script
+    src="{{ 'media-gallery.js' | asset_url }}"
+    type="module"
+    fetchpriority="low"
+  ></script>
+  <script
+    src="{{ 'rte-formatter.js' | asset_url }}"
+    type="module"
+    fetchpriority="low"
+  ></script>
+  <script
+    src="{{ 'volume-pricing.js' | asset_url }}"
+    type="module"
+    fetchpriority="low"
+  ></script>
+  <script
+    src="{{ 'price-per-item.js' | asset_url }}"
+    type="module"
+    fetchpriority="low"
+  ></script>
+  <script
+    src="{{ 'volume-pricing-info.js' | asset_url }}"
+    type="module"
+    fetchpriority="low"
+  ></script>
   <script
     src="{{ 'fly-to-cart.js' | asset_url }}"
     type="module"
@@ -271,6 +275,22 @@
     import { RecentlyViewed } from '@theme/recently-viewed-products';
     RecentlyViewed.addProduct('{{ product.id }}');
   </script>
+{% endif %}
+
+{% if dl_is_collection_like %}
+  <script
+    src="{{ 'fly-to-cart.js' | asset_url }}"
+    type="module"
+    fetchpriority="low"
+  ></script>
+{% endif %}
+
+{% if localization.available_countries.size > 1 or localization.available_languages.size > 1 %}
+  <script
+    src="{{ 'localization.js' | asset_url }}"
+    type="module"
+    fetchpriority="low"
+  ></script>
 {% endif %}
 
 <script

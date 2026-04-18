@@ -58,10 +58,19 @@
   align-items: end;
 }
 
+.dlh-hero__slide:not(:first-child) {
+  content-visibility: auto;
+  contain-intrinsic-size: 100vw var(--dlh-hero-min-height-mobile);
+}
+
 @media screen and (min-width: 750px) {
   .dlh-hero__slide {
     min-height: var(--dlh-hero-min-height);
     align-items: center;
+  }
+
+  .dlh-hero__slide:not(:first-child) {
+    contain-intrinsic-size: 100vw var(--dlh-hero-min-height);
   }
 }
 

@@ -1,5 +1,10 @@
 /* Timeline steps section */
 
+.timeline-steps {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 800px;
+}
+
 .timeline-steps__inner {
   --timeline-accent: #d7781a;
   --timeline-max-width: 1440px;

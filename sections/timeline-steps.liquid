@@ -1,4 +1,4 @@
-{{ 'timeline-steps.css' | asset_url | stylesheet_tag }}
+{{ 'timeline-steps.css' | asset_url | stylesheet_tag: preload: true }}
 
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
 <div

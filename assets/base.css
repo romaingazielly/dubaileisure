@@ -3678,6 +3678,11 @@ fly-to-cart.fly-to-cart--sticky {
   row-gap: var(--gap);
 }
 
+.section-resource-list {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 1200px;
+}
+
 .section-resource-list__content {
   display: flex;
   flex-direction: column;
