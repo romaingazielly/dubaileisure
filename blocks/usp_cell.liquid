@@ -2,12 +2,12 @@
   assign logo = block.settings.logo
   assign title = block.settings.heading
   assign cap = block.settings.caption
-  assign cell_class = 'usp-band__cell'
+  assign cell_class = 'usp__cell'
   if block.settings.show_background
-    assign cell_class = cell_class | append: ' usp-band__cell--bg'
+    assign cell_class = cell_class | append: ' usp__cell--bg'
   endif
   if block.settings.show_border
-    assign cell_class = cell_class | append: ' usp-band__cell--border'
+    assign cell_class = cell_class | append: ' usp__cell--border'
   endif
 %}
 {% if block.settings.link != blank %}

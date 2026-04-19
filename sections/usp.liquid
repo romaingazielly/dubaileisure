@@ -2,7 +2,7 @@
 
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
 <div
-  class="section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }} usp-band spacing-style"
+  class="section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }} usp spacing-style"
   style="
     {% render 'spacing-style', settings: section.settings %}
     --usp-max-width: {{ section.settings.max_width }}px;
@@ -12,12 +12,118 @@
     --usp-card-min-height: {{ section.settings.card_min_height }}px;
   "
 >
-  <div class="usp-band__inner" {{ section.shopify_attributes }}>
-    <div class="usp-band__blocks">
+  <div class="usp__inner" {{ section.shopify_attributes }}>
+    <div class="usp__blocks">
       {% content_for 'blocks' %}
     </div>
   </div>
 </div>
+
+{%- comment -%}
+  Auto-play mobile : sur les groupes USP en ligne non forcés en colonne sur
+  mobile, on ajoute la classe .usp__mobile-slider (styles CSS) puis on fait
+  défiler toutes les 5s d'une "page" à la fois. Pause au survol / focus.
+  Respect de prefers-reduced-motion.
+{%- endcomment -%}
+<script>
+  (() => {
+    if (window.__uspSliderInitialized) return;
+    window.__uspSliderInitialized = true;
+
+    const INTERVAL_MS = 5000;
+    const SLIDER_CLASS = 'usp__mobile-slider';
+    const MOBILE_MQ = window.matchMedia('(max-width: 749px)');
+    const REDUCE_MOTION_MQ = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const timers = new WeakMap();
+    const activeState = new WeakMap();
+    let rafHandle = 0;
+
+    const collect = () =>
+      document.querySelectorAll('.usp .layout-panel-flex--row');
+
+    const isEligible = (el) =>
+      !el.classList.contains('mobile-column') &&
+      el.querySelector('.usp__cell') !== null &&
+      el.children.length > 1;
+
+    const stop = (el) => {
+      const t = timers.get(el);
+      if (t) {
+        clearInterval(t);
+        timers.delete(el);
+      }
+    };
+
+    const start = (el) => {
+      stop(el);
+      if (REDUCE_MOTION_MQ.matches) return;
+      const id = setInterval(() => tick(el), INTERVAL_MS);
+      timers.set(el, id);
+    };
+
+    const tick = (el) => {
+      const first = el.firstElementChild;
+      if (!first) return;
+      const styles = getComputedStyle(el);
+      const gap = parseFloat(styles.columnGap) || parseFloat(styles.gap) || 0;
+      const step = first.getBoundingClientRect().width + gap;
+      if (step <= 0) return;
+      const perPage = Math.max(1, Math.floor(el.clientWidth / step));
+      const maxScroll = el.scrollWidth - el.clientWidth;
+      let next = el.scrollLeft + perPage * step;
+      if (next > maxScroll - 1) next = 0;
+      el.scrollTo({ left: next, behavior: 'smooth' });
+    };
+
+    const bind = (el) => {
+      if (el.dataset.uspSliderBound) return;
+      el.dataset.uspSliderBound = '1';
+      el.addEventListener('pointerenter', () => stop(el));
+      el.addEventListener('pointerleave', () => {
+        if (el.classList.contains(SLIDER_CLASS)) start(el);
+      });
+      el.addEventListener('focusin', () => stop(el));
+      el.addEventListener('focusout', () => {
+        if (el.classList.contains(SLIDER_CLASS)) start(el);
+      });
+    };
+
+    const apply = () => {
+      const mobile = MOBILE_MQ.matches;
+      collect().forEach((el) => {
+        bind(el);
+        const active = mobile && isEligible(el);
+        if (activeState.get(el) === active) return;
+        activeState.set(el, active);
+        el.classList.toggle(SLIDER_CLASS, active);
+        if (active) {
+          start(el);
+        } else {
+          stop(el);
+          el.scrollTo({ left: 0 });
+        }
+      });
+    };
+
+    const scheduleApply = () => {
+      if (rafHandle) return;
+      rafHandle = requestAnimationFrame(() => {
+        rafHandle = 0;
+        apply();
+      });
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', apply, { once: true });
+    } else {
+      apply();
+    }
+
+    MOBILE_MQ.addEventListener('change', apply);
+    REDUCE_MOTION_MQ.addEventListener('change', apply);
+    window.addEventListener('resize', scheduleApply, { passive: true });
+  })();
+</script>
 
 {% schema %}
 {

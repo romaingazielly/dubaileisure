@@ -67,7 +67,7 @@
       }
     },
     "trust_certs_DLHx7p": {
-      "type": "usp-band",
+      "type": "usp",
       "blocks": {
         "group_Hiayjw": {
           "type": "group",

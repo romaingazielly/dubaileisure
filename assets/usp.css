@@ -1,7 +1,7 @@
-/* USP band — section: usp-band.liquid, block: usp_cell */
+/* USP — section: usp.liquid, block: usp_cell */
 
-/* Repli si besoin ; la section surcharge en inline sur .usp-band */
-.usp-band {
+/* Repli ; la section surcharge en inline sur .usp */
+.usp {
   --usp-max-width: 1200px;
   --usp-gap: 16px;
   --usp-radius: 18px;
@@ -9,13 +9,13 @@
   --usp-card-min-height: 152px;
 }
 
-.usp-band__inner {
+.usp__inner {
   width: 100%;
   max-width: var(--usp-max-width, 1200px);
   margin-inline: auto;
 }
 
-.usp-band__blocks {
+.usp__blocks {
   display: flex;
   flex-direction: column;
   gap: var(--usp-gap, 16px);
@@ -23,26 +23,26 @@
   min-width: 0;
 }
 
-/* Cartes USP dans un groupe : le gap du groupe utilisait --gap du bloc, pas la section */
-.usp-band .layout-panel-flex:has(.usp-band__cell) {
+/* Cartes USP dans un groupe : s'aligner sur le gap de la section */
+.usp .layout-panel-flex:has(.usp__cell) {
   gap: var(--usp-gap, 16px);
 }
 
-.usp-band__blocks > * {
+.usp__blocks > * {
   min-width: 0;
 }
 
-.usp-band__blocks > *:has(.usp-band__cell) {
+.usp__blocks > *:has(.usp__cell) {
   display: flex;
   flex-direction: column;
 }
 
-.usp-band__blocks :is(.group-block, .text-block) {
+.usp__blocks :is(.group-block, .text-block) {
   max-width: 100%;
 }
 
 /* Carte : layout (fond / bordure = options du bloc Carte USP) */
-.usp-band__cell {
+.usp__cell {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -67,7 +67,7 @@
     border-color 0.22s ease;
 }
 
-.usp-band__cell--bg {
+.usp__cell--bg {
   background: rgb(var(--color-foreground-rgb) / var(--opacity-5));
   box-shadow:
     0 1px 2px rgb(0 0 0 / 5%),
@@ -75,12 +75,12 @@
     0 0 0 1px rgb(var(--color-foreground-rgb) / var(--opacity-5));
 }
 
-.usp-band__cell--border {
+.usp__cell--border {
   border: 1px solid rgb(var(--color-foreground-rgb) / var(--opacity-10));
 }
 
-a.usp-band__cell--bg:hover,
-a.usp-band__cell--bg:focus-visible {
+a.usp__cell--bg:hover,
+a.usp__cell--bg:focus-visible {
   transform: translateY(-3px);
   box-shadow:
     0 2px 4px rgb(0 0 0 / 6%),
@@ -88,46 +88,46 @@ a.usp-band__cell--bg:focus-visible {
     0 0 0 1px rgb(var(--color-foreground-rgb) / var(--opacity-10));
 }
 
-a.usp-band__cell--border:not(.usp-band__cell--bg):hover,
-a.usp-band__cell--border:not(.usp-band__cell--bg):focus-visible {
+a.usp__cell--border:not(.usp__cell--bg):hover,
+a.usp__cell--border:not(.usp__cell--bg):focus-visible {
   transform: translateY(-2px);
   border-color: rgb(var(--color-foreground-rgb) / var(--opacity-22));
 }
 
-a.usp-band__cell--bg.usp-band__cell--border:hover,
-a.usp-band__cell--bg.usp-band__cell--border:focus-visible {
+a.usp__cell--bg.usp__cell--border:hover,
+a.usp__cell--bg.usp__cell--border:focus-visible {
   border-color: rgb(var(--color-foreground-rgb) / var(--opacity-18));
 }
 
-a.usp-band__cell:not(.usp-band__cell--bg):not(.usp-band__cell--border):hover,
-a.usp-band__cell:not(.usp-band__cell--bg):not(.usp-band__cell--border):focus-visible {
+a.usp__cell:not(.usp__cell--bg):not(.usp__cell--border):hover,
+a.usp__cell:not(.usp__cell--bg):not(.usp__cell--border):focus-visible {
   transform: none;
   opacity: 0.88;
 }
 
-a.usp-band__cell:focus-visible {
+a.usp__cell:focus-visible {
   outline: 2px solid rgb(var(--color-foreground-rgb) / var(--opacity-40));
   outline-offset: 3px;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .usp-band__cell,
-  a.usp-band__cell {
+  .usp__cell,
+  a.usp__cell {
     transition: none;
   }
 
-  a.usp-band__cell:hover,
-  a.usp-band__cell:focus-visible {
+  a.usp__cell:hover,
+  a.usp__cell:focus-visible {
     transform: none;
   }
 
-  a.usp-band__cell:not(.usp-band__cell--bg):not(.usp-band__cell--border):hover,
-  a.usp-band__cell:not(.usp-band__cell--bg):not(.usp-band__cell--border):focus-visible {
+  a.usp__cell:not(.usp__cell--bg):not(.usp__cell--border):hover,
+  a.usp__cell:not(.usp__cell--bg):not(.usp__cell--border):focus-visible {
     opacity: 1;
   }
 }
 
-.layout-panel-flex--row > *:has(.usp-band__cell) {
+.layout-panel-flex--row > *:has(.usp__cell) {
   flex: 1 1 0;
   min-width: 0;
   align-self: stretch;
@@ -135,10 +135,47 @@ a.usp-band__cell:focus-visible {
   flex-direction: column;
 }
 
-.layout-panel-flex--row > *:has(.usp-band__cell) .usp-band__cell {
+.layout-panel-flex--row > *:has(.usp__cell) .usp__cell {
   flex: 1 1 auto;
   min-height: var(--usp-card-min-height, 152px);
   height: 100%;
+}
+
+/*
+ * Slider mobile : la classe .usp__mobile-slider est posée par le JS de la
+ * section (usp.liquid) sur les groupes USP en ligne non forcés en colonne
+ * sur mobile. Le container devient un scroll-snap horizontal, le JS fait
+ * défiler toutes les 5s d'une "page" à la fois.
+ */
+.usp__mobile-slider {
+  --usp-mobile-per-page: 3;
+
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+}
+
+.usp__mobile-slider::-webkit-scrollbar {
+  display: none;
+}
+
+.usp__mobile-slider > * {
+  flex: 0 0
+    calc(
+      (100% - (var(--usp-mobile-per-page, 3) - 1) * var(--usp-gap, 16px)) /
+      var(--usp-mobile-per-page, 3)
+    );
+  min-width: 0;
+  scroll-snap-align: start;
+}
+
+@media (max-width: 479px) {
+  .usp__mobile-slider {
+    --usp-mobile-per-page: 2;
+  }
 }
 
 .usp-cell__media {
