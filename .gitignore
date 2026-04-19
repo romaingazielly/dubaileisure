@@ -8,6 +8,13 @@ Thumbs.db
 .vscode/
 .idea/
 
+.agents/
+.aidesigner/
+.claude/
+.mcp.json
+
 .shopify/
 node_modules/
 dist/
+.aidesigner/*
+!.aidesigner/.gitkeep
