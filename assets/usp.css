@@ -1,104 +1,86 @@
-/* USP band — lifted cells (sections/usp) */
+/* USP — section: usp.liquid, block: usp_cell */
 
+/* Repli si besoin ; la section surcharge en inline sur .usp-band */
 .usp-band {
   --usp-max-width: 1200px;
   --usp-gap: 16px;
   --usp-radius: 18px;
-  --usp-cols-sm: 2;
-  --usp-cols-md: 3;
-  --usp-cols-lg: 4;
   --usp-logo-h: 44px;
+  --usp-card-min-height: 152px;
 }
 
 .usp-band__inner {
   width: 100%;
-  max-width: var(--usp-max-width);
+  max-width: var(--usp-max-width, 1200px);
   margin-inline: auto;
 }
 
-.usp-band__header {
-  text-align: center;
-  max-width: 42rem;
-  margin-inline: auto;
-  margin-bottom: clamp(1.25rem, 3vw, 2rem);
+.usp-band__blocks {
+  display: flex;
+  flex-direction: column;
+  gap: var(--usp-gap, 16px);
+  width: 100%;
+  min-width: 0;
 }
 
-.usp-band__eyebrow {
-  margin: 0 0 0.5rem;
-  font-size: 0.75rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: rgb(var(--color-foreground-rgb) / var(--opacity-70));
+/* Cartes USP dans un groupe : le gap du groupe utilisait --gap du bloc, pas la section */
+.usp-band .layout-panel-flex:has(.usp-band__cell) {
+  gap: var(--usp-gap, 16px);
 }
 
-.usp-band__heading {
-  margin: 0 0 0.5rem;
-  font-family: var(--font-heading--family);
-  font-weight: var(--font-heading--weight);
-  line-height: 1.15;
+.usp-band__blocks > * {
+  min-width: 0;
 }
 
-.usp-band__subheading {
-  margin: 0;
-  font-size: 0.95rem;
-  line-height: 1.5;
-  color: rgb(var(--color-foreground-rgb) / var(--opacity-70));
+.usp-band__blocks > *:has(.usp-band__cell) {
+  display: flex;
+  flex-direction: column;
 }
 
-.usp-band__grid {
-  display: grid;
-  grid-template-columns: repeat(var(--usp-cols-sm), minmax(0, 1fr));
-  gap: var(--usp-gap);
-  list-style: none;
-  margin: 0;
-  padding: 0;
+.usp-band__blocks :is(.group-block, .text-block) {
+  max-width: 100%;
 }
 
-@media screen and (min-width: 600px) {
-  .usp-band__grid {
-    grid-template-columns: repeat(var(--usp-cols-md), minmax(0, 1fr));
-  }
-}
-
-@media screen and (min-width: 990px) {
-  .usp-band__grid {
-    grid-template-columns: repeat(var(--usp-cols-lg), minmax(0, 1fr));
-  }
-}
-
-.usp-cell {
-  height: 100%;
-  min-height: 7.5rem;
-}
-
-.usp-cell__link,
-.usp-cell__inner {
+/* Carte : layout (fond / bordure = options du bloc Carte USP) */
+.usp-band__cell {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  text-align: center;
   gap: 0.65rem;
-  height: 100%;
-  min-height: inherit;
+  flex: 1 1 auto;
+  width: 100%;
+  min-height: var(--usp-card-min-height, 152px);
+  box-sizing: border-box;
   padding: 1rem 0.85rem 1.1rem;
-  border-radius: var(--usp-radius);
+  border-radius: var(--usp-radius, 18px);
+  text-align: center;
   text-decoration: none;
   color: inherit;
-  background: rgb(var(--color-foreground-rgb) / var(--opacity-5));
-  border: 1px solid rgb(var(--color-foreground-rgb) / var(--opacity-10));
-  box-shadow:
-    0 1px 2px rgb(0 0 0 / 5%),
-    0 10px 28px rgb(0 0 0 / 8%),
-    0 0 0 1px rgb(var(--color-foreground-rgb) / var(--opacity-5));
+  border: none;
+  background: transparent;
+  box-shadow: none;
   transition:
     transform 0.22s ease,
+    opacity 0.22s ease,
     box-shadow 0.22s ease,
     border-color 0.22s ease;
 }
 
-.usp-cell__link:hover,
-.usp-cell__link:focus-visible {
+.usp-band__cell--bg {
+  background: rgb(var(--color-foreground-rgb) / var(--opacity-5));
+  box-shadow:
+    0 1px 2px rgb(0 0 0 / 5%),
+    0 10px 28px rgb(0 0 0 / 8%),
+    0 0 0 1px rgb(var(--color-foreground-rgb) / var(--opacity-5));
+}
+
+.usp-band__cell--border {
+  border: 1px solid rgb(var(--color-foreground-rgb) / var(--opacity-10));
+}
+
+a.usp-band__cell--bg:hover,
+a.usp-band__cell--bg:focus-visible {
   transform: translateY(-3px);
   box-shadow:
     0 2px 4px rgb(0 0 0 / 6%),
@@ -106,18 +88,57 @@
     0 0 0 1px rgb(var(--color-foreground-rgb) / var(--opacity-10));
 }
 
-.usp-cell__link:focus-visible {
+a.usp-band__cell--border:not(.usp-band__cell--bg):hover,
+a.usp-band__cell--border:not(.usp-band__cell--bg):focus-visible {
+  transform: translateY(-2px);
+  border-color: rgb(var(--color-foreground-rgb) / var(--opacity-22));
+}
+
+a.usp-band__cell--bg.usp-band__cell--border:hover,
+a.usp-band__cell--bg.usp-band__cell--border:focus-visible {
+  border-color: rgb(var(--color-foreground-rgb) / var(--opacity-18));
+}
+
+a.usp-band__cell:not(.usp-band__cell--bg):not(.usp-band__cell--border):hover,
+a.usp-band__cell:not(.usp-band__cell--bg):not(.usp-band__cell--border):focus-visible {
+  transform: none;
+  opacity: 0.88;
+}
+
+a.usp-band__cell:focus-visible {
   outline: 2px solid rgb(var(--color-foreground-rgb) / var(--opacity-40));
   outline-offset: 3px;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .usp-cell__link,
-  .usp-cell__link:hover,
-  .usp-cell__link:focus-visible {
+  .usp-band__cell,
+  a.usp-band__cell {
     transition: none;
+  }
+
+  a.usp-band__cell:hover,
+  a.usp-band__cell:focus-visible {
     transform: none;
   }
+
+  a.usp-band__cell:not(.usp-band__cell--bg):not(.usp-band__cell--border):hover,
+  a.usp-band__cell:not(.usp-band__cell--bg):not(.usp-band__cell--border):focus-visible {
+    opacity: 1;
+  }
+}
+
+.layout-panel-flex--row > *:has(.usp-band__cell) {
+  flex: 1 1 0;
+  min-width: 0;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+}
+
+.layout-panel-flex--row > *:has(.usp-band__cell) .usp-band__cell {
+  flex: 1 1 auto;
+  min-height: var(--usp-card-min-height, 152px);
+  height: 100%;
 }
 
 .usp-cell__media {
@@ -125,12 +146,12 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  min-height: var(--usp-logo-h);
+  min-height: var(--usp-logo-h, 44px);
 }
 
 .usp-cell__logo {
   max-width: 100%;
-  max-height: var(--usp-logo-h);
+  max-height: var(--usp-logo-h, 44px);
   width: auto;
   height: auto;
   object-fit: contain;
@@ -157,7 +178,6 @@
   font-size: 0.95rem;
   font-weight: 600;
   line-height: 1.25;
-  font-family: var(--font-body--family);
 }
 
 .usp-cell__caption {

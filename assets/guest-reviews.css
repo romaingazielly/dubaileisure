@@ -1,0 +1,189 @@
+/* Guest reviews marquee (reference: dubai-leisure-holidays.html) */
+
+.guest-reviews__empty {
+  text-align: center;
+  margin: 0;
+  padding: 2rem 1rem;
+  opacity: 0.75;
+}
+
+.guest-reviews {
+  --guest-review-gold: #c9a84c;
+  --guest-review-gold-dark: #9a7630;
+  --guest-review-sand: #f2e6c9;
+  --guest-review-muted: #7a6040;
+  --guest-review-ink: #1a0f05;
+  --guest-review-card-w: 340px;
+  --guest-review-gap: 24px;
+  --guest-review-duration: 35s;
+
+  overflow: hidden;
+}
+
+.guest-reviews__intro {
+  text-align: center;
+  max-width: 40rem;
+  margin-inline: auto;
+  margin-bottom: clamp(1.5rem, 4vw, 3rem);
+}
+
+.guest-reviews__eyebrow {
+  margin: 0 0 0.5rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--guest-review-gold);
+  font-weight: 500;
+}
+
+.guest-reviews__divider {
+  width: 60px;
+  height: 1px;
+  margin: 1.2rem auto;
+  background: linear-gradient(to right, transparent, var(--guest-review-gold), transparent);
+}
+
+.guest-reviews__heading {
+  margin: 0 0 0.75rem;
+  font-family: var(--font-heading--family);
+  font-weight: 600;
+  line-height: 1.15;
+  color: rgb(var(--color-foreground-rgb));
+}
+
+.guest-reviews__heading-accent {
+  color: var(--guest-review-gold);
+  font-style: italic;
+  font-weight: 400;
+}
+
+.guest-reviews__sub {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.75;
+  font-weight: 300;
+  color: rgb(var(--color-foreground-rgb) / var(--opacity-70));
+}
+
+.guest-reviews__intro-shell {
+  width: 100%;
+}
+
+.guest-reviews__track-wrap {
+  overflow: hidden;
+  width: 100%;
+  padding-block: 2rem;
+}
+
+.guest-reviews__track {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  width: max-content;
+  gap: 0;
+}
+
+.guest-reviews__marquee-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: var(--guest-review-gap);
+  flex-shrink: 0;
+}
+
+.guest-reviews__marquee-row .shopify-block {
+  flex-shrink: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .guest-reviews__track--animate {
+    will-change: transform;
+    animation: guest-reviews-scroll var(--guest-review-duration) linear infinite;
+  }
+
+  .guest-reviews--pause-hover .guest-reviews__track--animate:hover {
+    animation-play-state: paused;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .guest-reviews__marquee-row--clone {
+    display: none;
+  }
+
+  .guest-reviews__track--animate {
+    animation: none;
+    will-change: auto;
+  }
+}
+
+@keyframes guest-reviews-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.guest-review-card {
+  flex-shrink: 0;
+  width: var(--guest-review-card-w);
+  background: rgb(255 255 255 / 0.025);
+  border: 1px solid rgb(201 168 76 / 0.12);
+  border-radius: 4px;
+  padding: 1.8rem;
+}
+
+.guest-review-card__stars {
+  color: var(--guest-review-gold);
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  letter-spacing: 0.1em;
+}
+
+.guest-review-card__quote {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.guest-review-card__text {
+  margin: 0;
+  font-size: 0.9rem;
+  font-style: italic;
+  line-height: 1.7;
+  color: rgb(var(--color-foreground-rgb) / 0.9);
+}
+
+.guest-review-card__author {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-top: 1.2rem;
+}
+
+.guest-review-card__avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--guest-review-gold-dark), var(--guest-review-gold));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--guest-review-ink);
+  flex-shrink: 0;
+}
+
+.guest-review-card__name {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: rgb(var(--color-foreground-rgb));
+}
+
+.guest-review-card__meta {
+  font-size: 0.72rem;
+  color: var(--guest-review-muted);
+}

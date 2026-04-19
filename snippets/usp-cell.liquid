@@ -1,11 +1,3 @@
-{%- doc -%}
-  USP band cell content (logo, title, caption).
-  @param {object} logo - image object from image_picker
-  @param {string} title
-  @param {string} caption
-  @param {string} placeholder_seed - used for initials when logo is blank
-{%- enddoc -%}
-
 <div class="usp-cell__media">
   {% if logo != blank %}
     {%- liquid
@@ -13,10 +5,10 @@
     -%}
     {{
       logo
-      | image_url: width: 360
+      | image_url: width: 240
       | image_tag:
-        widths: '120, 180, 240, 360',
-        sizes: '(max-width: 749px) 33vw, 160px',
+        widths: '120, 180, 240',
+        sizes: '(max-width: 749px) 33vw, 128px',
         loading: 'lazy',
         class: 'usp-cell__logo',
         alt: logo_alt
@@ -29,11 +21,9 @@
     <span class="usp-cell__placeholder" aria-hidden="true">{{ initials }}</span>
   {% endif %}
 </div>
-
 {% if title != blank %}
   <h3 class="usp-cell__title">{{ title | escape }}</h3>
 {% endif %}
-
 {% if caption != blank %}
   <p class="usp-cell__caption">{{ caption | escape }}</p>
 {% endif %}

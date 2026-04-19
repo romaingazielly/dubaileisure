@@ -1,0 +1,62 @@
+{%- doc -%}
+  Guest review card (Dubai Leisure style).
+
+  @param {object} block - guest_review block
+  @param {boolean} [show_shopify_attributes] - Output block.shopify_attributes (false on the cloned marquee row)
+{%- enddoc -%}
+
+{% liquid
+  assign quote = block.settings.quote
+  assign author = block.settings.author
+  assign meta = block.settings.meta
+  assign rating = block.settings.rating | default: 5 | times: 1
+  if rating > 5
+    assign rating = 5
+  endif
+  if rating < 1
+    assign rating = 1
+  endif
+
+  assign initials = block.settings.avatar_initials | strip
+  if initials == blank and author != blank
+    assign parts = author | split: ' '
+    if parts.size > 1
+      assign a = parts[0] | slice: 0, 1
+      assign b = parts[1] | slice: 0, 1
+      assign initials = a | append: b | upcase
+    else
+      assign initials = author | strip | slice: 0, 2 | upcase
+    endif
+  endif
+
+  assign stars_str = ''
+  for i in (1..rating)
+    assign stars_str = stars_str | append: '★'
+  endfor
+
+  assign show_attrs = show_shopify_attributes
+  if show_attrs == nil
+    assign show_attrs = true
+  endif
+%}
+
+<div
+  class="guest-review-card"
+  {% if show_attrs %}{{ block.shopify_attributes }}{% endif %}
+>
+  <div class="guest-review-card__stars" aria-hidden="true">{{ stars_str }}</div>
+  <blockquote class="guest-review-card__quote">
+    <p class="guest-review-card__text">{{ quote | escape }}</p>
+  </blockquote>
+  <div class="guest-review-card__author">
+    <div class="guest-review-card__avatar" aria-hidden="true">{{ initials | escape }}</div>
+    <div class="guest-review-card__meta-wrap">
+      {% if author != blank %}
+        <div class="guest-review-card__name">{{ author | escape }}</div>
+      {% endif %}
+      {% if meta != blank %}
+        <div class="guest-review-card__meta">{{ meta | escape }}</div>
+      {% endif %}
+    </div>
+  </div>
+</div>

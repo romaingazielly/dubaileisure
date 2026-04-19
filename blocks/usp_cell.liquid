@@ -1,0 +1,97 @@
+{% liquid
+  assign logo = block.settings.logo
+  assign title = block.settings.heading
+  assign cap = block.settings.caption
+  assign cell_class = 'usp-band__cell'
+  if block.settings.show_background
+    assign cell_class = cell_class | append: ' usp-band__cell--bg'
+  endif
+  if block.settings.show_border
+    assign cell_class = cell_class | append: ' usp-band__cell--border'
+  endif
+%}
+{% if block.settings.link != blank %}
+  <a
+    class="{{ cell_class }}"
+    href="{{ block.settings.link }}"
+    {% if block.settings.open_new_tab %}
+      target="_blank" rel="noopener noreferrer"
+    {% endif %}
+    {{ block.shopify_attributes }}
+  >
+    {% render 'usp-cell', logo: logo, title: title, caption: cap, placeholder_seed: title %}
+  </a>
+{% else %}
+  <div class="{{ cell_class }}" {{ block.shopify_attributes }}>
+    {% render 'usp-cell', logo: logo, title: title, caption: cap, placeholder_seed: title %}
+  </div>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Carte USP",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Style de la carte"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_background",
+      "label": "Fond et relief (ombre)",
+      "default": false,
+      "info": "Fond léger et ombre portée sur cette carte uniquement."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_border",
+      "label": "Bordure",
+      "default": false,
+      "info": "Bordure autour de cette carte uniquement."
+    },
+    {
+      "type": "header",
+      "content": "Contenu"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo ou icône"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Titre",
+      "default": "Family safe"
+    },
+    {
+      "type": "text",
+      "id": "caption",
+      "label": "Légende",
+      "default": "Ages 3 to 80+"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Lien (optionnel)"
+    },
+    {
+      "type": "checkbox",
+      "id": "open_new_tab",
+      "label": "Ouvrir le lien dans un nouvel onglet",
+      "default": false
+    }
+  ],
+  "presets": [
+    {
+      "name": "Carte USP",
+      "category": "t:categories.storytelling",
+      "settings": {
+        "heading": "Family safe",
+        "caption": "Ages 3 to 80+"
+      }
+    }
+  ]
+}
+{% endschema %}

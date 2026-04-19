@@ -340,6 +340,84 @@
         "padding-block-end": 48
       }
     },
+    "guest_reviews_home_k8mN2p": {
+      "type": "guest-reviews",
+      "blocks": {
+        "guest_review_JM": {
+          "type": "guest_review",
+          "settings": {
+            "rating": 5,
+            "quote": "Absolutely spectacular evening. The dune bashing was thrilling, the buffet was outstanding, and the fire show had our kids speechless. Worth every dirham.",
+            "author": "James M.",
+            "meta": "London, UK · TripAdvisor",
+            "avatar_initials": ""
+          }
+        },
+        "guest_review_SA": {
+          "type": "guest_review",
+          "settings": {
+            "rating": 5,
+            "quote": "The sunrise safari was magical — cool breeze, golden dunes, and Arabic coffee at dawn. Our guide was incredibly knowledgeable about Bedouin culture.",
+            "author": "Sara A.",
+            "meta": "Paris, France · Google",
+            "avatar_initials": ""
+          }
+        },
+        "guest_review_RC": {
+          "type": "guest_review",
+          "settings": {
+            "rating": 5,
+            "quote": "Took the dune buggy add-on and it was the highlight of our Dubai trip. Professional, safe, and outrageously fun. We're coming back next year!",
+            "author": "Ravi C.",
+            "meta": "Mumbai, India · TripAdvisor",
+            "avatar_initials": ""
+          }
+        },
+        "guest_review_KL": {
+          "type": "guest_review",
+          "settings": {
+            "rating": 5,
+            "quote": "Seamless from pickup to drop-off. The henna artist was amazing with our daughters. The belly dance show was mesmerising. Highly, highly recommend.",
+            "author": "Kim L.",
+            "meta": "Sydney, Australia · Google",
+            "avatar_initials": ""
+          }
+        },
+        "guest_review_TP": {
+          "type": "guest_review",
+          "settings": {
+            "rating": 5,
+            "quote": "We're a family of five including grandparents. Everyone had an incredible time — the team was thoughtful, attentive, and genuinely warm. True Arabian hospitality.",
+            "author": "Thomas P.",
+            "meta": "New York, USA · TripAdvisor",
+            "avatar_initials": ""
+          }
+        }
+      },
+      "block_order": [
+        "guest_review_JM",
+        "guest_review_SA",
+        "guest_review_RC",
+        "guest_review_KL",
+        "guest_review_TP"
+      ],
+      "name": "Guest reviews",
+      "settings": {
+        "section_id": "reviews",
+        "eyebrow": "Guest Stories",
+        "heading": "Voices from the",
+        "heading_accent": "Dunes",
+        "subheading": "Over 15,000 guests have made memories in the desert. Here's what they said.",
+        "card_width": 340,
+        "card_gap": 24,
+        "scroll_seconds": 35,
+        "pause_on_hover": true,
+        "color_scheme": "scheme-1",
+        "section_width": "full-width",
+        "padding-block-start": 56,
+        "padding-block-end": 56
+      }
+    },
     "section_FQQqfN": {
       "type": "section",
       "blocks": {
@@ -1104,16 +1182,11 @@
       ],
       "name": "USP",
       "settings": {
-        "eyebrow": "WHY TRAVEL WITH US",
-        "heading": "Trust built for families & partners",
-        "subheading": "From family-friendly service to global certifications — every detail earns your confidence.",
         "max_width": 1200,
         "gap": 16,
         "cell_radius": 18,
         "logo_max_height": 44,
-        "columns_mobile": "2",
-        "columns_tablet": "3",
-        "columns_desktop": "4",
+        "card_min_height": 152,
         "color_scheme": "",
         "section_width": "page-width",
         "padding-block-start": 48,
@@ -1126,6 +1199,7 @@
     "trust_certs_DLHx7p",
     "timeline_steps_JxzJqk",
     "product_list_fa6P9H",
+    "guest_reviews_home_k8mN2p",
     "section_FQQqfN",
     "section_6xMaEE",
     "section_QawMUr"

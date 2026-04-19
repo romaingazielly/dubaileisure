@@ -1,10 +1,4 @@
-{{ 'usp.css' | asset_url | stylesheet_tag: preload: true }}
-
-{%- liquid
-  assign cols_sm = section.settings.columns_mobile
-  assign cols_md = section.settings.columns_tablet
-  assign cols_lg = section.settings.columns_desktop
--%}
+{{ 'usp.css' | asset_url | stylesheet_tag }}
 
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
 <div
@@ -15,59 +9,13 @@
     --usp-gap: {{ section.settings.gap }}px;
     --usp-radius: {{ section.settings.cell_radius }}px;
     --usp-logo-h: {{ section.settings.logo_max_height }}px;
-    --usp-cols-sm: {{ cols_sm }};
-    --usp-cols-md: {{ cols_md }};
-    --usp-cols-lg: {{ cols_lg }};
+    --usp-card-min-height: {{ section.settings.card_min_height }}px;
   "
 >
   <div class="usp-band__inner" {{ section.shopify_attributes }}>
-    {% if section.settings.eyebrow != blank or section.settings.heading != blank or section.settings.subheading != blank %}
-      <header class="usp-band__header">
-        {% if section.settings.eyebrow != blank %}
-          <p class="usp-band__eyebrow">{{ section.settings.eyebrow | escape }}</p>
-        {% endif %}
-        {% if section.settings.heading != blank %}
-          <h2 class="usp-band__heading h3">{{ section.settings.heading | escape }}</h2>
-        {% endif %}
-        {% if section.settings.subheading != blank %}
-          <p class="usp-band__subheading">{{ section.settings.subheading | escape }}</p>
-        {% endif %}
-      </header>
-    {% endif %}
-
-    {% if section.blocks.size > 0 %}
-      <ul class="usp-band__grid" role="list">
-        {% for block in section.blocks %}
-          <li class="usp-cell" {{ block.shopify_attributes }}>
-            {% liquid
-              assign has_link = false
-              if block.settings.link != blank
-                assign has_link = true
-              endif
-              assign logo = block.settings.logo
-              assign title = block.settings.heading
-              assign cap = block.settings.caption
-            %}
-
-            {% if has_link %}
-              <a
-                href="{{ block.settings.link }}"
-                class="usp-cell__link"
-                {% if block.settings.open_new_tab %}
-                  target="_blank" rel="noopener noreferrer"
-                {% endif %}
-              >
-                {% render 'usp-cell', logo: logo, title: title, caption: cap, placeholder_seed: title %}
-              </a>
-            {% else %}
-              <div class="usp-cell__inner">
-                {% render 'usp-cell', logo: logo, title: title, caption: cap, placeholder_seed: title %}
-              </div>
-            {% endif %}
-          </li>
-        {% endfor %}
-      </ul>
-    {% endif %}
+    <div class="usp-band__blocks">
+      {% content_for 'blocks' %}
+    </div>
   </div>
 </div>
 
@@ -76,29 +24,11 @@
   "name": "USP",
   "tag": "section",
   "class": "section-wrapper",
-  "max_blocks": 8,
+  "max_blocks": 50,
   "disabled_on": {
     "groups": ["header", "footer"]
   },
   "settings": [
-    {
-      "type": "text",
-      "id": "eyebrow",
-      "label": "Sur-titre",
-      "default": "WHY TRAVEL WITH US"
-    },
-    {
-      "type": "text",
-      "id": "heading",
-      "label": "Titre",
-      "default": "Trust built for families & partners"
-    },
-    {
-      "type": "textarea",
-      "id": "subheading",
-      "label": "Sous-titre",
-      "default": "Badges, certifications and promises — up to 8 USP cells."
-    },
     {
       "type": "range",
       "id": "max_width",
@@ -112,62 +42,46 @@
     {
       "type": "range",
       "id": "gap",
-      "label": "Espacement entre cellules",
+      "label": "Espacement entre les blocs",
       "min": 8,
       "max": 40,
       "step": 2,
       "unit": "px",
-      "default": 16
+      "default": 16,
+      "info": "S’applique entre les blocs de la section, et entre les cartes USP à l’intérieur d’un groupe (ligne ou colonne)."
     },
     {
       "type": "range",
       "id": "cell_radius",
-      "label": "Arrondi des cellules",
+      "label": "Arrondi des cartes USP",
       "min": 8,
       "max": 28,
       "step": 1,
       "unit": "px",
-      "default": 18
+      "default": 18,
+      "info": "S’applique à toutes les cartes USP de cette section."
     },
     {
       "type": "range",
       "id": "logo_max_height",
-      "label": "Hauteur max des logos",
+      "label": "Hauteur max des logos (cartes USP)",
       "min": 28,
       "max": 80,
       "step": 2,
       "unit": "px",
-      "default": 44
+      "default": 44,
+      "info": "S’applique à toutes les cartes USP de cette section."
     },
     {
-      "type": "select",
-      "id": "columns_mobile",
-      "label": "Colonnes (mobile)",
-      "options": [
-        { "value": "1", "label": "1" },
-        { "value": "2", "label": "2" }
-      ],
-      "default": "2"
-    },
-    {
-      "type": "select",
-      "id": "columns_tablet",
-      "label": "Colonnes (tablette)",
-      "options": [
-        { "value": "2", "label": "2" },
-        { "value": "3", "label": "3" }
-      ],
-      "default": "3"
-    },
-    {
-      "type": "select",
-      "id": "columns_desktop",
-      "label": "Colonnes (desktop)",
-      "options": [
-        { "value": "3", "label": "3" },
-        { "value": "4", "label": "4" }
-      ],
-      "default": "4"
+      "type": "range",
+      "id": "card_min_height",
+      "label": "Hauteur min. des cartes (uniforme)",
+      "min": 100,
+      "max": 260,
+      "step": 4,
+      "unit": "px",
+      "default": 152,
+      "info": "Toutes les cartes USP ont au moins cette hauteur. En ligne, elles s’alignent sur la plus haute."
     },
     {
       "type": "color_scheme",
@@ -212,38 +126,16 @@
   ],
   "blocks": [
     {
-      "type": "usp_cell",
-      "name": "Cell",
-      "settings": [
-        {
-          "type": "image_picker",
-          "id": "logo",
-          "label": "Logo ou icône"
-        },
-        {
-          "type": "text",
-          "id": "heading",
-          "label": "Titre",
-          "default": "Family safe"
-        },
-        {
-          "type": "text",
-          "id": "caption",
-          "label": "Légende",
-          "default": "Ages 3 to 80+"
-        },
-        {
-          "type": "url",
-          "id": "link",
-          "label": "Lien (optionnel)"
-        },
-        {
-          "type": "checkbox",
-          "id": "open_new_tab",
-          "label": "Ouvrir le lien dans un nouvel onglet",
-          "default": false
-        }
-      ]
+      "type": "usp_cell"
+    },
+    {
+      "type": "group"
+    },
+    {
+      "type": "text"
+    },
+    {
+      "type": "@app"
     }
   ],
   "presets": [
