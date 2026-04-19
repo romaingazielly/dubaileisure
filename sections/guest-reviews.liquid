@@ -1,12 +1,7 @@
 {{ 'guest-reviews.css' | asset_url | stylesheet_tag }}
 
 {% liquid
-  assign review_count = 0
-  for block in section.blocks
-    if block.type == 'guest_review'
-      assign review_count = review_count | plus: 1
-    endif
-  endfor
+  assign total_blocks = section.blocks.size
 %}
 
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
@@ -51,12 +46,12 @@
       </header>
     {% endif %}
 
-    {% if review_count == 0 and request.design_mode %}
+    {% if total_blocks == 0 and request.design_mode %}
       <p class="guest-reviews__empty">Add “Guest review” blocks below.</p>
     {% endif %}
   </div>
 
-  {% if review_count > 0 or request.design_mode %}
+  {% if total_blocks > 0 %}
     {% liquid
       assign reviews_aria = section.settings.heading | append: ' ' | append: section.settings.heading_accent | strip
       if reviews_aria == blank
@@ -65,27 +60,33 @@
     %}
     <div class="guest-reviews__track-wrap">
       <div
-        class="guest-reviews__track{% if review_count > 0 %}{% unless request.design_mode %} guest-reviews__track--animate{% endunless %}{% endif %}"
+        class="guest-reviews__track{% unless request.design_mode %} guest-reviews__track--animate{% endunless %}"
         role="region"
         aria-label="{{ reviews_aria | escape }}"
+        data-guest-reviews-track
       >
-        <div class="guest-reviews__marquee-row">
+        <div class="guest-reviews__marquee-row" data-guest-reviews-row>
           {% content_for 'blocks' %}
         </div>
-        {%- comment -%} Seamless loop: second row on the storefront only (HTML prototype). Theme editor: single row. {%- endcomment -%}
-        {% if review_count > 0 %}
-          {% unless request.design_mode %}
-            <div class="guest-reviews__marquee-row guest-reviews__marquee-row--clone" aria-hidden="true">
-              {% for block in section.blocks %}
-                {% if block.type == 'guest_review' %}
-                  {% render 'guest-review-card', block: block, show_shopify_attributes: false %}
-                {% endif %}
-              {% endfor %}
-            </div>
-          {% endunless %}
-        {% endif %}
       </div>
     </div>
+
+    {%- comment -%} Seamless loop : clone JS de la rangée, uniquement hors éditeur {%- endcomment -%}
+    {% unless request.design_mode %}
+      <script>
+        (() => {
+          const track = document.querySelector('[data-guest-reviews-track]');
+          if (!track) return;
+          const row = track.querySelector('[data-guest-reviews-row]');
+          if (!row || row.children.length === 0) return;
+          const clone = row.cloneNode(true);
+          clone.classList.add('guest-reviews__marquee-row--clone');
+          clone.setAttribute('aria-hidden', 'true');
+          clone.removeAttribute('data-guest-reviews-row');
+          track.appendChild(clone);
+        })();
+      </script>
+    {% endunless %}
   {% endif %}
 </div>
 

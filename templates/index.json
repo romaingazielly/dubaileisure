@@ -1115,7 +1115,7 @@
       }
     },
     "trust_certs_DLHx7p": {
-      "type": "usp",
+      "type": "usp-band",
       "blocks": {
         "usp_k3Fm9L": {
           "type": "usp_cell",

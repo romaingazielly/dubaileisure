@@ -18,6 +18,8 @@
   --guest-review-duration: 35s;
 
   overflow: hidden;
+  position: relative;
+  z-index: var(--layer-flat);
 }
 
 .guest-reviews__intro {
@@ -73,6 +75,8 @@
   overflow: hidden;
   width: 100%;
   padding-block: 2rem;
+  position: relative;
+  z-index: var(--layer-flat);
 }
 
 .guest-reviews__track {
@@ -83,16 +87,34 @@
   gap: 0;
 }
 
+/*
+ * Chaque rangée se termine par un padding égal à l'écart inter-cartes.
+ * Combiné à translateX(-50%), cela garantit une boucle parfaitement
+ * seamless : la distance entre la dernière carte de la rangée d'origine
+ * et la première carte de la rangée clonée est exactement `--guest-review-gap`.
+ */
 .guest-reviews__marquee-row {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   gap: var(--guest-review-gap);
   flex-shrink: 0;
+  padding-inline-end: var(--guest-review-gap);
 }
 
-.guest-reviews__marquee-row .shopify-block {
-  flex-shrink: 0;
+/*
+ * OS 2.0 wraps blocks in <shopify-block>, .shopify-block, ou autre selon
+ * la version — on cible simplement les enfants directs pour rester robuste.
+ * display:block neutralise les éléments custom (inline par défaut) sans
+ * casser la mise en page interne de la carte.
+ */
+.guest-reviews__marquee-row > * {
+  display: block;
+  flex: 0 0 var(--guest-review-card-w);
+  width: var(--guest-review-card-w);
+  min-width: var(--guest-review-card-w);
+  max-width: var(--guest-review-card-w);
+  box-sizing: border-box;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -129,10 +151,26 @@
 .guest-review-card {
   flex-shrink: 0;
   width: var(--guest-review-card-w);
+  min-width: 0;
   background: rgb(255 255 255 / 0.025);
   border: 1px solid rgb(201 168 76 / 0.12);
   border-radius: 4px;
   padding: 1.8rem;
+}
+
+/* Éditeur uniquement : blocs sans citation */
+.guest-review-card--empty-editor {
+  border-style: dashed;
+  border-color: rgb(201 168 76 / 0.35);
+  background: transparent;
+}
+
+.guest-review-card__empty-hint {
+  margin: 0;
+  font-size: 0.85rem;
+  font-style: italic;
+  line-height: 1.5;
+  color: rgb(var(--color-foreground-rgb) / var(--opacity-55));
 }
 
 .guest-review-card__stars {

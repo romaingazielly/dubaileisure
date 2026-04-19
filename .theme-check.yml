@@ -1,0 +1,5 @@
+# https://shopify.dev/docs/storefronts/themes/tools/theme-check/configuration
+extends: theme-check:recommended
+
+# Explicit theme root (fixes false "section file missing" when tools run from the wrong cwd)
+root: .
