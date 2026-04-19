@@ -43,6 +43,11 @@
   }
 }
 
+/* Infinite-loop reposition: must ignore smooth scroll or sync maps to wrong clone mid-animation */
+.dlh-hero__track.dlh-hero__track--instant-scroll {
+  scroll-behavior: auto !important;
+}
+
 .dlh-hero__track::-webkit-scrollbar {
   display: none;
 }
@@ -58,7 +63,8 @@
   align-items: end;
 }
 
-.dlh-hero__slide:not(:first-child) {
+/* Prime = first real slide (set in JS; clones broke :first-child) */
+.dlh-hero__slide:not([data-dlh-prime]) {
   content-visibility: auto;
   contain-intrinsic-size: 100vw var(--dlh-hero-min-height-mobile);
 }
@@ -69,7 +75,7 @@
     align-items: center;
   }
 
-  .dlh-hero__slide:not(:first-child) {
+  .dlh-hero__slide:not([data-dlh-prime]) {
     contain-intrinsic-size: 100vw var(--dlh-hero-min-height);
   }
 }
@@ -215,28 +221,114 @@ a.dlh-hero__btn:focus-visible {
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
   z-index: 2;
-  padding: 0.25rem;
+  padding: 0.2rem;
 }
 
 .dlh-hero__dot {
-  width: 1.75rem;
-  height: 3px;
-  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.1rem;
+  min-height: 1.1rem;
+  padding: 0.15rem;
   border: none;
-  border-radius: 2px;
-  background: rgba(255, 255, 255, 0.35);
+  background: transparent;
   cursor: pointer;
-  transition: background 0.2s ease, transform 0.2s ease;
-}
-
-.dlh-hero__dot[aria-selected='true'] {
-  background: #fff;
-  transform: scaleX(1.15);
 }
 
 .dlh-hero__dot:focus-visible {
   outline: 2px solid #fff;
   outline-offset: 2px;
+  border-radius: 999px;
+}
+
+/* Dot (inactive) → bar (active): morph via width, height, border-radius */
+.dlh-hero__dot-visual {
+  position: relative;
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.45);
+  overflow: hidden;
+  transition:
+    width 0.38s cubic-bezier(0.4, 0, 0.2, 1),
+    height 0.38s cubic-bezier(0.4, 0, 0.2, 1),
+    border-radius 0.38s cubic-bezier(0.4, 0, 0.2, 1),
+    background 0.2s ease;
+}
+
+.dlh-hero__dot:hover .dlh-hero__dot-visual {
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.dlh-hero__dot-track,
+.dlh-hero__dot-progress {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.dlh-hero__dot-track {
+  opacity: 0;
+  background: rgba(255, 255, 255, 0.28);
+  transition: opacity 0.2s ease;
+}
+
+.dlh-hero__dot-progress {
+  transform: scaleX(0);
+  transform-origin: left center;
+  background: #fff;
+}
+
+.dlh-hero__dot[aria-selected='true'] .dlh-hero__dot-visual {
+  width: 2.75rem;
+  height: 8px;
+  border-radius: 4px;
+  background: transparent;
+}
+
+.dlh-hero__dot[aria-selected='true'] .dlh-hero__dot-track {
+  opacity: 1;
+}
+
+/* Fill animates over autoplay duration (set via --dlh-autoplay-duration on carousel) */
+dlh-hero-carousel:not([data-autoplay-off]) .dlh-hero__dot[aria-selected='true'] .dlh-hero__dot-progress {
+  animation: dlh-dot-fill var(--dlh-autoplay-duration, 5s) linear forwards;
+}
+
+/* Autoplay off: active slide shows full bar, no timer animation */
+dlh-hero-carousel[data-autoplay-off] .dlh-hero__dot[aria-selected='true'] .dlh-hero__dot-progress {
+  animation: none;
+  transform: scaleX(1);
+}
+
+@keyframes dlh-dot-fill {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
+
+dlh-hero-carousel.dlh-hero-carousel--autoplay-paused .dlh-hero__dot[aria-selected='true'] .dlh-hero__dot-progress {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dlh-hero__dot-visual {
+    transition-duration: 0.01ms;
+  }
+
+  dlh-hero-carousel:not([data-autoplay-off]) .dlh-hero__dot[aria-selected='true'] .dlh-hero__dot-progress {
+    animation: none;
+    transform: scaleX(1);
+  }
 }

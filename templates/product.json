@@ -183,6 +183,24 @@
               },
               "blocks": {}
             },
+            "date_picker_default": {
+              "type": "date-picker",
+              "settings": {
+                "show_label": true,
+                "label": "Pick your date",
+                "placeholder": "Select a date",
+                "property_label": "Date",
+                "required": true,
+                "error_message": "Please select a date before adding to cart.",
+                "lead_days": 1,
+                "window_days": 365,
+                "padding-block-start": 8,
+                "padding-block-end": 12,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
             "buy_buttons_eYQEYi": {
               "type": "buy-buttons",
               "settings": {
@@ -248,6 +266,7 @@
             "group_icgrde",
             "divider_VJhene",
             "variant_picker_R3rGDr",
+            "date_picker_default",
             "buy_buttons_eYQEYi",
             "text_aEtTtq"
           ]

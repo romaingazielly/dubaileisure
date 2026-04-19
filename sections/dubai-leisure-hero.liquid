@@ -38,6 +38,9 @@
               {% assign dlh_slide_i = dlh_slide_i | plus: 1 %}
               <div
                 class="dlh-hero__slide"
+                {% if dlh_slide_i == 1 %}
+                  data-dlh-prime
+                {% endif %}
                 id="dlh-slide-{{ section.id }}-{{ block.id }}"
                 {{ block.shopify_attributes }}
               >
@@ -135,6 +138,10 @@
                     tabindex="-1"
                   {% endif %}
                 >
+                  <span class="dlh-hero__dot-visual" aria-hidden="true">
+                    <span class="dlh-hero__dot-track"></span>
+                    <span class="dlh-hero__dot-progress"></span>
+                  </span>
                   <span class="visually-hidden">
                     {{- section.settings.slide_indicator_label }} {{ dot_i | plus: 1 -}}
                   </span>

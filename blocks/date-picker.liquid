@@ -1,0 +1,213 @@
+{{ 'date-picker.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'date-picker.js' | asset_url }}" defer></script>
+
+{% liquid
+  assign placeholder = block.settings.placeholder | default: 'Select a date'
+  assign label = block.settings.label | default: 'Date'
+  assign property_label = block.settings.property_label | default: 'Date'
+  assign property_name = 'properties[' | append: property_label | append: ']'
+  assign lead_days = block.settings.lead_days | default: 1
+  assign window_days = block.settings.window_days | default: 365
+  assign required = block.settings.required
+  assign error_message = block.settings.error_message | default: 'Please select a date before adding to cart.'
+  assign show_label = block.settings.show_label
+  assign field_id = 'DatePicker-' | append: block.id
+%}
+
+<div
+  class="date-picker-block spacing-style"
+  style="{% render 'spacing-style', settings: block.settings %}"
+  {{ block.shopify_attributes }}
+>
+  <date-picker-component
+    class="date-picker"
+    data-property-name="{{ property_name | escape }}"
+    data-lead-days="{{ lead_days }}"
+    data-window-days="{{ window_days }}"
+    data-required="{% if required %}true{% else %}false{% endif %}"
+    data-locale="{{ request.locale.iso_code | default: 'en' }}"
+    data-placeholder="{{ placeholder | escape }}"
+    data-error-message="{{ error_message | escape }}"
+  >
+    {% if show_label %}
+      <label class="date-picker__label" for="{{ field_id }}">
+        {{ label }}{% if required %}<span class="date-picker__required" aria-hidden="true"> *</span>{% endif %}
+      </label>
+    {% endif %}
+
+    <button
+      type="button"
+      class="date-picker__trigger"
+      id="{{ field_id }}"
+      aria-haspopup="dialog"
+      aria-expanded="false"
+      aria-label="{{ label | escape }}"
+      data-ref="trigger"
+    >
+      <span class="date-picker__trigger-icon svg-wrapper" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="5" width="18" height="16" rx="2"></rect>
+          <path d="M3 10h18M8 3v4M16 3v4"></path>
+        </svg>
+      </span>
+      <span class="date-picker__trigger-text" data-ref="trigger-text">{{ placeholder }}</span>
+      <span class="date-picker__trigger-chevron svg-wrapper" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 9l6 6 6-6"></path>
+        </svg>
+      </span>
+    </button>
+
+    <div class="date-picker__popover" role="dialog" aria-modal="false" aria-label="{{ label | escape }}" hidden data-ref="popover">
+      <div class="date-picker__nav">
+        <button type="button" class="date-picker__nav-btn" data-ref="prev" aria-label="Previous month">
+          <span class="svg-wrapper" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M15 6l-6 6 6 6"></path>
+            </svg>
+          </span>
+        </button>
+        <span class="date-picker__month-label" data-ref="month-label" aria-live="polite"></span>
+        <button type="button" class="date-picker__nav-btn" data-ref="next" aria-label="Next month">
+          <span class="svg-wrapper" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 6l6 6-6 6"></path>
+            </svg>
+          </span>
+        </button>
+      </div>
+      <div class="date-picker__weekdays" data-ref="weekdays" aria-hidden="true"></div>
+      <div class="date-picker__grid" role="grid" data-ref="grid"></div>
+    </div>
+
+    <p class="date-picker__error" role="alert" hidden data-ref="error">{{ error_message }}</p>
+
+    <input
+      type="hidden"
+      name="{{ property_name }}"
+      value=""
+      data-ref="input"
+    >
+  </date-picker-component>
+</div>
+
+{% schema %}
+{
+  "name": "Date picker",
+  "tag": null,
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Lets the customer choose a date when buying. The chosen date is sent as a line item property."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_label",
+      "label": "Show field label above",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Field label",
+      "default": "Pick your date"
+    },
+    {
+      "type": "text",
+      "id": "placeholder",
+      "label": "Placeholder (when empty)",
+      "default": "Select a date"
+    },
+    {
+      "type": "text",
+      "id": "property_label",
+      "label": "Cart property name",
+      "default": "Date",
+      "info": "How the field is labeled in the cart and in the order (e.g. ‘Date’)."
+    },
+    {
+      "type": "checkbox",
+      "id": "required",
+      "label": "Required to add to cart",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "error_message",
+      "label": "Error message (if required and empty)",
+      "default": "Please select a date before adding to cart."
+    },
+    {
+      "type": "header",
+      "content": "Booking window"
+    },
+    {
+      "type": "range",
+      "id": "lead_days",
+      "label": "Minimum days ahead",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "default": 1,
+      "info": "0 = today is selectable, 1 = tomorrow is the earliest, etc."
+    },
+    {
+      "type": "number",
+      "id": "window_days",
+      "label": "Max days ahead",
+      "default": 365,
+      "info": "How many days in the future can be selected."
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-start",
+      "label": "Left",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-end",
+      "label": "Right",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Date picker",
+      "category": "t:categories.product"
+    }
+  ]
+}
+{% endschema %}
