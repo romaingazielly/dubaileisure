@@ -60,6 +60,7 @@
         "hero_min_height_mobile": 480,
         "hero_min_height": 640,
         "content_max_width": 1440,
+        "pause_on_hover": true,
         "autoplay_seconds": 7,
         "slides_aria_label": "Carrousel principal",
         "slide_dots_label": "Pick a slide",
@@ -224,6 +225,7 @@
             "time_label": "3:00 PM",
             "title": "Hotel Pickup",
             "description": "Transfers from Dubai\nShared or Private.",
+            "show_icon": false,
             "icon_name": "map_pin"
           }
         },
@@ -233,6 +235,7 @@
             "time_label": "4:00 PM",
             "title": "Desert Activities",
             "description": "Quad, Sandboard, camel ride, falcon photo",
+            "show_icon": false,
             "icon_name": "stopwatch"
           }
         },
@@ -242,6 +245,7 @@
             "time_label": "5:00 PM",
             "title": "Dune Bashing",
             "description": "30 minutes of Dune bashing in the Red Dunes",
+            "show_icon": false,
             "icon_name": "truck"
           }
         },
@@ -251,6 +255,7 @@
             "time_label": "6:30 PM",
             "title": "Sunset + BBQ",
             "description": "International BBQ buffet dinner (vegetarian options available)",
+            "show_icon": false,
             "icon_name": "serving_dish"
           }
         },
@@ -260,6 +265,7 @@
             "time_label": "7:30 PM",
             "title": "Live Shows",
             "description": "Tanoura dance, belly dance, fire show",
+            "show_icon": false,
             "icon_name": "silhouette"
           }
         },
@@ -269,6 +275,7 @@
             "time_label": "8:30 PM",
             "title": "Hotel Drop-off",
             "description": "Back around 9 PM",
+            "show_icon": false,
             "icon_name": "map_pin"
           }
         }
@@ -283,10 +290,13 @@
       ],
       "name": "Timeline steps",
       "settings": {
-        "eyebrow": "YOUR EVENING",
-        "heading": "What Actually Happens",
-        "subheading": "6 heures. Un itineraire pense du pickup au drop-off.",
+        "eyebrow": "Your Evening · Hour by Hour",
+        "heading": "What Actually",
+        "heading_accent": "Happens.",
+        "subheading": "No vague \"desert experience\" marketing. Here is exactly what six hours with us looks like, from the moment we ring your hotel buzzer to the moment we drop you back.",
+        "heading_layout": "split",
         "accent_color": "#c41e3a",
+        "show_glow": true,
         "max_width": 1440,
         "color_scheme": "",
         "section_width": "full-width",
