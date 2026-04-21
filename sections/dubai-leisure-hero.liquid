@@ -24,6 +24,7 @@
       class="dlh-hero"
       data-section-id="{{ section.id }}"
       data-autoplay-seconds="{{ section.settings.autoplay_seconds }}"
+      data-pause-on-hover="{{ section.settings.pause_on_hover }}"
       role="region"
       aria-label="{{ section.settings.slides_aria_label | escape }}"
       {% if slide_count < 2 %}
@@ -205,6 +206,12 @@
       "label": "Largeur max. bloc texte + CTA",
       "default": 1440,
       "info": "L’image reste pleine largeur ; seul le bloc contenu est limité."
+    },
+    {
+      "type": "checkbox",
+      "id": "pause_on_hover",
+      "label": "Pause au survol de la souris",
+      "default": true
     },
     {
       "type": "range",

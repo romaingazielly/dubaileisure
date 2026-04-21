@@ -60,9 +60,9 @@
         "hero_min_height_mobile": 480,
         "hero_min_height": 640,
         "content_max_width": 1440,
-        "autoplay_seconds": 0,
+        "autoplay_seconds": 7,
         "slides_aria_label": "Carrousel principal",
-        "slide_dots_label": "Choisir une diapositive",
+        "slide_dots_label": "Pick a slide",
         "slide_indicator_label": "Slide"
       }
     },

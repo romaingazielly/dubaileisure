@@ -201,8 +201,10 @@ class DlhHeroCarousel extends HTMLElement {
       this.#restartFillAnimation();
     }
 
-    this.addEventListener('mouseenter', this.#pauseAutoplay);
-    this.addEventListener('mouseleave', this.#resumeAutoplay);
+    if (this.dataset.pauseOnHover !== 'false') {
+      this.addEventListener('mouseenter', this.#pauseAutoplay);
+      this.addEventListener('mouseleave', this.#resumeAutoplay);
+    }
     this.addEventListener('focusin', this.#pauseAutoplay);
     this.addEventListener('focusout', this.#resumeAutoplay);
   }
