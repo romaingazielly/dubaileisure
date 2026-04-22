@@ -1,5 +1,5 @@
 {%- doc -%}
-  Guest review card (Dubai Leisure style).
+  Guest review card — aligned with Reviews.jsx design.
 
   @param {object} block - guest_review block
   @param {boolean} [show_shopify_attributes] - Output block.shopify_attributes (false on the cloned marquee row)
@@ -19,20 +19,17 @@
 
   assign initials = block.settings.avatar_initials | strip
   if initials == blank and author != blank
-    assign parts = author | split: ' '
-    if parts.size > 1
-      assign a = parts[0] | slice: 0, 1
-      assign b = parts[1] | slice: 0, 1
-      assign initials = a | append: b | upcase
-    else
-      assign initials = author | strip | slice: 0, 2 | upcase
-    endif
+    assign initials = author | strip | slice: 0, 1 | upcase
   endif
 
-  assign stars_str = ''
-  for i in (1..rating)
-    assign stars_str = stars_str | append: '★'
-  endfor
+  assign source_label = ''
+  if meta contains 'TripAdvisor'
+    assign source_label = 'TripAdvisor'
+  elsif meta contains 'Google'
+    assign source_label = 'Google'
+  elsif meta contains 'GetYourGuide'
+    assign source_label = 'GetYourGuide'
+  endif
 
   assign show_attrs = show_shopify_attributes
   if show_attrs == nil
@@ -40,14 +37,27 @@
   endif
 %}
 
-<div
+<article
   class="guest-review-card"
   {% if show_attrs %}{{ block.shopify_attributes }}{% endif %}
 >
-  <div class="guest-review-card__stars" aria-hidden="true">{{ stars_str }}</div>
+  <div class="guest-review-card__top">
+    <span class="guest-review-card__stars" aria-hidden="true">
+      {% for i in (1..5) %}
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="{% if i <= rating %}currentColor{% else %}rgba(0,0,0,0.12){% endif %}" aria-hidden="true">
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+        </svg>
+      {% endfor %}
+    </span>
+    {% if source_label != blank %}
+      <span class="guest-review-card__source">{{ source_label }}</span>
+    {% endif %}
+  </div>
+
   <blockquote class="guest-review-card__quote">
-    <p class="guest-review-card__text">{{ quote | escape }}</p>
+    <p class="guest-review-card__text">&ldquo;{{ quote | escape }}&rdquo;</p>
   </blockquote>
+
   <div class="guest-review-card__author">
     <div class="guest-review-card__avatar" aria-hidden="true">{{ initials | escape }}</div>
     <div class="guest-review-card__meta-wrap">
@@ -59,4 +69,4 @@
       {% endif %}
     </div>
   </div>
-</div>
+</article>

@@ -17,21 +17,14 @@
     id="{{ section.settings.section_id | handle }}"
   {% endif %}
 >
-  <div class="guest-reviews__intro-shell page-width-content" {{ section.shopify_attributes }}>
-    {% if section.settings.eyebrow != blank
-      or section.settings.heading != blank
-      or section.settings.heading_accent != blank
-      or section.settings.subheading != blank
-    %}
-      <header class="guest-reviews__intro">
+  <div class="guest-reviews__header-shell page-width-content" {{ section.shopify_attributes }}>
+    <div class="guest-reviews__header">
+      <div class="guest-reviews__header-title">
         {% if section.settings.eyebrow != blank %}
           <p class="guest-reviews__eyebrow">{{ section.settings.eyebrow | escape }}</p>
         {% endif %}
-        {% if section.settings.heading != blank
-          or section.settings.heading_accent != blank
-        %}
-          <div class="guest-reviews__divider" aria-hidden="true"></div>
-          <h2 class="guest-reviews__heading h2">
+        {% if section.settings.heading != blank or section.settings.heading_accent != blank %}
+          <h2 class="guest-reviews__heading">
             {% if section.settings.heading != blank %}
               {{ section.settings.heading | escape }}
             {% endif %}
@@ -40,14 +33,33 @@
             {% endif %}
           </h2>
         {% endif %}
-        {% if section.settings.subheading != blank %}
-          <p class="guest-reviews__sub">{{ section.settings.subheading | escape }}</p>
-        {% endif %}
-      </header>
-    {% endif %}
+      </div>
+
+      {% if section.settings.show_rating_block %}
+        <div class="guest-reviews__rating-block">
+          <div class="guest-reviews__rating-score">
+            <div class="guest-reviews__rating-number">
+              <span class="guest-reviews__rating-big">{{ section.settings.rating_score }}</span><span class="guest-reviews__rating-max">/5</span>
+            </div>
+            <div class="guest-reviews__rating-stars" aria-hidden="true">
+              {% for i in (1..5) %}
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                </svg>
+              {% endfor %}
+            </div>
+          </div>
+          <div class="guest-reviews__rating-detail">
+            <div class="guest-reviews__rating-label">Based on</div>
+            <div class="guest-reviews__rating-count">{{ section.settings.review_count | escape }}</div>
+            <div class="guest-reviews__rating-sources">{{ section.settings.review_sources | escape }}</div>
+          </div>
+        </div>
+      {% endif %}
+    </div>
 
     {% if total_blocks == 0 and request.design_mode %}
-      <p class="guest-reviews__empty">Add “Guest review” blocks below.</p>
+      <p class="guest-reviews__empty">Add "Guest review" blocks below.</p>
     {% endif %}
   </div>
 
@@ -59,6 +71,8 @@
       endif
     %}
     <div class="guest-reviews__track-wrap">
+      <span class="guest-reviews__fade guest-reviews__fade--left" aria-hidden="true"></span>
+      <span class="guest-reviews__fade guest-reviews__fade--right" aria-hidden="true"></span>
       <div
         class="guest-reviews__track{% unless request.design_mode %} guest-reviews__track--animate{% endunless %}"
         role="region"
@@ -71,7 +85,6 @@
       </div>
     </div>
 
-    {%- comment -%} Seamless loop : clone JS de la rangée, uniquement hors éditeur {%- endcomment -%}
     {% unless request.design_mode %}
       <script>
         (() => {
@@ -123,13 +136,39 @@
       "type": "text",
       "id": "heading_accent",
       "label": "Heading accent",
-      "default": "Dunes"
+      "default": "dunes"
     },
     {
-      "type": "textarea",
-      "id": "subheading",
-      "label": "Subheading",
-      "default": "Over 15,000 guests have made memories in the desert. Here's what they said."
+      "type": "header",
+      "content": "Rating block"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating_block",
+      "label": "Show rating summary block",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "rating_score",
+      "label": "Rating score",
+      "default": "4.9"
+    },
+    {
+      "type": "text",
+      "id": "review_count",
+      "label": "Review count text",
+      "default": "1,247 verified reviews"
+    },
+    {
+      "type": "text",
+      "id": "review_sources",
+      "label": "Review sources",
+      "default": "TripAdvisor · Google · GetYourGuide"
+    },
+    {
+      "type": "header",
+      "content": "Marquee"
     },
     {
       "type": "range",
@@ -139,7 +178,7 @@
       "step": 10,
       "unit": "px",
       "label": "Card width",
-      "default": 340
+      "default": 360
     },
     {
       "type": "range",
@@ -149,7 +188,7 @@
       "step": 2,
       "unit": "px",
       "label": "Gap between cards",
-      "default": 24
+      "default": 20
     },
     {
       "type": "range",
@@ -159,7 +198,7 @@
       "step": 1,
       "unit": "s",
       "label": "Loop duration",
-      "default": 35
+      "default": 60
     },
     {
       "type": "checkbox",
@@ -171,7 +210,7 @@
       "type": "color_scheme",
       "id": "color_scheme",
       "label": "Color scheme",
-      "default": "scheme-1"
+      "default": "scheme-2"
     },
     {
       "type": "select",
@@ -195,7 +234,7 @@
       "max": 120,
       "step": 4,
       "unit": "px",
-      "default": 56
+      "default": 96
     },
     {
       "type": "range",
@@ -205,7 +244,7 @@
       "max": 120,
       "step": 4,
       "unit": "px",
-      "default": 56
+      "default": 88
     }
   ],
   "blocks": [
@@ -217,6 +256,12 @@
     {
       "name": "Guest reviews (marquee)",
       "category": "t:categories.storytelling",
+      "settings": {
+        "show_rating_block": true,
+        "rating_score": "4.9",
+        "review_count": "1,247 verified reviews",
+        "review_sources": "TripAdvisor · Google · GetYourGuide"
+      },
       "blocks": [
         {
           "type": "guest_review",
