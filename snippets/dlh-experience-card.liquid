@@ -1,0 +1,147 @@
+{%- doc -%}
+  Experience card — matches ProductCard from design (ProductGrid.jsx).
+  Uses product tags for badge (tag starting with "badge:") and
+  meta info (tag starting with "meta:duration:", "meta:group:").
+  Display tags are all other tags not prefixed with badge: or meta:.
+
+  @param {object} product - Shopify product (or null for placeholder)
+  @param {object} section_settings - parent section settings
+{%- enddoc -%}
+
+{% liquid
+  assign onboarding = false
+  if product == blank or product == empty
+    assign onboarding = true
+  endif
+
+  unless onboarding
+    assign badge_text = ''
+    assign badge_tone = ''
+    assign duration = ''
+    assign group_label = ''
+    assign display_tags = ''
+
+    for tag in product.tags
+      assign tag_down = tag | downcase
+      if tag_down contains 'badge:'
+        assign badge_parts = tag | split: ':'
+        assign badge_text = badge_parts[1] | strip
+        if badge_parts.size > 2
+          assign badge_tone = badge_parts[2] | strip | downcase
+        endif
+        if badge_tone == blank
+          assign badge_tone = 'red'
+        endif
+      elsif tag_down contains 'meta:duration:'
+        assign duration = tag | split: ':' | last | strip
+      elsif tag_down contains 'meta:group:'
+        assign group_label = tag | split: ':' | last | strip
+      else
+        if display_tags != blank
+          assign display_tags = display_tags | append: '|||'
+        endif
+        assign display_tags = display_tags | append: tag
+      endif
+    endfor
+
+    assign display_tags_arr = display_tags | split: '|||'
+
+    assign rating_value = product.metafields.reviews.rating.value.value | default: nil
+    assign rating_count = product.metafields.reviews.rating_count.value | default: nil
+
+    assign variant = product.selected_or_first_available_variant
+    assign image = product.featured_image
+  endunless
+%}
+
+<article class="dlh-exp-card">
+  <a href="{% unless onboarding %}{{ product.url }}{% endunless %}" class="dlh-exp-card__link" {% if onboarding %}aria-hidden="true"{% endif %}>
+    <div class="dlh-exp-card__media">
+      {% unless onboarding %}
+        {% if image %}
+          {{ image | image_url: width: 800 | image_tag:
+            widths: '400, 600, 800',
+            sizes: '(min-width: 750px) 25vw, 50vw',
+            loading: 'lazy',
+            class: 'dlh-exp-card__img',
+            alt: product.title
+          }}
+        {% else %}
+          <div class="dlh-exp-card__placeholder">
+            {{ 'product-1' | placeholder_svg_tag: 'dlh-exp-card__placeholder-svg' }}
+          </div>
+        {% endif %}
+      {% else %}
+        <div class="dlh-exp-card__placeholder">
+          {{ 'product-1' | placeholder_svg_tag: 'dlh-exp-card__placeholder-svg' }}
+        </div>
+      {% endunless %}
+
+      {% if badge_text != blank %}
+        <span class="dlh-exp-card__badge dlh-exp-card__badge--{{ badge_tone }}">{{ badge_text }}</span>
+      {% endif %}
+
+      {% if section_settings.show_rating and onboarding == false %}
+        <span class="dlh-exp-card__rating-pill">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+          </svg>
+          {% if rating_value %}
+            {{ rating_value }}
+            {% if rating_count %}<span class="dlh-exp-card__rating-count">({{ rating_count }})</span>{% endif %}
+          {% else %}
+            4.9
+          {% endif %}
+        </span>
+      {% endif %}
+    </div>
+
+    <div class="dlh-exp-card__body">
+      {% unless onboarding %}
+        <p class="dlh-exp-card__eyebrow">
+          {% if product.type != blank %}{{ product.type }}{% endif %}
+          {% if duration != blank %} · {{ duration }}{% endif %}
+          {% if group_label != blank %} · {{ group_label }}{% endif %}
+        </p>
+
+        <h3 class="dlh-exp-card__title">{{ product.title }}</h3>
+
+        {% if product.description != blank %}
+          <p class="dlh-exp-card__tagline">{{ product.description | strip_html | truncate: 100 }}</p>
+        {% endif %}
+
+        {% if section_settings.show_tags and display_tags_arr.size > 0 %}
+          <div class="dlh-exp-card__tags">
+            {% for tag in display_tags_arr limit: 4 %}
+              <span class="dlh-exp-card__tag">{{ tag }}</span>
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        <div class="dlh-exp-card__footer">
+          <div class="dlh-exp-card__price-wrap">
+            <span class="dlh-exp-card__price-label">From</span>
+            <span class="dlh-exp-card__price">
+              {{ variant.price | money }}
+              <span class="dlh-exp-card__price-per">/ person</span>
+            </span>
+          </div>
+          <span class="dlh-exp-card__cta">
+            Explore <span aria-hidden="true">→</span>
+          </span>
+        </div>
+      {% else %}
+        <p class="dlh-exp-card__eyebrow">Experience</p>
+        <h3 class="dlh-exp-card__title">Desert Safari</h3>
+        <p class="dlh-exp-card__tagline">Select a collection to display products</p>
+        <div class="dlh-exp-card__footer">
+          <div class="dlh-exp-card__price-wrap">
+            <span class="dlh-exp-card__price-label">From</span>
+            <span class="dlh-exp-card__price">AED 250</span>
+          </div>
+          <span class="dlh-exp-card__cta">Explore <span aria-hidden="true">→</span></span>
+        </div>
+      {% endunless %}
+    </div>
+  </a>
+</article>

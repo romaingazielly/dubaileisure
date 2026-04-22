@@ -1,0 +1,344 @@
+/* Experience grid — ported from ProductGrid.jsx / ProductCard.jsx */
+
+.dlh-exp {
+  --dlh-exp-cols: 4;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ── Header ── */
+
+.dlh-exp__inner {
+  max-width: 1280px;
+  margin-inline: auto;
+  padding-inline: clamp(20px, 4vw, 40px);
+}
+
+.dlh-exp__header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 48px;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.dlh-exp__header-text {
+  max-width: 620px;
+}
+
+.dlh-exp__eyebrow {
+  margin: 0 0 14px;
+  font-family: var(--font-body--family, var(--font-body));
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--brand-red, #b11c3d);
+}
+
+.dlh-exp__heading {
+  margin: 0 0 16px;
+  font-family: var(--font-heading--family, var(--font-heading));
+  font-style: italic;
+  font-weight: 600;
+  font-size: clamp(34px, 5vw, 58px);
+  color: var(--brand-navy, #0a1c3a);
+  letter-spacing: -0.025em;
+  line-height: 1.02;
+}
+
+.dlh-exp__heading-accent {
+  color: var(--brand-red-bright, #c41e3a);
+}
+
+.dlh-exp__sub {
+  margin: 0;
+  font-size: 16px;
+  color: var(--fg-muted, rgba(10, 28, 58, 0.66));
+  max-width: 520px;
+  line-height: 1.55;
+}
+
+.dlh-exp__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border: 1px solid var(--brand-navy, #0a1c3a);
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--brand-navy, #0a1c3a);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.2s, color 0.2s;
+  margin-bottom: 4px;
+}
+
+.dlh-exp__btn:hover {
+  background: var(--brand-navy, #0a1c3a);
+  color: var(--brand-cream, #fcfaf7);
+}
+
+/* ── Grid ── */
+
+.dlh-exp__grid {
+  display: grid;
+  grid-template-columns: repeat(var(--dlh-exp-cols), 1fr);
+  gap: 24px;
+}
+
+@media (max-width: 999px) {
+  .dlh-exp__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 549px) {
+  .dlh-exp__grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .dlh-exp__header {
+    margin-bottom: 32px;
+  }
+}
+
+/* ── Card ── */
+
+.dlh-exp-card {
+  height: 100%;
+}
+
+.dlh-exp-card__link {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #fff;
+  border-radius: 6px;
+  overflow: hidden;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  box-shadow:
+    0 2px 4px rgb(0 0 0 / 0.06),
+    0 16px 40px rgb(0 0 0 / 0.10),
+    0 0 0 1px rgb(10 28 58 / 0.06);
+  transition:
+    transform 0.3s cubic-bezier(0.33, 1, 0.68, 1),
+    box-shadow 0.3s;
+}
+
+.dlh-exp-card__link:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 4px 6px rgb(0 0 0 / 0.08),
+    0 28px 56px rgb(0 0 0 / 0.18),
+    0 0 0 1px rgb(10 28 58 / 0.08);
+}
+
+/* Media */
+
+.dlh-exp-card__media {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+}
+
+.dlh-exp-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+.dlh-exp-card__link:hover .dlh-exp-card__img {
+  transform: scale(1.06);
+}
+
+.dlh-exp-card__placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #d7781a, #b11c3d 70%, #5a0a1a);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dlh-exp-card__placeholder-svg {
+  width: 60%;
+  height: 60%;
+  opacity: 0.3;
+}
+
+/* Badge */
+
+.dlh-exp-card__badge {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  padding: 6px 12px;
+  border-radius: 100px;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-family: var(--font-body--family, var(--font-body));
+  line-height: 1;
+}
+
+.dlh-exp-card__badge--red {
+  background: var(--brand-red, #b11c3d);
+  color: #fff;
+}
+
+.dlh-exp-card__badge--navy {
+  background: var(--brand-navy, #0a1c3a);
+  color: var(--brand-cream, #fcfaf7);
+}
+
+.dlh-exp-card__badge--ember {
+  background: var(--brand-ember, #d7781a);
+  color: #fff;
+}
+
+.dlh-exp-card__badge--oasis {
+  background: var(--brand-oasis, #6b8e5a);
+  color: #fff;
+}
+
+/* Rating pill */
+
+.dlh-exp-card__rating-pill {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: rgba(252, 250, 247, 0.95);
+  color: var(--brand-navy, #0a1c3a);
+  padding: 5px 9px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.dlh-exp-card__rating-pill svg {
+  color: var(--brand-ember, #d7781a);
+}
+
+.dlh-exp-card__rating-count {
+  opacity: 0.6;
+  font-weight: 500;
+}
+
+/* Body */
+
+.dlh-exp-card__body {
+  padding: 22px 22px 24px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.dlh-exp-card__eyebrow {
+  margin: 0;
+  font-family: var(--font-body--family, var(--font-body));
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--fg-muted, rgba(10, 28, 58, 0.66));
+}
+
+.dlh-exp-card__title {
+  margin: 10px 0 8px;
+  font-family: var(--font-heading--family, var(--font-heading));
+  font-style: italic;
+  font-weight: 600;
+  color: var(--brand-navy, #0a1c3a);
+  font-size: 26px;
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+}
+
+.dlh-exp-card__tagline {
+  margin: 0 0 16px;
+  font-size: 13.5px;
+  color: var(--fg-muted, rgba(10, 28, 58, 0.66));
+  line-height: 1.5;
+}
+
+/* Tags */
+
+.dlh-exp-card__tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+
+.dlh-exp-card__tag {
+  font-size: 11px;
+  padding: 4px 9px;
+  border-radius: 100px;
+  background: var(--brand-sand, #f4efe6);
+  color: var(--brand-navy, #0a1c3a);
+  font-weight: 500;
+}
+
+/* Footer: price + CTA */
+
+.dlh-exp-card__footer {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid rgba(10, 28, 58, 0.08);
+}
+
+.dlh-exp-card__price-label {
+  display: block;
+  font-size: 10.5px;
+  color: var(--fg-muted, rgba(10, 28, 58, 0.66));
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.dlh-exp-card__price {
+  font-weight: 700;
+  color: var(--brand-navy, #0a1c3a);
+  font-size: 20px;
+  font-family: var(--font-heading--family, var(--font-heading));
+  font-style: italic;
+}
+
+.dlh-exp-card__price-per {
+  font-weight: 400;
+  color: var(--fg-muted, rgba(10, 28, 58, 0.66));
+  font-size: 12px;
+  font-style: normal;
+  margin-left: 4px;
+}
+
+.dlh-exp-card__cta {
+  color: var(--brand-red, #b11c3d);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: transform 0.3s;
+  white-space: nowrap;
+}
+
+.dlh-exp-card__link:hover .dlh-exp-card__cta {
+  transform: translateX(3px);
+}
