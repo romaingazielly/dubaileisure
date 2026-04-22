@@ -1,0 +1,146 @@
+{{ 'dlh-final-cta.css' | asset_url | stylesheet_tag }}
+
+<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+<section
+  class="section section--full-width color-{{ section.settings.color_scheme }} dlh-final-cta spacing-style"
+  style="{% render 'spacing-style', settings: section.settings %}"
+>
+  <span class="dlh-final-cta__glow" aria-hidden="true"></span>
+  <div class="dlh-final-cta__inner" {{ section.shopify_attributes }}>
+    {% if section.settings.eyebrow != blank %}
+      <p class="dlh-final-cta__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+    {% endif %}
+    {% if section.settings.heading != blank or section.settings.heading_accent != blank %}
+      <h2 class="dlh-final-cta__heading">
+        {% if section.settings.heading != blank %}{{ section.settings.heading | escape }}{% endif %}
+        {% if section.settings.heading_accent != blank %}
+          <span class="dlh-final-cta__heading-accent"> {{ section.settings.heading_accent | escape }}</span>
+        {% endif %}
+      </h2>
+    {% endif %}
+    {% if section.settings.subheading != blank %}
+      <p class="dlh-final-cta__sub">{{ section.settings.subheading | escape }}</p>
+    {% endif %}
+    <div class="dlh-final-cta__buttons">
+      {% if section.settings.primary_label != blank %}
+        <a href="{{ section.settings.primary_url | default: '#' }}" class="dlh-final-cta__btn dlh-final-cta__btn--primary">
+          {{ section.settings.primary_label | escape }}
+        </a>
+      {% endif %}
+      {% if section.settings.secondary_label != blank %}
+        <a
+          href="{{ section.settings.secondary_url | default: '#' }}"
+          class="dlh-final-cta__btn dlh-final-cta__btn--outline"
+          {% if section.settings.secondary_url contains 'wa.me' or section.settings.secondary_url contains 'whatsapp' %}
+            target="_blank" rel="noopener"
+          {% endif %}
+        >
+          {{ section.settings.secondary_label | escape }}
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Final CTA band",
+  "tag": "div",
+  "class": "section-wrapper",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Book your evening"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "The dunes are"
+    },
+    {
+      "type": "text",
+      "id": "heading_accent",
+      "label": "Heading accent",
+      "default": "waiting."
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Free cancellation up to 24 hours. Instant confirmation. Real humans on WhatsApp 24/7."
+    },
+    {
+      "type": "header",
+      "content": "Primary button"
+    },
+    {
+      "type": "text",
+      "id": "primary_label",
+      "label": "Label",
+      "default": "Book evening safari"
+    },
+    {
+      "type": "url",
+      "id": "primary_url",
+      "label": "URL"
+    },
+    {
+      "type": "header",
+      "content": "Secondary button"
+    },
+    {
+      "type": "text",
+      "id": "secondary_label",
+      "label": "Label",
+      "default": "Chat on WhatsApp"
+    },
+    {
+      "type": "url",
+      "id": "secondary_url",
+      "label": "URL"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-5"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 88
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 88
+    }
+  ],
+  "presets": [
+    {
+      "name": "Final CTA band",
+      "category": "t:categories.storytelling"
+    }
+  ]
+}
+{% endschema %}

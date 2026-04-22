@@ -1,0 +1,105 @@
+/* Final CTA band — ported from FinalCTA in Footer.jsx */
+
+.dlh-final-cta {
+  position: relative;
+  overflow: hidden;
+}
+
+.dlh-final-cta__glow {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 25% 50%, rgba(215, 120, 26, 0.2), transparent 55%),
+    radial-gradient(circle at 80% 80%, rgba(177, 28, 61, 0.2), transparent 55%);
+  pointer-events: none;
+}
+
+.dlh-final-cta__inner {
+  position: relative;
+  max-width: 1000px;
+  margin-inline: auto;
+  padding-inline: clamp(20px, 4vw, 40px);
+  text-align: center;
+}
+
+.dlh-final-cta__eyebrow {
+  margin: 0 0 16px;
+  font-family: var(--font-body--family, var(--font-body));
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--brand-ember, #d7781a);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dlh-final-cta__heading {
+  margin: 0 0 20px;
+  font-family: var(--font-heading--family, var(--font-heading));
+  font-style: italic;
+  font-weight: 600;
+  font-size: clamp(40px, 6vw, 72px);
+  color: var(--brand-cream, #fcfaf7);
+  letter-spacing: -0.025em;
+  line-height: 1.0;
+}
+
+.dlh-final-cta__heading-accent {
+  color: var(--brand-ember, #d7781a);
+}
+
+.dlh-final-cta__sub {
+  margin: 0 auto 34px;
+  font-size: 17px;
+  line-height: 1.55;
+  color: rgba(252, 250, 247, 0.8);
+  max-width: 560px;
+}
+
+.dlh-final-cta__buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.dlh-final-cta__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 6px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+}
+
+.dlh-final-cta__btn:active {
+  transform: translateY(1px);
+}
+
+.dlh-final-cta__btn--primary {
+  padding: 16px 28px;
+  font-size: 15px;
+  background: var(--brand-red, #b11c3d);
+  color: #fff;
+  border: none;
+}
+
+.dlh-final-cta__btn--primary:hover {
+  background: var(--brand-red-dark, #8d1631);
+}
+
+.dlh-final-cta__btn--outline {
+  padding: 16px 22px;
+  font-size: 14px;
+  background: transparent;
+  color: var(--brand-cream, #fcfaf7);
+  border: 1px solid rgba(252, 250, 247, 0.5);
+}
+
+.dlh-final-cta__btn--outline:hover {
+  background: rgba(252, 250, 247, 0.12);
+}

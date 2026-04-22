@@ -1166,6 +1166,20 @@
         "padding-block-start": 96,
         "padding-block-end": 96
       }
+    },
+    "dlh_final_cta": {
+      "type": "dlh-final-cta",
+      "settings": {
+        "eyebrow": "Book your evening",
+        "heading": "The dunes are",
+        "heading_accent": "waiting.",
+        "subheading": "Free cancellation up to 24 hours. Instant confirmation. Real humans on WhatsApp 24/7.",
+        "primary_label": "Book evening safari",
+        "secondary_label": "Chat on WhatsApp",
+        "color_scheme": "scheme-5",
+        "padding-block-start": 88,
+        "padding-block-end": 88
+      }
     }
   },
   "order": [
@@ -1175,6 +1189,7 @@
     "dlh_experiences_grid",
     "guest_reviews_home_k8mN2p",
     "dlh_faq",
+    "dlh_final_cta",
     "section_FQQqfN",
     "section_6xMaEE",
     "section_QawMUr"
