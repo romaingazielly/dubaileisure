@@ -15,24 +15,16 @@
   endif
 
   unless onboarding
-    assign badge_text = ''
-    assign badge_tone = ''
+    assign badge_text = product.metafields.custom.usp | strip | default: ''
+    assign badge_tone = product.metafields.custom.usp_tone | strip | downcase | default: 'red'
+
     assign duration = ''
     assign group_label = ''
     assign display_tags = ''
 
     for tag in product.tags
       assign tag_down = tag | downcase
-      if tag_down contains 'badge:'
-        assign badge_parts = tag | split: ':'
-        assign badge_text = badge_parts[1] | strip
-        if badge_parts.size > 2
-          assign badge_tone = badge_parts[2] | strip | downcase
-        endif
-        if badge_tone == blank
-          assign badge_tone = 'red'
-        endif
-      elsif tag_down contains 'meta:duration:'
+      if tag_down contains 'meta:duration:'
         assign duration = tag | split: ':' | last | strip
       elsif tag_down contains 'meta:group:'
         assign group_label = tag | split: ':' | last | strip

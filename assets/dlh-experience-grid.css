@@ -209,6 +209,11 @@
   color: #fff;
 }
 
+.dlh-exp-card__badge--cream {
+  background: var(--brand-cream, #fcfaf7);
+  color: var(--brand-navy, #0a1c3a);
+}
+
 /* Rating pill */
 
 .dlh-exp-card__rating-pill {
@@ -317,6 +322,7 @@
   font-size: 20px;
   font-family: var(--font-heading--family, var(--font-heading));
   font-style: italic;
+  white-space: nowrap;
 }
 
 .dlh-exp-card__price-per {
