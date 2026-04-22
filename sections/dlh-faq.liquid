@@ -1,0 +1,248 @@
+{{ 'dlh-faq.css' | asset_url | stylesheet_tag }}
+
+<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+<div
+  class="section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }} dlh-faq spacing-style"
+  style="{% render 'spacing-style', settings: section.settings %}"
+  {% if section.settings.section_id != blank %}
+    id="{{ section.settings.section_id | handle }}"
+  {% endif %}
+>
+  <div class="dlh-faq__inner">
+    <div class="dlh-faq__sticky">
+      {% if section.settings.eyebrow != blank %}
+        <p class="dlh-faq__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {% endif %}
+      {% if section.settings.heading != blank or section.settings.heading_accent != blank %}
+        <h2 class="dlh-faq__heading">
+          {% if section.settings.heading != blank %}{{ section.settings.heading | escape }}{% endif %}
+          {% if section.settings.heading_accent != blank %}
+            <span class="dlh-faq__heading-accent"> {{ section.settings.heading_accent | escape }}</span>
+          {% endif %}
+        </h2>
+      {% endif %}
+      {% if section.settings.subheading != blank %}
+        <p class="dlh-faq__sub">{{ section.settings.subheading | escape }}</p>
+      {% endif %}
+      {% if section.settings.button_label != blank %}
+        <a
+          href="{{ section.settings.button_url | default: '#' }}"
+          class="dlh-faq__btn"
+          {% if section.settings.button_url contains 'wa.me' or section.settings.button_url contains 'whatsapp' %}
+            target="_blank" rel="noopener"
+          {% endif %}
+        >
+          {{ section.settings.button_label | escape }}
+        </a>
+      {% endif %}
+    </div>
+
+    <div class="dlh-faq__list" data-dlh-faq>
+      {% for block in section.blocks %}
+        <div
+          class="dlh-faq__item{% if forloop.first %} dlh-faq__item--first{% endif %}"
+          data-dlh-faq-item
+          {{ block.shopify_attributes }}
+        >
+          <button
+            class="dlh-faq__question"
+            aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}"
+            data-dlh-faq-trigger
+          >
+            <span>{{ block.settings.question | escape }}</span>
+            <span class="dlh-faq__icon" aria-hidden="true">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                <line x1="7" y1="1" x2="7" y2="13"/>
+                <line x1="1" y1="7" x2="13" y2="7"/>
+              </svg>
+            </span>
+          </button>
+          <div class="dlh-faq__answer{% if forloop.first %} dlh-faq__answer--open{% endif %}" data-dlh-faq-answer>
+            <p class="dlh-faq__answer-text">{{ block.settings.answer | escape }}</p>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<script>
+  (() => {
+    const faq = document.querySelector('[data-dlh-faq]');
+    if (!faq) return;
+
+    const close = (trigger) => {
+      const answer = trigger.closest('[data-dlh-faq-item]').querySelector('[data-dlh-faq-answer]');
+      answer.style.height = answer.scrollHeight + 'px';
+      requestAnimationFrame(() => {
+        answer.style.height = '0px';
+      });
+      trigger.setAttribute('aria-expanded', 'false');
+    };
+
+    const open = (trigger) => {
+      const answer = trigger.closest('[data-dlh-faq-item]').querySelector('[data-dlh-faq-answer]');
+      trigger.setAttribute('aria-expanded', 'true');
+      answer.style.height = answer.scrollHeight + 'px';
+      const onEnd = () => {
+        answer.style.height = 'auto';
+        answer.removeEventListener('transitionend', onEnd);
+      };
+      answer.addEventListener('transitionend', onEnd);
+    };
+
+    faq.querySelectorAll('[data-dlh-faq-answer]').forEach((a) => {
+      if (a.classList.contains('dlh-faq__answer--open')) {
+        a.style.height = 'auto';
+      } else {
+        a.style.height = '0px';
+      }
+      a.classList.remove('dlh-faq__answer--open');
+    });
+
+    faq.addEventListener('click', (e) => {
+      const trigger = e.target.closest('[data-dlh-faq-trigger]');
+      if (!trigger) return;
+      const isOpen = trigger.getAttribute('aria-expanded') === 'true';
+
+      faq.querySelectorAll('[data-dlh-faq-trigger][aria-expanded="true"]').forEach((t) => {
+        if (t !== trigger) close(t);
+      });
+
+      if (isOpen) {
+        close(trigger);
+      } else {
+        open(trigger);
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "FAQ accordion",
+  "tag": "section",
+  "class": "section-wrapper",
+  "max_blocks": 20,
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_id",
+      "label": "Section HTML id",
+      "default": "faq"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Questions"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Everything you"
+    },
+    {
+      "type": "text",
+      "id": "heading_accent",
+      "label": "Heading accent",
+      "default": "wanted to ask"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Can't find what you're looking for? Our team replies on WhatsApp in under 10 minutes, 24/7."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Ask on WhatsApp"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Button URL"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-2"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "Section width",
+      "options": [
+        { "value": "page-width", "label": "Page" },
+        { "value": "full-width", "label": "Full width" }
+      ],
+      "default": "page-width"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 96
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 96
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq_item",
+      "name": "FAQ item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "How do I get picked up from my hotel?"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Answer",
+          "default": "A Bedouin-trained driver will arrive at your hotel lobby 15 minutes before the scheduled time."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ accordion",
+      "category": "t:categories.storytelling",
+      "blocks": [
+        { "type": "faq_item", "settings": { "question": "How do I get picked up from my hotel?", "answer": "A Bedouin-trained driver will arrive at your hotel lobby 15 minutes before the scheduled time, in a clearly marked Toyota Land Cruiser. You'll receive their name and photo by WhatsApp the day before." }},
+        { "type": "faq_item", "settings": { "question": "Is the desert safari safe for kids and seniors?", "answer": "Yes. We host guests from age 3 to 80+. Dune bashing is optional — families with young children or seniors can skip it and join us directly at the camp. Every vehicle has seatbelts, a trained driver, and first-aid equipment." }},
+        { "type": "faq_item", "settings": { "question": "What should I wear?", "answer": "Loose, comfortable clothing and closed-toe shoes for daytime. Light layers for evening — the desert cools sharply after sunset. Cultural dress (shoulders and knees covered) is recommended for the camp." }},
+        { "type": "faq_item", "settings": { "question": "Can I book a fully private experience?", "answer": "Absolutely. Our Private Overnight Camp and Private Heritage Trek are bookable year-round. For bespoke multi-day itineraries, reach out via WhatsApp and we'll design it with you." }},
+        { "type": "faq_item", "settings": { "question": "What is your cancellation policy?", "answer": "Free cancellation up to 24 hours before your experience. No-questions-asked refund to your original payment method within 3 business days." }},
+        { "type": "faq_item", "settings": { "question": "Is the food vegetarian/halal/allergy-friendly?", "answer": "Our BBQ buffet includes halal meats, full vegetarian and vegan options, and gluten-free mains. Please flag allergies at booking and we'll confirm arrangements with the camp chef." }}
+      ]
+    }
+  ]
+}
+{% endschema %}
