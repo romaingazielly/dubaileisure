@@ -1,0 +1,145 @@
+/* ============================================================
+   DLH USP Ticker — Infinite horizontal marquee
+   Section: dlh-usp-ticker.liquid
+   ============================================================ */
+
+.dlh-usp-ticker {
+  --ticker-bg: var(--brand-cream, #fcfaf7);
+  --ticker-border: rgba(10, 28, 58, 0.08);
+  --ticker-speed: 50s;
+  padding: 22px 0;
+  background: var(--ticker-bg);
+  border-top: 1px solid var(--ticker-border);
+  border-bottom: 1px solid var(--ticker-border);
+  overflow: hidden;
+}
+
+.dlh-usp-ticker__track {
+  overflow: hidden;
+  width: 100%;
+}
+
+.dlh-usp-ticker__row {
+  display: inline-flex;
+  gap: 0;
+  white-space: nowrap;
+  will-change: transform;
+  animation: dlh-ticker-scroll var(--ticker-speed) linear infinite;
+}
+
+.dlh-usp-ticker__track:hover .dlh-usp-ticker__row {
+  animation-play-state: paused;
+}
+
+@keyframes dlh-ticker-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* Single USP item */
+.dlh-usp-ticker__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 0 28px;
+}
+
+/* Icon chip */
+.dlh-usp-ticker__icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(196, 30, 58, 0.08);
+  border: 1px solid rgba(196, 30, 58, 0.22);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.dlh-usp-ticker__icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Number + unit */
+.dlh-usp-ticker__value {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.dlh-usp-ticker__num {
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-weight: 600;
+  font-size: 22px;
+  color: var(--brand-navy, #0a1c3a);
+  line-height: 1;
+}
+
+.dlh-usp-ticker__unit {
+  color: var(--brand-red-bright, #c41e3a);
+  margin-left: 2px;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.dlh-usp-ticker__label {
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: rgba(10, 28, 58, 0.66);
+  white-space: nowrap;
+}
+
+/* Diamond separator */
+.dlh-usp-ticker__sep {
+  color: var(--brand-ember, #d7781a);
+  font-size: 12px;
+  margin-left: 14px;
+  opacity: 0.55;
+  flex-shrink: 0;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .dlh-usp-ticker__row {
+    animation: none;
+  }
+}
+
+/* Mobile: slightly smaller items */
+@media (max-width: 749px) {
+  .dlh-usp-ticker {
+    padding: 16px 0;
+  }
+
+  .dlh-usp-ticker__item {
+    gap: 10px;
+    padding: 0 20px;
+  }
+
+  .dlh-usp-ticker__icon {
+    width: 34px;
+    height: 34px;
+  }
+
+  .dlh-usp-ticker__icon svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .dlh-usp-ticker__num {
+    font-size: 19px;
+  }
+
+  .dlh-usp-ticker__label {
+    font-size: 9.5px;
+  }
+
+  .dlh-usp-ticker__sep {
+    margin-left: 10px;
+  }
+}

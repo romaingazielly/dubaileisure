@@ -1,0 +1,242 @@
+{{ 'dlh-usp-ticker.css' | asset_url | stylesheet_tag }}
+
+<section
+  class="dlh-usp-ticker"
+  style="
+    {% render 'spacing-style', settings: section.settings %}
+    {% if section.settings.speed > 0 %}--ticker-speed: {{ section.settings.speed }}s;{% endif %}
+  "
+  aria-label="{{ section.settings.aria_label | default: 'Why travel with us' }}"
+  {{ section.shopify_attributes }}
+>
+  <div class="dlh-usp-ticker__track">
+    <div class="dlh-usp-ticker__row">
+      {%- comment -%} Render items twice for seamless infinite loop {%- endcomment -%}
+      {%- for pass in (1..2) -%}
+        {%- for block in section.blocks -%}
+          <div class="dlh-usp-ticker__item" {{ block.shopify_attributes }}>
+            <div class="dlh-usp-ticker__icon">
+              {%- liquid
+                assign icon = block.settings.icon_type
+              -%}
+              {%- case icon -%}
+                {%- when 'star' -%}
+                  <svg viewBox="0 0 32 32" fill="none" stroke="var(--brand-red-bright, #c41e3a)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3.5l3.7 7.9 8.3 1-6.2 6 1.6 8.6L16 22.8 8.6 27l1.6-8.6L4 12.4l8.3-1L16 3.5z"/></svg>
+                {%- when 'quote' -%}
+                  <svg viewBox="0 0 32 32" fill="none" stroke="var(--brand-red-bright, #c41e3a)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 22V13a4 4 0 0 1 4-4"/><path d="M19 22V13a4 4 0 0 1 4-4"/><path d="M4 22h8M14 22h8"/></svg>
+                {%- when 'heritage' -%}
+                  <svg viewBox="0 0 32 32" fill="none" stroke="var(--brand-red-bright, #c41e3a)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 27V14l12-8 12 8v13"/><path d="M11 27v-7h10v7"/><path d="M4 27h24"/></svg>
+                {%- when 'shield' -%}
+                  <svg viewBox="0 0 32 32" fill="none" stroke="var(--brand-red-bright, #c41e3a)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3l11 4v8c0 7-5 12-11 14C10 27 5 22 5 15V7l11-4z"/><path d="M11 15l4 4 6-7"/></svg>
+                {%- when 'pickup' -%}
+                  <svg viewBox="0 0 32 32" fill="none" stroke="var(--brand-red-bright, #c41e3a)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20h3l2-7h10l2 7h3"/><circle cx="9" cy="22" r="2.2"/><circle cx="21" cy="22" r="2.2"/><path d="M6 13V8a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v5"/></svg>
+                {%- when 'cancel' -%}
+                  <svg viewBox="0 0 32 32" fill="none" stroke="var(--brand-red-bright, #c41e3a)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="16" r="12"/><path d="M16 9v7l5 3"/></svg>
+                {%- when 'guide' -%}
+                  <svg viewBox="0 0 32 32" fill="none" stroke="var(--brand-red-bright, #c41e3a)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="11" r="4.5"/><path d="M7 27c.8-5 4.5-8 9-8s8.2 3 9 8"/><path d="M11.5 9c.5-2 2.3-3 4.5-3s4 1 4.5 3"/></svg>
+                {%- when 'private' -%}
+                  <svg viewBox="0 0 32 32" fill="none" stroke="var(--brand-red-bright, #c41e3a)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="14" width="20" height="13" rx="2"/><path d="M10 14V9a6 6 0 0 1 12 0v5"/></svg>
+                {%- when 'whatsapp' -%}
+                  <svg viewBox="0 0 32 32" fill="none" stroke="var(--brand-red-bright, #c41e3a)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 27l1.6-5A10 10 0 1 1 12 26.4L6 27z"/><path d="M12 14c0 3 2 5 5 5"/></svg>
+                {%- when 'group' -%}
+                  <svg viewBox="0 0 32 32" fill="none" stroke="var(--brand-red-bright, #c41e3a)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="12" r="3.5"/><circle cx="22" cy="13" r="3"/><path d="M4 24c.8-3.5 3.5-5.5 7-5.5s6.2 2 7 5.5"/><path d="M19 19.5c2.8.2 4.8 1.8 5.5 4.5"/></svg>
+              {%- endcase -%}
+            </div>
+
+            <div class="dlh-usp-ticker__value">
+              <div>
+                <span class="dlh-usp-ticker__num">{{ block.settings.number }}</span>
+                {%- if block.settings.unit != blank -%}
+                  <span class="dlh-usp-ticker__unit">{{ block.settings.unit }}</span>
+                {%- endif -%}
+              </div>
+              <div class="dlh-usp-ticker__label">{{ block.settings.label }}</div>
+            </div>
+
+            <span class="dlh-usp-ticker__sep" aria-hidden="true">✦</span>
+          </div>
+        {%- endfor -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "USP Ticker",
+  "tag": "div",
+  "class": "section-wrapper",
+  "max_blocks": 12,
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "range",
+      "id": "speed",
+      "label": "Vitesse du défilement",
+      "min": 20,
+      "max": 120,
+      "step": 5,
+      "unit": "s",
+      "default": 50,
+      "info": "Durée d'un cycle complet (plus élevé = plus lent)."
+    },
+    {
+      "type": "text",
+      "id": "aria_label",
+      "label": "Aria label (accessibilité)",
+      "default": "Why travel with us"
+    },
+    {
+      "type": "header",
+      "content": "Espacements"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Padding haut",
+      "min": 0,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Padding bas",
+      "min": 0,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "usp_item",
+      "name": "USP",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon_type",
+          "label": "Icône",
+          "options": [
+            { "value": "star",      "label": "Étoile (note)" },
+            { "value": "quote",     "label": "Citation (avis)" },
+            { "value": "heritage",  "label": "Héritage (maison)" },
+            { "value": "shield",    "label": "Bouclier (certifié)" },
+            { "value": "pickup",    "label": "Véhicule (pickup)" },
+            { "value": "cancel",    "label": "Horloge (annulation)" },
+            { "value": "guide",     "label": "Guide (personne)" },
+            { "value": "private",   "label": "Cadenas (privé)" },
+            { "value": "whatsapp",  "label": "Message (WhatsApp)" },
+            { "value": "group",     "label": "Groupe (personnes)" }
+          ],
+          "default": "star"
+        },
+        {
+          "type": "text",
+          "id": "number",
+          "label": "Chiffre / valeur",
+          "default": "4.9"
+        },
+        {
+          "type": "text",
+          "id": "unit",
+          "label": "Unité (optionnel)",
+          "default": "/5",
+          "info": "Ex: /5, yrs, h…"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Libellé",
+          "default": "Guest rating"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "USP Ticker",
+      "category": "t:categories.storytelling",
+      "blocks": [
+        {
+          "type": "usp_item",
+          "settings": {
+            "icon_type": "star",
+            "number": "4.9",
+            "unit": "/5",
+            "label": "Guest rating"
+          }
+        },
+        {
+          "type": "usp_item",
+          "settings": {
+            "icon_type": "pickup",
+            "number": "Free",
+            "unit": "",
+            "label": "Hotel pickup"
+          }
+        },
+        {
+          "type": "usp_item",
+          "settings": {
+            "icon_type": "cancel",
+            "number": "24h",
+            "unit": "",
+            "label": "Free cancellation"
+          }
+        },
+        {
+          "type": "usp_item",
+          "settings": {
+            "icon_type": "shield",
+            "number": "ISO",
+            "unit": "·IATA",
+            "label": "Certified"
+          }
+        },
+        {
+          "type": "usp_item",
+          "settings": {
+            "icon_type": "guide",
+            "number": "12",
+            "unit": "",
+            "label": "Bedouin guides"
+          }
+        },
+        {
+          "type": "usp_item",
+          "settings": {
+            "icon_type": "whatsapp",
+            "number": "24/7",
+            "unit": "",
+            "label": "WhatsApp concierge"
+          }
+        },
+        {
+          "type": "usp_item",
+          "settings": {
+            "icon_type": "private",
+            "number": "100%",
+            "unit": "",
+            "label": "Private options"
+          }
+        },
+        {
+          "type": "usp_item",
+          "settings": {
+            "icon_type": "quote",
+            "number": "1,247",
+            "unit": "",
+            "label": "Verified reviews"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

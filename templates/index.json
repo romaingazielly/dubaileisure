@@ -94,151 +94,96 @@
       }
     },
     "trust_certs_DLHx7p": {
-      "type": "usp",
+      "type": "dlh-usp-ticker",
       "blocks": {
-        "group_Hiayjw": {
-          "type": "group",
-          "name": "t:names.group",
+        "usp_rating": {
+          "type": "usp_item",
           "settings": {
-            "content_direction": "row",
-            "vertical_on_mobile": true,
-            "horizontal_alignment": "flex-start",
-            "vertical_alignment": "center",
-            "align_baseline": false,
-            "horizontal_alignment_flex_direction_column": "flex-start",
-            "vertical_alignment_flex_direction_column": "center",
-            "gap": 12,
-            "width": "fill",
-            "custom_width": 100,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fit",
-            "custom_height": 100,
-            "inherit_color_scheme": true,
-            "color_scheme": "",
-            "background_media": "none",
-            "video_position": "cover",
-            "background_image_position": "cover",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "toggle_overlay": false,
-            "overlay_color": "#00000026",
-            "overlay_style": "solid",
-            "gradient_direction": "to top",
-            "link": "",
-            "open_in_new_tab": false,
-            "placeholder": "",
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "usp_cell_tgGTLD": {
-              "type": "usp_cell",
-              "name": "Carte USP",
-              "settings": {
-                "show_background": false,
-                "show_border": false,
-                "heading": "Family safe",
-                "caption": "Ages 3 to 80+",
-                "link": "",
-                "open_new_tab": false
-              },
-              "blocks": {}
-            },
-            "usp_cell_XUJKpq": {
-              "type": "usp_cell",
-              "name": "Carte USP",
-              "settings": {
-                "show_background": false,
-                "show_border": false,
-                "heading": "Family safe",
-                "caption": "Ages 3 to 80+",
-                "link": "",
-                "open_new_tab": false
-              },
-              "blocks": {}
-            },
-            "usp_cell_yyReae": {
-              "type": "usp_cell",
-              "name": "Carte USP",
-              "settings": {
-                "show_background": false,
-                "show_border": false,
-                "heading": "Family safe",
-                "caption": "Ages 3 to 80+",
-                "link": "",
-                "open_new_tab": false
-              },
-              "blocks": {}
-            },
-            "usp_cell_iaQAGR": {
-              "type": "usp_cell",
-              "name": "Carte USP",
-              "settings": {
-                "show_background": false,
-                "show_border": false,
-                "heading": "Family safe",
-                "caption": "Ages 3 to 80+",
-                "link": "",
-                "open_new_tab": false
-              },
-              "blocks": {}
-            },
-            "usp_cell_jipx99": {
-              "type": "usp_cell",
-              "name": "Carte USP",
-              "settings": {
-                "show_background": false,
-                "show_border": false,
-                "heading": "Family safe",
-                "caption": "Ages 3 to 80+",
-                "link": "",
-                "open_new_tab": false
-              },
-              "blocks": {}
-            },
-            "usp_cell_fGyHyY": {
-              "type": "usp_cell",
-              "name": "Carte USP",
-              "settings": {
-                "show_background": false,
-                "show_border": false,
-                "heading": "Family safe",
-                "caption": "Ages 3 to 80+",
-                "link": "",
-                "open_new_tab": false
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "usp_cell_tgGTLD",
-            "usp_cell_XUJKpq",
-            "usp_cell_yyReae",
-            "usp_cell_iaQAGR",
-            "usp_cell_jipx99",
-            "usp_cell_fGyHyY"
-          ]
+            "icon_type": "star",
+            "number": "4.9",
+            "unit": "/5",
+            "label": "Guest rating"
+          }
+        },
+        "usp_pickup": {
+          "type": "usp_item",
+          "settings": {
+            "icon_type": "pickup",
+            "number": "Free",
+            "unit": "",
+            "label": "Hotel pickup"
+          }
+        },
+        "usp_cancel": {
+          "type": "usp_item",
+          "settings": {
+            "icon_type": "cancel",
+            "number": "24h",
+            "unit": "",
+            "label": "Free cancellation"
+          }
+        },
+        "usp_certified": {
+          "type": "usp_item",
+          "settings": {
+            "icon_type": "shield",
+            "number": "ISO",
+            "unit": "·IATA",
+            "label": "Certified"
+          }
+        },
+        "usp_guides": {
+          "type": "usp_item",
+          "settings": {
+            "icon_type": "guide",
+            "number": "12",
+            "unit": "",
+            "label": "Bedouin guides"
+          }
+        },
+        "usp_whatsapp": {
+          "type": "usp_item",
+          "settings": {
+            "icon_type": "whatsapp",
+            "number": "24/7",
+            "unit": "",
+            "label": "WhatsApp concierge"
+          }
+        },
+        "usp_private": {
+          "type": "usp_item",
+          "settings": {
+            "icon_type": "private",
+            "number": "100%",
+            "unit": "",
+            "label": "Private options"
+          }
+        },
+        "usp_reviews": {
+          "type": "usp_item",
+          "settings": {
+            "icon_type": "quote",
+            "number": "1,247",
+            "unit": "",
+            "label": "Verified reviews"
+          }
         }
       },
       "block_order": [
-        "group_Hiayjw"
+        "usp_rating",
+        "usp_pickup",
+        "usp_cancel",
+        "usp_certified",
+        "usp_guides",
+        "usp_whatsapp",
+        "usp_private",
+        "usp_reviews"
       ],
-      "name": "USP",
+      "name": "USP Ticker",
       "settings": {
-        "max_width": 1200,
-        "gap": 16,
-        "cell_radius": 18,
-        "logo_max_height": 44,
-        "card_min_height": 152,
-        "color_scheme": "",
-        "section_width": "page-width",
-        "padding-block-start": 48,
-        "padding-block-end": 48
+        "speed": 50,
+        "padding-block-start": 0,
+        "padding-block-end": 0
       }
     },
     "timeline_steps_JxzJqk": {
