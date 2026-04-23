@@ -1,0 +1,455 @@
+{
+  "sections": {
+    "main": {
+      "type": "dlh-pdp-vehicle",
+      "blocks": {
+        "trust_1": {
+          "type": "trust_item",
+          "settings": {
+            "icon": "shield",
+            "label": "ISO / IATA certified"
+          }
+        },
+        "trust_2": {
+          "type": "trust_item",
+          "settings": {
+            "icon": "bolt",
+            "label": "Instant confirmation"
+          }
+        },
+        "trust_3": {
+          "type": "trust_item",
+          "settings": {
+            "icon": "refund",
+            "label": "Free cancel · 24h"
+          }
+        },
+        "trust_4": {
+          "type": "trust_item",
+          "settings": {
+            "icon": "mobile",
+            "label": "Mobile voucher"
+          }
+        },
+        "slot_1": {
+          "type": "time_slot",
+          "settings": {
+            "time": "08:00",
+            "spots_left": "3",
+            "sold_out": false
+          }
+        },
+        "slot_2": {
+          "type": "time_slot",
+          "settings": {
+            "time": "11:00",
+            "spots_left": "6",
+            "sold_out": false
+          }
+        },
+        "slot_3": {
+          "type": "time_slot",
+          "settings": {
+            "time": "15:00",
+            "spots_left": "2",
+            "sold_out": false
+          }
+        },
+        "slot_4": {
+          "type": "time_slot",
+          "settings": {
+            "time": "17:00",
+            "spots_left": "0",
+            "sold_out": true
+          }
+        },
+        "addon_1": {
+          "type": "addon",
+          "settings": {
+            "name": "Hotel pickup & drop-off",
+            "price_label": "AED 120",
+            "description": "Private AC transfer from any Dubai hotel, round trip."
+          }
+        },
+        "addon_2": {
+          "type": "addon",
+          "settings": {
+            "name": "Pro action photos (24 shots)",
+            "price_label": "AED 150",
+            "description": "A dedicated photographer captures your run in the dunes."
+          }
+        },
+        "addon_3": {
+          "type": "addon",
+          "settings": {
+            "name": "BBQ dinner & live shows",
+            "price_label": "AED 180",
+            "description": "Tanoura, belly dance, fire show + international buffet at camp."
+          }
+        },
+        "reass_1": {
+          "type": "reassurance",
+          "settings": {
+            "text": "No payment today"
+          }
+        },
+        "reass_2": {
+          "type": "reassurance",
+          "settings": {
+            "text": "Reserve now, pay later"
+          }
+        },
+        "reass_3": {
+          "type": "reassurance",
+          "settings": {
+            "text": "24h free cancel"
+          }
+        },
+        "ticker_1": {
+          "type": "ticker_msg",
+          "settings": {
+            "name": "Priya",
+            "detail": "from Mumbai · booked this",
+            "ago": "14 min ago"
+          }
+        },
+        "ticker_2": {
+          "type": "ticker_msg",
+          "settings": {
+            "name": "Marco",
+            "detail": "from Milan · booked this",
+            "ago": "32 min ago"
+          }
+        },
+        "ticker_3": {
+          "type": "ticker_msg",
+          "settings": {
+            "name": "The Ali family",
+            "detail": "from Riyadh · booked this",
+            "ago": "1 hr ago"
+          }
+        },
+        "ticker_4": {
+          "type": "ticker_msg",
+          "settings": {
+            "name": "Emma",
+            "detail": "from London · booked this",
+            "ago": "2 hr ago"
+          }
+        }
+      },
+      "block_order": [
+        "trust_1",
+        "trust_2",
+        "trust_3",
+        "trust_4",
+        "slot_1",
+        "slot_2",
+        "slot_3",
+        "slot_4",
+        "addon_1",
+        "addon_2",
+        "addon_3",
+        "reass_1",
+        "reass_2",
+        "reass_3",
+        "ticker_1",
+        "ticker_2",
+        "ticker_3",
+        "ticker_4"
+      ],
+      "settings": {
+        "category_text": "Desert Adventure · Al Badayer",
+        "title_accent": "Self-drive rush.",
+        "rating": "4.9",
+        "review_count": "1,247",
+        "price_unit": "Total for 1 buggy · Taxes & fees included",
+        "urgency_text": "Only <b>4 slots</b> left for this weekend — 23 people viewing now",
+        "show_trust_bar": true,
+        "option1_hint": "Capacity per buggy",
+        "show_date_picker": true,
+        "qty_label": "Buggies",
+        "qty_hint": "How many vehicles",
+        "qty_sub": "Max riders per buggy",
+        "addons_label": "Add to your evening",
+        "show_buy_now": true,
+        "show_reassurance": true
+      }
+    },
+    "highlights": {
+      "type": "dlh-pdp-highlights",
+      "blocks": {
+        "hi_1": {
+          "type": "highlight",
+          "settings": {
+            "icon": "bolt",
+            "title": "Floor-it across dunes",
+            "description": "Polaris RZR 1000cc — up to 120 km/h on open sand."
+          }
+        },
+        "hi_2": {
+          "type": "highlight",
+          "settings": {
+            "icon": "shield",
+            "title": "Full safety gear",
+            "description": "DOT helmets, gloves, goggles, 5-point harness included."
+          }
+        },
+        "hi_3": {
+          "type": "highlight",
+          "settings": {
+            "icon": "truck",
+            "title": "Guided convoy",
+            "description": "Lead marshal + tail vehicle. Never drive alone in the desert."
+          }
+        },
+        "hi_4": {
+          "type": "highlight",
+          "settings": {
+            "icon": "fire",
+            "title": "Al Badayer access",
+            "description": "Exclusive permits to the legendary \"Big Red\" dune belt."
+          }
+        }
+      },
+      "block_order": ["hi_1", "hi_2", "hi_3", "hi_4"],
+      "settings": {
+        "eyebrow": "Why You'll Love It",
+        "heading": "Built for the rush.",
+        "heading_accent": "Safe enough for your mum.",
+        "lede": "Brand-new 2024 Polaris RZR buggies, full safety kit, named Bedouin marshals. Four things that set this apart from every other operator in Dubai."
+      }
+    },
+    "experience": {
+      "type": "dlh-pdp-experience",
+      "blocks": {
+        "inc_1": { "type": "included", "settings": { "text": "Polaris RZR 1000cc (2024 model)" } },
+        "inc_2": { "type": "included", "settings": { "text": "DOT helmet, gloves, goggles, scarf" } },
+        "inc_3": { "type": "included", "settings": { "text": "5-point harness & safety briefing" } },
+        "inc_4": { "type": "included", "settings": { "text": "Named Bedouin marshal guide" } },
+        "inc_5": { "type": "included", "settings": { "text": "Fuel, water & Arabic coffee stop" } },
+        "inc_6": { "type": "included", "settings": { "text": "Comprehensive insurance" } },
+        "exc_1": { "type": "not_included", "settings": { "text": "Hotel pickup (add +AED 120)" } },
+        "exc_2": { "type": "not_included", "settings": { "text": "Photography (add +AED 150)" } },
+        "exc_3": { "type": "not_included", "settings": { "text": "Gratuities for your marshal" } },
+        "tl_1": { "type": "timeline_step", "settings": { "icon": "truck", "time_label": "30 min before", "name": "Hotel Pickup", "description": "Private transfer from any Dubai hotel." } },
+        "tl_2": { "type": "timeline_step", "settings": { "icon": "shield", "time_label": "On arrival", "name": "Safety Briefing", "description": "15 min walk-through with your Bedouin marshal." } },
+        "tl_3": { "type": "timeline_step", "settings": { "icon": "shield", "time_label": "Gear up", "name": "Helmet & Harness", "description": "Full kit fitted, radios paired, photo of your plate." } },
+        "tl_4": { "type": "timeline_step", "settings": { "icon": "bolt", "time_label": "Drive", "name": "Dune Run", "description": "45–90 min on the Al Badayer belt. Chase the lead." } },
+        "tl_5": { "type": "timeline_step", "settings": { "icon": "fire", "time_label": "Break", "name": "Sunset & Gahwa", "description": "Arabic coffee and dates on the ridge. Cameras ready." } },
+        "tl_6": { "type": "timeline_step", "settings": { "icon": "check", "time_label": "Return", "name": "Drop-off", "description": "Back to your hotel, sand still in your hair." } }
+      },
+      "block_order": [
+        "inc_1", "inc_2", "inc_3", "inc_4", "inc_5", "inc_6",
+        "exc_1", "exc_2", "exc_3",
+        "tl_1", "tl_2", "tl_3", "tl_4", "tl_5", "tl_6"
+      ],
+      "settings": {
+        "desc_eyebrow": "Your Drive",
+        "desc_heading": "What to expect.",
+        "desc_heading_accent": "Minute by minute.",
+        "description": "<p>Twenty kilometres south of Dubai, the sand changes colour — from pale beige to deep ochre to Al Badayer's signature rust red. This is where we put you behind the wheel.</p><p>Your Polaris RZR 1000cc is the same machine the pros race in the Abu Dhabi Desert Challenge. Four-wheel drive, full cage, five-point harness, power steering. After a fifteen-minute briefing with your marshal you'll be leading a convoy across open desert, chasing the horizon through dune bowls up to thirty feet high.</p><p>Unlike the quad-bike tours that run in circles behind a fence, our route is a proper point-to-point. You'll cover fifteen to forty kilometres of untouched sand, stop for Arabic coffee on a ridge, and return as the call to prayer drifts across the dunes.</p>",
+        "tl_eyebrow": "Your Evening",
+        "tl_heading": "Six moments.",
+        "tl_heading_accent": "Two unforgettable hours.",
+        "tl_lede": "From the moment we collect you at your hotel to the tea on the ridge — here's how every Dune Buggy booking unfolds."
+      }
+    },
+    "faq": {
+      "type": "dlh-faq",
+      "blocks": {
+        "faq_1": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Do I need a driving licence?",
+            "answer": "Yes — you'll need to present a valid licence (international or home country). Passengers over 16 can ride without one. Under-16s must be accompanied in the two- or four-seater variants."
+          }
+        },
+        "faq_2": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What's the cancellation policy?",
+            "answer": "Free cancellation up to 24 hours before your start time — full refund, no questions. Cancellations within 24 hours are non-refundable but can be rescheduled once."
+          }
+        },
+        "faq_3": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Is it safe for first-timers?",
+            "answer": "Absolutely. 70% of our drivers have never touched a buggy before. Our marshals run a 15-min briefing, convoy the whole route, and match pace to the slowest driver. Zero pressure to floor it."
+          }
+        },
+        "faq_4": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What should I wear?",
+            "answer": "Closed shoes (no flip-flops), comfortable trousers, sunglasses. We provide the helmet, gloves, goggles and a scarf. Avoid loose scarves or jewellery."
+          }
+        },
+        "faq_5": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Where do we meet?",
+            "answer": "Hotel pickup is available for free within Dubai city limits. Otherwise meet at our Al Badayer staging point — live pin shared 24h before your slot."
+          }
+        },
+        "faq_6": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Is it suitable for children?",
+            "answer": "Kids 6+ can ride as passengers in the two- or four-seater. Minimum driving age is 18 with a valid licence. We offer a family-friendly route with gentler dunes."
+          }
+        }
+      },
+      "block_order": ["faq_1", "faq_2", "faq_3", "faq_4", "faq_5", "faq_6"],
+      "settings": {
+        "eyebrow": "Good to know",
+        "heading": "Your questions,",
+        "heading_accent": "answered honestly.",
+        "subheading": "Can't find your answer? Reach out on WhatsApp — real humans, 24/7.",
+        "button_label": "Chat on WhatsApp",
+        "color_scheme": "scheme-1",
+        "section_width": "page-width",
+        "padding-block-start": 72,
+        "padding-block-end": 72
+      }
+    },
+    "recommendations": {
+      "type": "product-recommendations",
+      "blocks": {
+        "rec_header": {
+          "type": "text",
+          "name": "Header",
+          "settings": {
+            "text": "<h3>You may also like</h3>",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "h4",
+            "font": "var(--font-primary--family)",
+            "font_size": "",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          }
+        },
+        "rec_card": {
+          "type": "_product-card",
+          "name": "Product card",
+          "static": true,
+          "settings": {
+            "product_card_gap": 8,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 8,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "rec_gallery": {
+              "type": "_product-card-gallery",
+              "name": "Product card media",
+              "settings": {
+                "image_ratio": "adapt",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              }
+            },
+            "rec_title": {
+              "type": "product-title",
+              "name": "Product title",
+              "settings": {
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 4,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              }
+            },
+            "rec_price": {
+              "type": "price",
+              "settings": {
+                "show_sale_price_first": true,
+                "show_installments": false,
+                "show_tax_info": false,
+                "type_preset": "h6",
+                "width": "100%",
+                "alignment": "left",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "color": "var(--color-foreground)",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              }
+            }
+          },
+          "block_order": ["rec_gallery", "rec_title", "rec_price"]
+        }
+      },
+      "block_order": ["rec_header"],
+      "settings": {
+        "product": "{{ closest.product }}",
+        "recommendation_type": "related",
+        "layout_type": "grid",
+        "carousel_on_mobile": false,
+        "max_products": 4,
+        "columns": 4,
+        "mobile_columns": "2",
+        "columns_gap": 12,
+        "rows_gap": 24,
+        "icons_style": "arrow",
+        "icons_shape": "none",
+        "section_width": "page-width",
+        "gap": 28,
+        "color_scheme": "scheme-1",
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      }
+    }
+  },
+  "order": [
+    "main",
+    "highlights",
+    "experience",
+    "faq",
+    "recommendations"
+  ]
+}

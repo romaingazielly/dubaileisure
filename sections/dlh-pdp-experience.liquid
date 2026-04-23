@@ -1,0 +1,245 @@
+{{ 'dlh-pdp-experience.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%} ── Description + What's Included (cream bg) ── {%- endcomment -%}
+<section class="dlh-pe" {{ section.shopify_attributes }}>
+  <div class="dlh-pe__inner">
+    {%- if section.settings.desc_eyebrow != blank -%}
+      <p class="dlh-pe__eyebrow">{{ section.settings.desc_eyebrow }}</p>
+    {%- endif -%}
+    {%- if section.settings.desc_heading != blank or section.settings.desc_heading_accent != blank -%}
+      <h2 class="dlh-pe__heading">
+        {{ section.settings.desc_heading }}
+        {%- if section.settings.desc_heading_accent != blank -%}
+          <span class="dlh-pe__heading-accent">{{ section.settings.desc_heading_accent }}</span>
+        {%- endif -%}
+      </h2>
+    {%- endif -%}
+
+    <div class="dlh-pe__desc-grid">
+      {%- comment -%} Left — rich text copy ── {%- endcomment -%}
+      <div class="dlh-pe__copy">
+        {{ section.settings.description }}
+      </div>
+
+      {%- comment -%} Right — included / not included card ── {%- endcomment -%}
+      <aside class="dlh-pe__incl-card">
+        {%- assign incl_yes = section.blocks | where: 'type', 'included' -%}
+        {%- assign incl_no  = section.blocks | where: 'type', 'not_included' -%}
+
+        {%- if incl_yes.size > 0 -%}
+          <h5>What's included</h5>
+          <ul class="dlh-pe__incl-list dlh-pe__incl-list--yes">
+            {%- for block in incl_yes -%}
+              <li {{ block.shopify_attributes }}>
+                <svg width="16" height="16"><use href="#dlh-ico-check"/></svg>
+                <span>{{ block.settings.text }}</span>
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+
+        {%- if incl_no.size > 0 -%}
+          <h5>Not included</h5>
+          <ul class="dlh-pe__incl-list dlh-pe__incl-list--no">
+            {%- for block in incl_no -%}
+              <li {{ block.shopify_attributes }}>
+                <svg width="16" height="16"><use href="#dlh-ico-x"/></svg>
+                <span>{{ block.settings.text }}</span>
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+      </aside>
+    </div>
+  </div>
+</section>
+
+{%- comment -%} ── Timeline (sand bg) ── {%- endcomment -%}
+{%- assign timeline_blocks = section.blocks | where: 'type', 'timeline_step' -%}
+{%- if timeline_blocks.size > 0 -%}
+  <section class="dlh-pe__timeline-section" style="--dlh-pe-steps: {{ timeline_blocks.size }};">
+    {%- if section.settings.tl_eyebrow != blank -%}
+      <p class="dlh-pe__eyebrow">{{ section.settings.tl_eyebrow }}</p>
+    {%- endif -%}
+    {%- if section.settings.tl_heading != blank or section.settings.tl_heading_accent != blank -%}
+      <h2 class="dlh-pe__heading">
+        {{ section.settings.tl_heading }}
+        {%- if section.settings.tl_heading_accent != blank -%}
+          <span class="dlh-pe__heading-accent">{{ section.settings.tl_heading_accent }}</span>
+        {%- endif -%}
+      </h2>
+    {%- endif -%}
+    {%- if section.settings.tl_lede != blank -%}
+      <p class="dlh-pe__lede">{{ section.settings.tl_lede }}</p>
+    {%- endif -%}
+
+    <div class="dlh-pe__timeline-wrap">
+      <div class="dlh-pe__timeline-grid">
+        {%- for block in timeline_blocks -%}
+          <div class="dlh-pe__step" {{ block.shopify_attributes }}>
+            <div class="dlh-pe__chip">
+              <svg width="22" height="22"><use href="#dlh-ico-{{ block.settings.icon }}"/></svg>
+            </div>
+            <div class="dlh-pe__step-time">{{ block.settings.time_label }}</div>
+            <div class="dlh-pe__step-name">{{ block.settings.name }}</div>
+            <div class="dlh-pe__step-desc">{{ block.settings.description }}</div>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Vehicle experience",
+  "tag": "div",
+  "class": "dlh-section-pdp-experience",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Description"
+    },
+    {
+      "type": "text",
+      "id": "desc_eyebrow",
+      "label": "Eyebrow",
+      "default": "Your Drive"
+    },
+    {
+      "type": "text",
+      "id": "desc_heading",
+      "label": "Heading",
+      "default": "What to expect."
+    },
+    {
+      "type": "text",
+      "id": "desc_heading_accent",
+      "label": "Heading accent",
+      "default": "Minute by minute."
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description body",
+      "default": "<p>Twenty kilometres south of Dubai, the sand changes colour — from pale beige to deep ochre to Al Badayer's signature rust red. This is where we put you behind the wheel.</p><p>Your Polaris RZR 1000cc is the same machine the pros race in the Abu Dhabi Desert Challenge. Four-wheel drive, full cage, five-point harness, power steering. After a fifteen-minute briefing with your marshal you'll be leading a convoy across open desert.</p><p>Unlike the quad-bike tours that run in circles behind a fence, our route is a proper point-to-point. You'll cover fifteen to forty kilometres of untouched sand, stop for Arabic coffee on a ridge, and return as the call to prayer drifts across the dunes.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Timeline"
+    },
+    {
+      "type": "text",
+      "id": "tl_eyebrow",
+      "label": "Timeline eyebrow",
+      "default": "Your Evening"
+    },
+    {
+      "type": "text",
+      "id": "tl_heading",
+      "label": "Timeline heading",
+      "default": "Six moments."
+    },
+    {
+      "type": "text",
+      "id": "tl_heading_accent",
+      "label": "Timeline heading accent",
+      "default": "Two unforgettable hours."
+    },
+    {
+      "type": "textarea",
+      "id": "tl_lede",
+      "label": "Timeline lead text",
+      "default": "From the moment we collect you at your hotel to the tea on the ridge — here's how every booking unfolds."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "included",
+      "name": "Included item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Polaris RZR 1000cc (2024 model)"
+        }
+      ]
+    },
+    {
+      "type": "not_included",
+      "name": "Not included item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Hotel pickup (add +AED 120)"
+        }
+      ]
+    },
+    {
+      "type": "timeline_step",
+      "name": "Timeline step",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "truck", "label": "Truck / Pickup" },
+            { "value": "shield", "label": "Shield / Safety" },
+            { "value": "bolt", "label": "Bolt / Drive" },
+            { "value": "camera", "label": "Camera" },
+            { "value": "fire", "label": "Fire" },
+            { "value": "check", "label": "Check / Flag" },
+            { "value": "refund", "label": "Return" }
+          ],
+          "default": "truck"
+        },
+        {
+          "type": "text",
+          "id": "time_label",
+          "label": "Time label",
+          "default": "30 min before"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Step name",
+          "default": "Hotel Pickup"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Step description",
+          "default": "Private transfer from any Dubai hotel."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Vehicle experience",
+      "category": "Product",
+      "blocks": [
+        { "type": "included", "settings": { "text": "Polaris RZR 1000cc (2024 model)" } },
+        { "type": "included", "settings": { "text": "DOT helmet, gloves, goggles, scarf" } },
+        { "type": "included", "settings": { "text": "5-point harness & safety briefing" } },
+        { "type": "included", "settings": { "text": "Named Bedouin marshal guide" } },
+        { "type": "included", "settings": { "text": "Fuel, water & Arabic coffee stop" } },
+        { "type": "included", "settings": { "text": "Comprehensive insurance" } },
+        { "type": "not_included", "settings": { "text": "Hotel pickup (add +AED 120)" } },
+        { "type": "not_included", "settings": { "text": "Photography (add +AED 150)" } },
+        { "type": "not_included", "settings": { "text": "Gratuities for your marshal" } },
+        { "type": "timeline_step", "settings": { "icon": "truck", "time_label": "30 min before", "name": "Hotel Pickup", "description": "Private transfer from any Dubai hotel." } },
+        { "type": "timeline_step", "settings": { "icon": "shield", "time_label": "On arrival", "name": "Safety Briefing", "description": "15 min walk-through with your Bedouin marshal." } },
+        { "type": "timeline_step", "settings": { "icon": "shield", "time_label": "Gear up", "name": "Helmet & Harness", "description": "Full kit fitted, radios paired, photo of your plate." } },
+        { "type": "timeline_step", "settings": { "icon": "bolt", "time_label": "Drive", "name": "Dune Run", "description": "45–90 min on the Al Badayer belt. Chase the lead." } },
+        { "type": "timeline_step", "settings": { "icon": "fire", "time_label": "Break", "name": "Sunset & Gahwa", "description": "Arabic coffee and dates on the ridge. Cameras ready." } },
+        { "type": "timeline_step", "settings": { "icon": "check", "time_label": "Return", "name": "Drop-off", "description": "Back to your hotel, sand still in your hair." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

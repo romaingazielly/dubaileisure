@@ -1,0 +1,116 @@
+{{ 'dlh-pdp-highlights.css' | asset_url | stylesheet_tag }}
+
+<section class="dlh-ph" {{ section.shopify_attributes }}>
+  {%- if section.settings.eyebrow != blank -%}
+    <p class="dlh-ph__eyebrow">{{ section.settings.eyebrow }}</p>
+  {%- endif -%}
+
+  {%- if section.settings.heading != blank or section.settings.heading_accent != blank -%}
+    <h2 class="dlh-ph__heading">
+      {{ section.settings.heading }}
+      {%- if section.settings.heading_accent != blank -%}
+        <span class="dlh-ph__heading-accent">{{ section.settings.heading_accent }}</span>
+      {%- endif -%}
+    </h2>
+  {%- endif -%}
+
+  {%- if section.settings.lede != blank -%}
+    <p class="dlh-ph__lede">{{ section.settings.lede }}</p>
+  {%- endif -%}
+
+  {%- if section.blocks.size > 0 -%}
+    <div class="dlh-ph__grid">
+      {%- for block in section.blocks -%}
+        <div class="dlh-ph__card" {{ block.shopify_attributes }}>
+          <div class="dlh-ph__icon">
+            <svg width="22" height="22"><use href="#dlh-ico-{{ block.settings.icon }}"/></svg>
+          </div>
+          <h4>{{ block.settings.title }}</h4>
+          <p>{{ block.settings.description }}</p>
+        </div>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Vehicle highlights",
+  "tag": "div",
+  "class": "dlh-section-pdp-highlights",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Why You'll Love It"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Built for the rush."
+    },
+    {
+      "type": "text",
+      "id": "heading_accent",
+      "label": "Heading accent",
+      "default": "Safe enough for your mum."
+    },
+    {
+      "type": "textarea",
+      "id": "lede",
+      "label": "Lead text",
+      "default": "Brand-new 2024 Polaris RZR buggies, full safety kit, named Bedouin marshals. Four things that set this apart from every other operator in Dubai."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "highlight",
+      "name": "Highlight card",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "bolt", "label": "Bolt" },
+            { "value": "shield", "label": "Shield" },
+            { "value": "truck", "label": "Route / Truck" },
+            { "value": "fire", "label": "Fire" },
+            { "value": "camera", "label": "Camera" },
+            { "value": "check", "label": "Check" },
+            { "value": "mobile", "label": "Mobile" },
+            { "value": "refund", "label": "Refund" }
+          ],
+          "default": "bolt"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Floor-it across dunes"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Polaris RZR 1000cc — up to 120 km/h on open sand."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Vehicle highlights",
+      "category": "Product",
+      "blocks": [
+        { "type": "highlight", "settings": { "icon": "bolt", "title": "Floor-it across dunes", "description": "Polaris RZR 1000cc — up to 120 km/h on open sand." } },
+        { "type": "highlight", "settings": { "icon": "shield", "title": "Full safety gear", "description": "DOT helmets, gloves, goggles, 5-point harness included." } },
+        { "type": "highlight", "settings": { "icon": "truck", "title": "Guided convoy", "description": "Lead marshal + tail vehicle. Never drive alone in the desert." } },
+        { "type": "highlight", "settings": { "icon": "fire", "title": "Al Badayer access", "description": "Exclusive permits to the legendary \"Big Red\" dune belt." } }
+      ]
+    }
+  ]
+}
+{% endschema %}
