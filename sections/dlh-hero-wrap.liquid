@@ -1,0 +1,325 @@
+{{ 'dlh-hero-wrap.css' | asset_url | stylesheet_tag }}
+
+<section
+  class="dlh-hw"
+  style="
+    --dlh-hw-min-h: {{ section.settings.min_height }}px;
+    --dlh-hw-accent: {{ section.settings.accent_color }};
+  "
+>
+  {%- comment -%} ── Video / poster gradient background ── {%- endcomment -%}
+  <div class="dlh-hw__bg" style="background: {{ section.settings.poster_gradient }};">
+    {%- if section.settings.video != blank -%}
+      <dlh-hero-video class="dlh-hw__video-wrap" data-autoplay="{{ section.settings.video_autoplay }}">
+        {{
+          section.settings.video
+          | video_tag:
+            autoplay: section.settings.video_autoplay,
+            loop: section.settings.video_loop,
+            muted: true,
+            playsinline: true,
+            controls: false,
+            class: 'dlh-hw__video',
+            loading: 'lazy',
+            image_size: '2048x'
+        }}
+      </dlh-hero-video>
+    {%- endif -%}
+
+    {%- if section.settings.fallback_image != blank -%}
+      <picture class="dlh-hw__poster {% if section.settings.video != blank %}dlh-hw__poster--behind{% endif %}">
+        {{
+          section.settings.fallback_image
+          | image_url: width: 2048
+          | image_tag:
+            class: 'dlh-hw__poster-img',
+            loading: 'eager',
+            fetchpriority: 'high',
+            sizes: '100vw',
+            widths: '375, 750, 1100, 1500, 2048'
+        }}
+      </picture>
+    {%- endif -%}
+  </div>
+
+  {%- comment -%} ── Scrims ── {%- endcomment -%}
+  <div class="dlh-hw__scrim" aria-hidden="true"></div>
+  <div class="dlh-hw__vignette" aria-hidden="true"></div>
+
+  {%- comment -%} ── Content ── {%- endcomment -%}
+  <div class="dlh-hw__inner">
+    <div class="dlh-hw__copy">
+      {%- comment -%} Badge ── outline pill with red dot {%- endcomment -%}
+      {%- if section.settings.badge != blank -%}
+        <div class="dlh-hw__badge-row">
+          <span class="dlh-hw__badge">
+            <span class="dlh-hw__badge-dot" aria-hidden="true"></span>
+            {{ section.settings.badge }}
+          </span>
+        </div>
+      {%- endif -%}
+
+      {%- comment -%} Eyebrow {%- endcomment -%}
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="dlh-hw__eyebrow">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+
+      {%- comment -%} Heading {%- endcomment -%}
+      {%- if section.settings.heading_line_1 != blank or section.settings.heading_accent != blank -%}
+        <h1 class="dlh-hw__title">
+          {%- if section.settings.heading_line_1 != blank -%}
+            {{ section.settings.heading_line_1 }}<br>
+          {%- endif -%}
+          {%- if section.settings.heading_accent != blank -%}
+            <span class="dlh-hw__title-accent">{{ section.settings.heading_accent }}</span>
+          {%- endif -%}
+        </h1>
+      {%- endif -%}
+
+      {%- comment -%} Body text {%- endcomment -%}
+      {%- if section.settings.text != blank -%}
+        <p class="dlh-hw__text">{{ section.settings.text }}</p>
+      {%- endif -%}
+
+      {%- comment -%} CTA row — primary + optional outline {%- endcomment -%}
+      <div class="dlh-hw__cta-row">
+        {%- if section.settings.button_label != blank -%}
+          <a
+            {% if section.settings.button_link != blank %}href="{{ section.settings.button_link }}"{% endif %}
+            class="dlh-hw__btn dlh-hw__btn--primary"
+          >
+            <span>{{ section.settings.button_label }}</span>
+            <span class="dlh-hw__btn-arrow" aria-hidden="true">→</span>
+          </a>
+        {%- endif -%}
+
+        {%- if section.settings.secondary_label != blank -%}
+          <a
+            {% if section.settings.secondary_link != blank %}href="{{ section.settings.secondary_link }}"{% endif %}
+            class="dlh-hw__btn dlh-hw__btn--outline"
+          >
+            <span class="dlh-hw__play-icon" aria-hidden="true">
+              <span class="dlh-hw__play-tri">▶</span>
+            </span>
+            <span>{{ section.settings.secondary_label }}</span>
+          </a>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} Trust strip {%- endcomment -%}
+      {%- if section.settings.show_trust_strip -%}
+        <div class="dlh-hw__trust">
+          <div class="dlh-hw__trust-item">
+            <span class="dlh-hw__stars" aria-label="4.9 out of 5 stars">
+              {%- for i in (1..5) -%}
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="#f5b942" aria-hidden="true">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                </svg>
+              {%- endfor -%}
+            </span>
+            <span class="dlh-hw__trust-text">
+              <strong>{{ section.settings.trust_rating }}</strong>
+              <span class="dlh-hw__trust-muted">· {{ section.settings.trust_reviews }}</span>
+            </span>
+          </div>
+          <span class="dlh-hw__trust-sep" aria-hidden="true"></span>
+          <div class="dlh-hw__trust-item">
+            <span class="dlh-hw__trust-text">
+              <strong>{{ section.settings.trust_guests }}</strong> guests hosted
+            </span>
+          </div>
+          <span class="dlh-hw__trust-sep" aria-hidden="true"></span>
+          <div class="dlh-hw__trust-item">
+            <span class="dlh-hw__trust-text">
+              <strong>{{ section.settings.trust_years }}</strong> of operation
+            </span>
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+
+  {%- comment -%} ── Scroll cue ── {%- endcomment -%}
+  {%- if section.settings.show_scroll_cue -%}
+    <div class="dlh-hw__scroll" aria-hidden="true">
+      <span class="dlh-hw__scroll-label">SCROLL</span>
+      <span class="dlh-hw__scroll-line"></span>
+    </div>
+  {%- endif -%}
+</section>
+
+<script src="{{ 'dlh-hero-wrap.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "Hero Wrap",
+  "tag": "section",
+  "class": "dlh-section-hero-wrap",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Video / Background"
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Background video"
+    },
+    {
+      "type": "image_picker",
+      "id": "fallback_image",
+      "label": "Fallback / poster image",
+      "info": "Shown while video loads or on mobile."
+    },
+    {
+      "type": "text",
+      "id": "poster_gradient",
+      "label": "Poster gradient (CSS)",
+      "default": "linear-gradient(135deg, #b35a14 0%, #d7781a 35%, #8d1a34 100%)",
+      "info": "Fallback gradient behind the video."
+    },
+    {
+      "type": "checkbox",
+      "id": "video_autoplay",
+      "label": "Autoplay video",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "video_loop",
+      "label": "Loop video",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Badge & Eyebrow"
+    },
+    {
+      "type": "text",
+      "id": "badge",
+      "label": "Badge text",
+      "default": "Licensed by Dubai DET"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "Authentic Desert Heritage · Since 2004"
+    },
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "heading_line_1",
+      "label": "Heading line 1",
+      "default": "A Journey Through"
+    },
+    {
+      "type": "text",
+      "id": "heading_accent",
+      "label": "Heading accent line",
+      "default": "Timeless Sands"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Description",
+      "default": "Hand-crafted desert experiences curated by Bedouin guides. From dune bashing to dinner under the stars — every detail considered, every guest treated as family."
+    },
+    {
+      "type": "header",
+      "content": "Buttons"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Primary button label",
+      "default": "Explore Experiences"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Primary button link"
+    },
+    {
+      "type": "text",
+      "id": "secondary_label",
+      "label": "Secondary button label",
+      "default": "Watch 60s film"
+    },
+    {
+      "type": "url",
+      "id": "secondary_link",
+      "label": "Secondary button link"
+    },
+    {
+      "type": "header",
+      "content": "Trust strip"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_trust_strip",
+      "label": "Show trust strip",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "trust_rating",
+      "label": "Rating",
+      "default": "4.9"
+    },
+    {
+      "type": "text",
+      "id": "trust_reviews",
+      "label": "Reviews count",
+      "default": "1,200+ reviews"
+    },
+    {
+      "type": "text",
+      "id": "trust_guests",
+      "label": "Guests count",
+      "default": "200,000+"
+    },
+    {
+      "type": "text",
+      "id": "trust_years",
+      "label": "Years label",
+      "default": "20+ years"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "min_height",
+      "label": "Min height (px)",
+      "min": 500,
+      "max": 1000,
+      "step": 20,
+      "default": 680,
+      "unit": "px"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent color (title highlight)",
+      "default": "#ff5c6e"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_scroll_cue",
+      "label": "Show scroll indicator",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero Wrap",
+      "category": "Hero"
+    }
+  ]
+}
+{% endschema %}

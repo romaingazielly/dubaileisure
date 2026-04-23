@@ -9,7 +9,33 @@
  */
 {
   "sections": {
+    "dlh_hero_wrap": {
+      "type": "dlh-hero-wrap",
+      "settings": {
+        "poster_gradient": "linear-gradient(135deg, #b35a14 0%, #d7781a 35%, #8d1a34 100%)",
+        "video_autoplay": true,
+        "video_loop": true,
+        "badge": "Licensed by Dubai DET",
+        "eyebrow": "Authentic Desert Heritage · Since 2004",
+        "heading_line_1": "A Journey Through",
+        "heading_accent": "Timeless Sands",
+        "text": "Hand-crafted desert experiences curated by Bedouin guides. From dune bashing to dinner under the stars — every detail considered, every guest treated as family.",
+        "button_label": "Explore Experiences",
+        "button_link": "",
+        "secondary_label": "Watch 60s film",
+        "secondary_link": "",
+        "show_trust_strip": true,
+        "trust_rating": "4.9",
+        "trust_reviews": "1,200+ reviews",
+        "trust_guests": "200,000+",
+        "trust_years": "20+ years",
+        "accent_color": "#ff5c6e",
+        "min_height": 680,
+        "show_scroll_cue": true
+      }
+    },
     "dubai_leisure_hero_iWD8GD": {
+      "disabled": true,
       "type": "dubai-leisure-hero",
       "blocks": {
         "slide_RdyNiN": {
@@ -1183,6 +1209,7 @@
     }
   },
   "order": [
+    "dlh_hero_wrap",
     "dubai_leisure_hero_iWD8GD",
     "trust_certs_DLHx7p",
     "timeline_steps_JxzJqk",
