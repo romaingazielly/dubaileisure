@@ -32,7 +32,7 @@
   overflow-y: hidden;
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
-  touch-action: pan-x pinch-zoom;
+  touch-action: manipulation;
   -webkit-overflow-scrolling: touch;
   outline: none;
 }
