@@ -283,13 +283,13 @@
         "heading": "Pick your",
         "heading_accent": "adventure",
         "subheading": "Four curated ways to experience the Arabian desert. Every trip includes hotel pickup, Bedouin-led guiding, and complimentary Gahwa.",
-        "max_width": 1440,
         "collection": "all",
-        "max_products": 4,
+        "max_products": 12,
+        "max_width": 1440,
         "show_rating": true,
         "show_tags": true,
         "color_scheme": "scheme-1",
-        "section_width": "full-width",
+        "section_width": "page-width",
         "padding-block-start": 96,
         "padding-block-end": 96
       }

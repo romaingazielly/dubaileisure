@@ -30,9 +30,10 @@
   gap: 40px;
   align-items: center;
   margin-bottom: 56px;
-  max-width: 1280px;
+  max-width: var(--dlh-content-rail-max, 1440px);
   margin-inline: auto;
-  padding-inline: clamp(20px, 4vw, 40px);
+  padding-inline: var(--dlh-content-rail-pad, 0px);
+  box-sizing: border-box;
 }
 
 @media (max-width: 740px) {

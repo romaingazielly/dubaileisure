@@ -16,9 +16,10 @@
 
 .dlh-final-cta__inner {
   position: relative;
-  max-width: 1000px;
+  max-width: var(--dlh-content-rail-max, 1440px);
   margin-inline: auto;
-  padding-inline: clamp(20px, 4vw, 40px);
+  padding-inline: var(--dlh-content-rail-pad, 0px);
+  box-sizing: border-box;
   text-align: center;
 }
 

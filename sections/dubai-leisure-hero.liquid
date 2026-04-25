@@ -9,10 +9,10 @@
 
 {{ 'dubai-leisure-hero.css' | asset_url | stylesheet_tag: preload: true }}
 
-<div
-  class="dlh-landing"
-  id="shopify-section-{{ section.id }}"
-  style="
+<div class="section section--full-width dlh-hero-section">
+  <div
+    class="dlh-landing"
+    style="
     --dlh-accent: {{ section.settings.accent_color }};
     --dlh-hero-min-height-mobile: {{ section.settings.hero_min_height_mobile }}px;
     --dlh-hero-min-height: {{ section.settings.hero_min_height }}px;
@@ -155,6 +155,7 @@
       </div>
     </dlh-hero-carousel>
   {% endif %}
+  </div>
 </div>
 
 {% if slide_count > 0 %}

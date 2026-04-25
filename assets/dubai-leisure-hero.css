@@ -1,8 +1,15 @@
 /* Dubai Leisure hero carousel — section dubai-leisure-hero */
 
+/* Même grille 3 colonnes que les autres sections pleine largeur (ex. Timeline) pour aligner le rail contenu */
+.section.dlh-hero-section.section--full-width > .dlh-landing {
+  grid-column: 1 / -1;
+  width: 100%;
+  min-width: 0;
+}
+
 .dlh-landing {
   --dlh-accent: #c41e3a;
-  --dlh-content-max-width: 1440px;
+  --dlh-content-max-width: var(--dlh-content-rail-max, 1440px);
   --dlh-hero-min-height: min(85svh, 720px);
   --dlh-hero-min-height-mobile: min(75svh, 560px);
 }
@@ -121,7 +128,7 @@
   width: 100%;
   max-width: var(--dlh-content-max-width);
   margin-inline: auto;
-  padding-inline: var(--page-margin);
+  padding-inline: var(--dlh-content-rail-pad, 0px);
   padding-block: 3rem 5rem;
 }
 

@@ -133,6 +133,14 @@
     --normal-page-width: 120rem;
     --wide-page-width: 150rem;
 
+    /* DLH home: one content rail so titles and blocks share the same width */
+    --dlh-content-rail-max: 1440px;
+    --dlh-content-rail-pad: 0px;
+
+    @media screen and (max-width: 820px) {
+      --dlh-content-rail-pad: 1.25rem;
+    }
+
     /* Section Heights */
     --section-height-small: 15rem;
     --section-height-medium: 25rem;
