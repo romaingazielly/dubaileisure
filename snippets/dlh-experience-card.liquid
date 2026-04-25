@@ -53,7 +53,7 @@
         {% if image %}
           {{ image | image_url: width: 800 | image_tag:
             widths: '400, 600, 800',
-            sizes: '(min-width: 750px) 25vw, 50vw',
+            sizes: '(min-width: 1000px) 25vw, (min-width: 550px) 50vw, 78vw',
             loading: 'lazy',
             class: 'dlh-exp-card__img',
             alt: product.title

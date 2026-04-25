@@ -3,7 +3,6 @@
 {%- liquid
   assign collection = section.settings.collection
   assign max_products = section.settings.max_products
-  assign cols = section.settings.columns
 -%}
 
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
@@ -11,15 +10,15 @@
   class="section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }} dlh-exp spacing-style"
   style="
     {% render 'spacing-style', settings: section.settings %}
-    --dlh-exp-cols: {{ cols }};
+    --dlh-exp-max-w: {{ section.settings.max_width }}px;
   "
-  {% if section.settings.section_id != blank %}
-    id="{{ section.settings.section_id | handle }}"
-  {% endif %}
 >
   <div class="dlh-exp__inner">
-    <div class="dlh-exp__header" {{ section.shopify_attributes }}>
-      <div class="dlh-exp__header-text">
+    <div
+      class="dlh-exp__header{% if section.settings.subheading != blank %} dlh-exp__header--split{% endif %}"
+      {{ section.shopify_attributes }}
+    >
+      <div class="dlh-exp__header-title">
         {% if section.settings.eyebrow != blank %}
           <p class="dlh-exp__eyebrow">{{ section.settings.eyebrow | escape }}</p>
         {% endif %}
@@ -31,20 +30,14 @@
             {% endif %}
           </h2>
         {% endif %}
-        {% if section.settings.subheading != blank %}
-          <p class="dlh-exp__sub">{{ section.settings.subheading | escape }}</p>
-        {% endif %}
       </div>
-      {% if section.settings.button_label != blank %}
-        <a
-          href="{{ section.settings.button_url | default: '#' }}"
-          class="dlh-exp__btn"
-        >
-          {{ section.settings.button_label | escape }}
-        </a>
+      {% if section.settings.subheading != blank %}
+        <p class="dlh-exp__sub">{{ section.settings.subheading | escape }}</p>
       {% endif %}
     </div>
+  </div>
 
+  <div class="dlh-exp__scroll-wrap">
     <div class="dlh-exp__grid">
       {% if collection != blank and collection.products_count > 0 %}
         {% for product in collection.products limit: max_products %}
@@ -68,12 +61,6 @@
     "groups": ["header", "footer"]
   },
   "settings": [
-    {
-      "type": "text",
-      "id": "section_id",
-      "label": "Section HTML id",
-      "default": "experiences"
-    },
     {
       "type": "header",
       "content": "Header"
@@ -103,17 +90,6 @@
       "default": "Four curated ways to experience the Arabian desert. Every trip includes hotel pickup, Bedouin-led guiding, and complimentary Gahwa."
     },
     {
-      "type": "text",
-      "id": "button_label",
-      "label": "Button label",
-      "default": "View all experiences"
-    },
-    {
-      "type": "url",
-      "id": "button_url",
-      "label": "Button URL"
-    },
-    {
       "type": "header",
       "content": "Products"
     },
@@ -132,13 +108,19 @@
       "default": 4
     },
     {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
       "type": "range",
-      "id": "columns",
-      "min": 2,
-      "max": 4,
-      "step": 1,
-      "label": "Desktop columns",
-      "default": 4
+      "id": "max_width",
+      "label": "Max content width",
+      "info": "Same role as Timeline: title block and product row share this width.",
+      "min": 900,
+      "max": 1800,
+      "step": 10,
+      "unit": "px",
+      "default": 1440
     },
     {
       "type": "header",
@@ -172,7 +154,7 @@
         { "value": "page-width", "label": "Page" },
         { "value": "full-width", "label": "Full width" }
       ],
-      "default": "page-width"
+      "default": "full-width"
     },
     {
       "type": "header",

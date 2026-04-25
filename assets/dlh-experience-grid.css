@@ -1,36 +1,57 @@
 /* Experience grid — ported from ProductGrid.jsx / ProductCard.jsx */
 
 .dlh-exp {
-  --dlh-exp-cols: 4;
+  /* Match .timeline-steps__inner default width */
+  --dlh-exp-max-w: 1440px;
+  /* Carousel card width: desktop (750px+) */
+  --dlh-exp-card-w: clamp(280px, 24vw, 360px);
+  /* Desktop: none (like timeline). Mobile: 1.25rem in max-width:820px rule. */
+  --dlh-exp-h-pad: 0;
   position: relative;
   overflow: hidden;
 }
 
-/* ── Header ── */
+/* Page-width: theme defaults to a single center column. Span the full section
+   row; inner max-width still centers like timeline. */
+.dlh-exp.section--page-width > .dlh-exp__inner,
+.dlh-exp.section--page-width > .dlh-exp__scroll-wrap {
+  grid-column: 1 / -1;
+  justify-self: stretch;
+  width: 100%;
+}
+
+/* ── Header (aligned with .timeline-steps__header + .timeline-steps__inner) ── */
 
 .dlh-exp__inner {
-  max-width: 1280px;
+  max-width: var(--dlh-exp-max-w);
   margin-inline: auto;
-  padding-inline: clamp(20px, 4vw, 40px);
+  position: relative;
+  padding-inline: var(--dlh-exp-h-pad);
 }
 
+/* Mirrors .timeline-steps__header: full width of inner; split = same grid as
+   .timeline-steps--layout-split .timeline-steps__header */
 .dlh-exp__header {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  margin-bottom: 48px;
-  flex-wrap: wrap;
-  gap: 20px;
+  position: relative;
+  z-index: 1;
+  margin-bottom: 4rem;
 }
 
-.dlh-exp__header-text {
-  max-width: 620px;
+.dlh-exp__header--split {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 3.75rem;
+  align-items: end;
+}
+
+.dlh-exp__header-title {
+  min-width: 0;
 }
 
 .dlh-exp__eyebrow {
   margin: 0 0 14px;
   font-family: var(--font-body--family, var(--font-body));
-  font-size: 11px;
+  font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -38,71 +59,122 @@
 }
 
 .dlh-exp__heading {
-  margin: 0 0 16px;
+  margin: 1rem 0 0;
   font-family: var(--font-heading--family, var(--font-heading));
   font-style: italic;
-  font-weight: 600;
-  font-size: clamp(34px, 5vw, 58px);
+  font-weight: var(--font-heading--weight, 600);
+  font-size: clamp(2.25rem, 5.2vw, 4rem);
   color: var(--brand-navy, #0a1c3a);
   letter-spacing: -0.025em;
-  line-height: 1.02;
+  line-height: 1;
 }
 
 .dlh-exp__heading-accent {
   color: var(--brand-red-bright, #c41e3a);
+  display: inline-block;
 }
 
-.dlh-exp__sub {
+/* Second column: same type scale as .timeline-steps__subheading */
+.dlh-exp__header--split .dlh-exp__sub {
   margin: 0;
-  font-size: 16px;
-  color: var(--fg-muted, rgba(10, 28, 58, 0.66));
-  max-width: 520px;
-  line-height: 1.55;
+  font-size: clamp(1rem, 1.4vw, 1.0625rem);
+  line-height: 1.6;
+  color: var(--fg-muted, color-mix(in srgb, var(--color-foreground) 78%, transparent));
+  max-width: 34rem;
 }
 
-.dlh-exp__btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 24px;
-  border: 1px solid var(--brand-navy, #0a1c3a);
-  border-radius: 6px;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--brand-navy, #0a1c3a);
-  text-decoration: none;
-  white-space: nowrap;
-  transition: background 0.2s, color 0.2s;
-  margin-bottom: 4px;
+.dlh-exp__header-title > .dlh-exp__heading:first-child {
+  margin-top: 0;
 }
 
-.dlh-exp__btn:hover {
-  background: var(--brand-navy, #0a1c3a);
-  color: var(--brand-cream, #fcfaf7);
-}
-
-/* ── Grid ── */
-
-.dlh-exp__grid {
-  display: grid;
-  grid-template-columns: repeat(var(--dlh-exp-cols), 1fr);
-  gap: 24px;
-}
-
-@media (max-width: 999px) {
-  .dlh-exp__grid {
-    grid-template-columns: repeat(2, 1fr);
+/* Mobile — same as .timeline-steps @media (max-width: 820px) on inner + header */
+@media screen and (max-width: 820px) {
+  .dlh-exp {
+    --dlh-exp-h-pad: 1.25rem;
   }
-}
 
-@media (max-width: 549px) {
-  .dlh-exp__grid {
+  .dlh-exp__header--split {
     grid-template-columns: 1fr;
-    gap: 20px;
+    gap: 1.25rem;
+    align-items: start;
   }
 
   .dlh-exp__header {
-    margin-bottom: 32px;
+    margin-bottom: 2.5rem;
+  }
+}
+
+/* Full width (carousel only): product strip is edge-to-edge; header stays in __inner. */
+.dlh-exp.section--full-width .dlh-exp__scroll-wrap {
+  max-width: none;
+  width: 100%;
+  box-sizing: border-box;
+  margin-inline: 0;
+  padding: 24px var(--page-margin, 16px) 64px;
+}
+
+/* ── Scroll wrapper (horizontal carousel, all viewports) ── */
+/* Sibling of __inner; both are direct children of the section grid. We mirror
+   __inner's max-width and padding so header and cards align. On small screens
+   the wrap spans the full section grid (grid-column: 1 / -1) for edge-to-edge
+   scroll with room for box-shadows. */
+
+.dlh-exp__scroll-wrap {
+  max-width: var(--dlh-exp-max-w);
+  width: 100%;
+  margin-inline: auto;
+  padding: 24px var(--dlh-exp-h-pad) 64px;
+  overflow-x: auto;
+  overflow-y: visible;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.dlh-exp__scroll-wrap::-webkit-scrollbar {
+  display: none;
+}
+
+/* ── Track: single row, no wrap ── */
+
+.dlh-exp__grid {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 24px;
+  width: max-content;
+  align-items: stretch;
+}
+
+.dlh-exp__grid > .dlh-exp-card {
+  width: var(--dlh-exp-card-w);
+  height: auto;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.dlh-exp__grid > .dlh-exp-card .dlh-exp-card__link {
+  flex: 1 1 auto;
+  height: auto;
+}
+
+@media (max-width: 749px) {
+  .dlh-exp {
+    --dlh-exp-card-w: clamp(260px, 78vw, 340px);
+  }
+
+  .dlh-exp__scroll-wrap {
+    grid-column: 1 / -1;
+    max-width: none;
+    margin-inline: 0;
+    padding: 24px clamp(40px, 8vw, 48px) 64px;
+  }
+
+  .dlh-exp.section--full-width .dlh-exp__scroll-wrap {
+    padding: 24px var(--page-margin, 16px) 64px;
+  }
+
+  .dlh-exp__grid {
+    gap: 16px;
   }
 }
 

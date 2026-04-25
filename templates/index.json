@@ -11,6 +11,7 @@
   "sections": {
     "dlh_hero_wrap": {
       "type": "dlh-hero-wrap",
+      "disabled": true,
       "settings": {
         "poster_gradient": "linear-gradient(135deg, #b35a14 0%, #d7781a 35%, #8d1a34 100%)",
         "video_autoplay": true,
@@ -29,13 +30,12 @@
         "trust_reviews": "1,200+ reviews",
         "trust_guests": "200,000+",
         "trust_years": "20+ years",
-        "accent_color": "#ff5c6e",
         "min_height": 680,
+        "accent_color": "#ff5c6e",
         "show_scroll_cue": true
       }
     },
     "dubai_leisure_hero_iWD8GD": {
-      "disabled": true,
       "type": "dubai-leisure-hero",
       "blocks": {
         "slide_RdyNiN": {
@@ -182,6 +182,7 @@
       "name": "USP Ticker",
       "settings": {
         "speed": 50,
+        "aria_label": "Why travel with us",
         "padding-block-start": 0,
         "padding-block-end": 0
       }
@@ -278,20 +279,17 @@
     "dlh_experiences_grid": {
       "type": "dlh-experience-grid",
       "settings": {
-        "section_id": "experiences",
         "eyebrow": "Our Experiences",
         "heading": "Pick your",
         "heading_accent": "adventure",
         "subheading": "Four curated ways to experience the Arabian desert. Every trip includes hotel pickup, Bedouin-led guiding, and complimentary Gahwa.",
-        "button_label": "View all experiences",
-        "button_url": "",
+        "max_width": 1440,
         "collection": "all",
         "max_products": 4,
-        "columns": 3,
         "show_rating": true,
         "show_tags": true,
         "color_scheme": "scheme-1",
-        "section_width": "page-width",
+        "section_width": "full-width",
         "padding-block-start": 96,
         "padding-block-end": 96
       }
@@ -379,6 +377,90 @@
         "color_scheme": "scheme-2",
         "section_width": "full-width",
         "padding-block-start": 96,
+        "padding-block-end": 88
+      }
+    },
+    "dlh_faq": {
+      "type": "dlh-faq",
+      "blocks": {
+        "faq_1": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How do I get picked up from my hotel?",
+            "answer": "A Bedouin-trained driver will arrive at your hotel lobby 15 minutes before the scheduled time, in a clearly marked Toyota Land Cruiser. You'll receive their name and photo by WhatsApp the day before."
+          }
+        },
+        "faq_2": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Is the desert safari safe for kids and seniors?",
+            "answer": "Yes. We host guests from age 3 to 80+. Dune bashing is optional — families with young children or seniors can skip it and join us directly at the camp. Every vehicle has seatbelts, a trained driver, and first-aid equipment."
+          }
+        },
+        "faq_3": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What should I wear?",
+            "answer": "Loose, comfortable clothing and closed-toe shoes for daytime. Light layers for evening — the desert cools sharply after sunset. Cultural dress (shoulders and knees covered) is recommended for the camp."
+          }
+        },
+        "faq_4": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Can I book a fully private experience?",
+            "answer": "Absolutely. Our Private Overnight Camp and Private Heritage Trek are bookable year-round. For bespoke multi-day itineraries, reach out via WhatsApp and we'll design it with you."
+          }
+        },
+        "faq_5": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What is your cancellation policy?",
+            "answer": "Free cancellation up to 24 hours before your experience. No-questions-asked refund to your original payment method within 3 business days."
+          }
+        },
+        "faq_6": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Is the food vegetarian/halal/allergy-friendly?",
+            "answer": "Our BBQ buffet includes halal meats, full vegetarian and vegan options, and gluten-free mains. Please flag allergies at booking and we'll confirm arrangements with the camp chef."
+          }
+        }
+      },
+      "block_order": [
+        "faq_1",
+        "faq_2",
+        "faq_3",
+        "faq_4",
+        "faq_5",
+        "faq_6"
+      ],
+      "settings": {
+        "section_id": "faq",
+        "eyebrow": "Questions",
+        "heading": "Everything you",
+        "heading_accent": "wanted to ask",
+        "subheading": "Can't find what you're looking for? Our team replies on WhatsApp in under 10 minutes, 24/7.",
+        "button_label": "Ask on WhatsApp",
+        "button_url": "",
+        "color_scheme": "scheme-2",
+        "section_width": "page-width",
+        "padding-block-start": 96,
+        "padding-block-end": 96
+      }
+    },
+    "dlh_final_cta": {
+      "type": "dlh-final-cta",
+      "settings": {
+        "eyebrow": "Book your evening",
+        "heading": "The dunes are",
+        "heading_accent": "waiting.",
+        "subheading": "Free cancellation up to 24 hours. Instant confirmation. Real humans on WhatsApp 24/7.",
+        "primary_label": "Book evening safari",
+        "primary_url": "",
+        "secondary_label": "Chat on WhatsApp",
+        "secondary_url": "",
+        "color_scheme": "scheme-5",
+        "padding-block-start": 88,
         "padding-block-end": 88
       }
     },
@@ -1076,80 +1158,6 @@
         "gradient_direction": "to top",
         "padding-block-start": 40,
         "padding-block-end": 40
-      }
-    },
-    "dlh_faq": {
-      "type": "dlh-faq",
-      "blocks": {
-        "faq_1": {
-          "type": "faq_item",
-          "settings": {
-            "question": "How do I get picked up from my hotel?",
-            "answer": "A Bedouin-trained driver will arrive at your hotel lobby 15 minutes before the scheduled time, in a clearly marked Toyota Land Cruiser. You'll receive their name and photo by WhatsApp the day before."
-          }
-        },
-        "faq_2": {
-          "type": "faq_item",
-          "settings": {
-            "question": "Is the desert safari safe for kids and seniors?",
-            "answer": "Yes. We host guests from age 3 to 80+. Dune bashing is optional — families with young children or seniors can skip it and join us directly at the camp. Every vehicle has seatbelts, a trained driver, and first-aid equipment."
-          }
-        },
-        "faq_3": {
-          "type": "faq_item",
-          "settings": {
-            "question": "What should I wear?",
-            "answer": "Loose, comfortable clothing and closed-toe shoes for daytime. Light layers for evening — the desert cools sharply after sunset. Cultural dress (shoulders and knees covered) is recommended for the camp."
-          }
-        },
-        "faq_4": {
-          "type": "faq_item",
-          "settings": {
-            "question": "Can I book a fully private experience?",
-            "answer": "Absolutely. Our Private Overnight Camp and Private Heritage Trek are bookable year-round. For bespoke multi-day itineraries, reach out via WhatsApp and we'll design it with you."
-          }
-        },
-        "faq_5": {
-          "type": "faq_item",
-          "settings": {
-            "question": "What is your cancellation policy?",
-            "answer": "Free cancellation up to 24 hours before your experience. No-questions-asked refund to your original payment method within 3 business days."
-          }
-        },
-        "faq_6": {
-          "type": "faq_item",
-          "settings": {
-            "question": "Is the food vegetarian/halal/allergy-friendly?",
-            "answer": "Our BBQ buffet includes halal meats, full vegetarian and vegan options, and gluten-free mains. Please flag allergies at booking and we'll confirm arrangements with the camp chef."
-          }
-        }
-      },
-      "block_order": ["faq_1", "faq_2", "faq_3", "faq_4", "faq_5", "faq_6"],
-      "settings": {
-        "section_id": "faq",
-        "eyebrow": "Questions",
-        "heading": "Everything you",
-        "heading_accent": "wanted to ask",
-        "subheading": "Can't find what you're looking for? Our team replies on WhatsApp in under 10 minutes, 24/7.",
-        "button_label": "Ask on WhatsApp",
-        "color_scheme": "scheme-2",
-        "section_width": "page-width",
-        "padding-block-start": 96,
-        "padding-block-end": 96
-      }
-    },
-    "dlh_final_cta": {
-      "type": "dlh-final-cta",
-      "settings": {
-        "eyebrow": "Book your evening",
-        "heading": "The dunes are",
-        "heading_accent": "waiting.",
-        "subheading": "Free cancellation up to 24 hours. Instant confirmation. Real humans on WhatsApp 24/7.",
-        "primary_label": "Book evening safari",
-        "secondary_label": "Chat on WhatsApp",
-        "color_scheme": "scheme-5",
-        "padding-block-start": 88,
-        "padding-block-end": 88
       }
     }
   },
