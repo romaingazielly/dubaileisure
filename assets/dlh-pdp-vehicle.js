@@ -173,6 +173,7 @@ class DlhPdpCalendar extends HTMLElement {
       input.value = this.#selected.toLocaleDateString('en-US', {
         weekday: 'short', day: 'numeric', month: 'short', year: 'numeric'
       });
+      document.dispatchEvent(new CustomEvent('dlh:pdp-selection-update', { bubbles: true }));
     }
   }
 
@@ -198,7 +199,10 @@ class DlhPdpSlots extends HTMLElement {
         btn.classList.add('is-active');
 
         const input = this.closest('form')?.querySelector('input[name="properties[Time]"]');
-        if (input) input.value = btn.dataset.slot;
+        if (input) {
+          input.value = btn.dataset.slot;
+          document.dispatchEvent(new CustomEvent('dlh:pdp-selection-update', { bubbles: true }));
+        }
       });
     });
   }
@@ -219,11 +223,48 @@ class DlhPdpStepper extends HTMLElement {
     const input = this.querySelector('input[name="quantity"]');
     const max = parseInt(this.dataset.max || '8', 10);
 
+    const fireQty = (v) => {
+      document.dispatchEvent(
+        new CustomEvent('quantity-selector:update', { bubbles: true, detail: { quantity: v } })
+      );
+    };
+
     const update = () => {
       const v = parseInt(input.value, 10);
       if (display) display.textContent = v;
       if (minus) minus.disabled = v <= 1;
       if (plus) plus.disabled = v >= max;
+      const recapSuffix = this.querySelector('.dlh-pv__stepper-suffix');
+      if (recapSuffix) {
+        recapSuffix.textContent = v > 1 ? ' buggies' : ' buggy';
+      }
+      const section =
+        this.closest('.shopify-section') || this.closest('[data-section-id]') || this.closest('section');
+      const totalEl = section?.querySelector('[data-total-val]');
+      if (totalEl) {
+        const unitPriceCents = parseInt(totalEl.dataset.unitPriceCents || '0', 10);
+        const currency = totalEl.dataset.currency || 'AED';
+        if (unitPriceCents > 0) {
+          const total = (unitPriceCents * v) / 100;
+          totalEl.textContent = `${currency} ${total.toLocaleString()}`;
+        }
+      }
+      const stickyPriceEl = section?.querySelector('[data-vehicle-sticky-price]');
+      if (stickyPriceEl) {
+        const unitPriceCents = parseInt(stickyPriceEl.dataset.unitPriceCents || '0', 10);
+        const comparePriceCents = parseInt(stickyPriceEl.dataset.comparePriceCents || '0', 10);
+        const currency = stickyPriceEl.dataset.currency || 'AED';
+        if (unitPriceCents > 0) {
+          const total = (unitPriceCents * v) / 100;
+          if (comparePriceCents > 0) {
+            const compareTotal = (comparePriceCents * v) / 100;
+            stickyPriceEl.textContent = `${currency} ${total.toLocaleString()} — ${currency} ${compareTotal.toLocaleString()}`;
+          } else {
+            stickyPriceEl.textContent = `${currency} ${total.toLocaleString()}`;
+          }
+        }
+      }
+      fireQty(v);
     };
 
     minus?.addEventListener('click', () => {
@@ -248,6 +289,40 @@ if (!customElements.get('dlh-pdp-stepper')) {
    ============================================================ */
 class DlhPdpAddons extends HTMLElement {
   connectedCallback() {
+    const form = this.closest('form');
+    const addonField = this.closest('[data-addon-field]') || this.closest('.dlh-pv__field');
+
+    const syncVisibility = () => {
+      if (!form || !addonField) return;
+
+      const groups = [...new Set(
+        [...form.querySelectorAll('[data-option][data-group]')]
+          .map((el) => el.dataset.group)
+          .filter(Boolean)
+      )];
+
+      const optionsReady =
+        groups.length === 0
+          || groups.every((group) => form.querySelector(`[data-option][data-group="${group}"].is-active`));
+
+      const qtyInput = form.querySelector('input[name="quantity"]');
+      const qtyReady = !qtyInput || (parseInt(qtyInput.value || '0', 10) > 0);
+
+      const dateInput = form.querySelector('input[name="properties[Date]"]');
+      const timeInput = form.querySelector('input[name="properties[Time]"]');
+      const dateReady = !dateInput || dateInput.value.trim() !== '';
+      const timeReady = !timeInput || timeInput.value.trim() !== '';
+
+      const ready = optionsReady && qtyReady && dateReady && timeReady;
+      addonField.hidden = !ready;
+      addonField.setAttribute('aria-hidden', ready ? 'false' : 'true');
+      addonField.style.display = ready ? '' : 'none';
+
+      this.querySelectorAll('input, button, select, textarea').forEach((control) => {
+        control.disabled = !ready;
+      });
+    };
+
     this.querySelectorAll('[data-addon]').forEach(label => {
       const cb = label.querySelector('input[type="checkbox"]');
       if (!cb) return;
@@ -256,6 +331,12 @@ class DlhPdpAddons extends HTMLElement {
       cb.addEventListener('change', sync);
       sync();
     });
+
+    form?.addEventListener('change', syncVisibility);
+    form?.addEventListener('input', syncVisibility);
+    document.addEventListener('quantity-selector:update', syncVisibility);
+    document.addEventListener('dlh:pdp-selection-update', syncVisibility);
+    syncVisibility();
   }
 }
 
@@ -302,18 +383,18 @@ class DlhPdpVariantPicker extends HTMLElement {
     if (match) {
       input.value = match.id;
       this.#updatePrice(match);
+      document.dispatchEvent(new CustomEvent('dlh:pdp-selection-update', { bubbles: true }));
     }
   }
 
   #updatePrice(variant) {
-    const section = this.closest('[data-section-id]') || this.closest('section');
+    const section =
+      this.closest('.shopify-section') || this.closest('[data-section-id]') || this.closest('section');
     if (!section) return;
 
     const nowEl = section.querySelector('[data-price-now]');
     const wasEl = section.querySelector('[data-price-was]');
     const totalEl = section.querySelector('[data-total-val]');
-    const ctaPrice = section.querySelector('[data-cta-price]');
-    const mobPrice = section.querySelector('[data-mob-price]');
 
     const currency = this.dataset.currency || 'AED';
     const price = (variant.price / 100).toLocaleString();
@@ -321,9 +402,62 @@ class DlhPdpVariantPicker extends HTMLElement {
 
     if (nowEl) nowEl.textContent = `${currency} ${price}`;
     if (wasEl && compare) wasEl.textContent = `${currency} ${compare}`;
-    if (totalEl) totalEl.innerHTML = `${currency} ${price}`;
-    if (ctaPrice) ctaPrice.textContent = `${currency} ${price}`;
-    if (mobPrice) mobPrice.textContent = `${currency} ${price}`;
+    if (totalEl) {
+      totalEl.dataset.unitPriceCents = String(variant.price);
+      totalEl.dataset.currency = currency;
+
+      const qtyInput = section.querySelector('input[name="quantity"]');
+      const qty = Math.max(1, parseInt(qtyInput?.value || '1', 10) || 1);
+      const total = ((variant.price || 0) * qty) / 100;
+      totalEl.textContent = `${currency} ${total.toLocaleString()}`;
+    }
+
+    const stepperRecap = section.querySelector('[data-stepper-recap]');
+    if (stepperRecap && Array.isArray(variant.options)) {
+      variant.options.forEach((optVal, i) => {
+        const el = stepperRecap.querySelector(`[data-stepper-bind="${i}"]`);
+        if (el) el.textContent = String(optVal);
+      });
+    }
+
+    const sticky = section.querySelector('sticky-add-to-cart');
+    if (sticky) {
+      sticky.setAttribute('data-current-variant-id', String(variant.id));
+      sticky.setAttribute('data-variant-available', variant.available ? 'true' : 'false');
+
+      const priceWrap = section.querySelector('[data-vehicle-sticky-price]');
+      if (priceWrap) {
+        priceWrap.dataset.unitPriceCents = String(variant.price || 0);
+        priceWrap.dataset.comparePriceCents = String(variant.compare_at_price || 0);
+        priceWrap.dataset.currency = currency;
+
+        const qtyInput = section.querySelector('input[name="quantity"]');
+        const qty = Math.max(1, parseInt(qtyInput?.value || '1', 10) || 1);
+        const stickyTotal = ((variant.price || 0) * qty) / 100;
+        const stickyCompareTotal = ((variant.compare_at_price || 0) * qty) / 100;
+
+        if (variant.compare_at_price) {
+          priceWrap.textContent = `${currency} ${stickyTotal.toLocaleString()} — ${currency} ${stickyCompareTotal.toLocaleString()}`;
+        } else {
+          priceWrap.textContent = `${currency} ${stickyTotal.toLocaleString()}`;
+        }
+      }
+
+      const vLabel = sticky.querySelector('.sticky-add-to-cart__variant');
+      if (vLabel) {
+        if (variant.title) {
+          vLabel.style.display = '';
+          vLabel.textContent = variant.title;
+        } else {
+          vLabel.style.display = 'none';
+        }
+      }
+
+      const stickyBtn = sticky.querySelector('[ref="addToCartButton"]');
+      if (stickyBtn) {
+        stickyBtn.disabled = !variant.available;
+      }
+    }
   }
 }
 
@@ -364,38 +498,36 @@ if (!customElements.get('dlh-pdp-ticker')) {
   customElements.define('dlh-pdp-ticker', DlhPdpTicker);
 }
 
-/* ============================================================
-   Sticky bottom bar — shows when the buy section scrolls out
-   ============================================================ */
-class DlhPdpStickyBar extends HTMLElement {
-  #observer = null;
-
-  connectedCallback() {
-    const buySection = document.querySelector('.dlh-pv__buy');
-    if (!buySection || !('IntersectionObserver' in window)) return;
-
-    this.#observer = new IntersectionObserver(
-      ([entry]) => {
-        this.classList.toggle('is-visible', !entry.isIntersecting);
-
-        const wa = document.querySelector('.dlh-pv__wa');
-        if (wa) wa.classList.toggle('dlh-pv__wa--bar-visible', !entry.isIntersecting);
-      },
-      { rootMargin: '-80px 0px 0px 0px', threshold: 0 }
-    );
-    this.#observer.observe(buySection);
+class DlhPdpTrustPlacement {
+  constructor() {
+    this.mediaQuery = window.matchMedia('(max-width: 768px)');
+    this.syncAll = this.syncAll.bind(this);
+    this.mediaQuery.addEventListener('change', this.syncAll);
+    this.syncAll();
   }
 
-  disconnectedCallback() {
-    if (this.#observer) {
-      this.#observer.disconnect();
-      this.#observer = null;
-    }
+  syncAll() {
+    document.querySelectorAll('.dlh-pv__grid').forEach((grid) => {
+      const trust = grid.querySelector('.dlh-pv__trust');
+      const gallery = grid.querySelector('.dlh-pv__gal');
+      const left = grid.querySelector('.dlh-pv__left');
+      const buy = grid.querySelector('.dlh-pv__buy');
+      const head = buy?.querySelector('.dlh-pv__head');
+      if (!trust || !gallery || !left || !buy || !head) return;
+
+      if (this.mediaQuery.matches) {
+        if (trust.parentElement !== buy) {
+          head.insertAdjacentElement('afterend', trust);
+        }
+      } else if (trust.parentElement !== left) {
+        gallery.insertAdjacentElement('afterend', trust);
+      }
+    });
   }
 }
 
-if (!customElements.get('dlh-pdp-sticky-bar')) {
-  customElements.define('dlh-pdp-sticky-bar', DlhPdpStickyBar);
+if (!window.__dlhTrustPlacement) {
+  window.__dlhTrustPlacement = new DlhPdpTrustPlacement();
 }
 
 /* ============================================================

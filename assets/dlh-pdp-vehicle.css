@@ -1,8 +1,3 @@
-/* ============================================================
-   DLH PDP Vehicle — Main product section (gallery + booking)
-   ============================================================ */
-
-/* ---- Breadcrumb ---- */
 
 .dlh-pv__crumb {
   max-width: 1440px;
@@ -33,7 +28,6 @@
   font-weight: 600;
 }
 
-/* Breadcrumb overlaid on gallery */
 .dlh-pv__crumb--on-gallery {
   position: absolute;
   top: 0;
@@ -75,7 +69,6 @@
   }
 }
 
-/* ---- Main grid ---- */
 
 .dlh-pv__grid {
   max-width: 1440px;
@@ -87,22 +80,36 @@
   align-items: start;
 }
 
+.dlh-pv__left {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  position: sticky;
+  top: 84px;
+  align-self: start;
+}
+
 @media (max-width: 1100px) {
   .dlh-pv__grid {
     grid-template-columns: 1fr;
     gap: 0;
   }
+
+  .dlh-pv__left {
+    gap: 0;
+    position: static;
+    top: auto;
+  }
 }
 
-/* ---- Gallery ---- */
 
 .dlh-pv__gal {
   display: grid;
   grid-template-columns: 96px 1fr;
   gap: 16px;
   align-items: start;
-  position: sticky;
-  top: 84px;
+  position: static;
+  top: auto;
   margin-bottom: 0;
 }
 
@@ -189,7 +196,7 @@
 
 .dlh-pv__main {
   position: relative;
-  border-radius: 8px;
+  border-radius: 0;
   overflow: hidden;
   aspect-ratio: 4 / 3;
   background: linear-gradient(135deg, #8a5a2e, #3d1f0f);
@@ -380,7 +387,6 @@
   height: 14px;
 }
 
-/* ---- Right column (booking) ---- */
 
 .dlh-pv__buy {
   display: flex;
@@ -465,22 +471,27 @@
   background: var(--fg-subtle, rgba(10,28,58,.45));
 }
 
-/* ---- Trust bar ---- */
 
 .dlh-pv__trust {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: nowrap;
   gap: 8px;
   padding: 14px;
   background: var(--brand-cream, #fcfaf7);
   border: 1px solid var(--border, rgba(10,28,58,.10));
-  border-radius: 14px;
+  border-radius: 0;
+  overflow: hidden;
 }
 
 .dlh-pv__trust-item {
   display: flex;
   align-items: center;
   gap: 10px;
+  white-space: nowrap;
+  flex: 1 1 0;
+  min-width: 0;
   font-size: 12px;
   color: var(--brand-navy, #0a1c3a);
   font-weight: 600;
@@ -493,7 +504,6 @@
   flex-shrink: 0;
 }
 
-/* ---- Price block ---- */
 
 .dlh-pv__price-wrap {
   display: flex;
@@ -539,7 +549,6 @@
   font-weight: 500;
 }
 
-/* ---- Urgency ---- */
 
 .dlh-pv__urgency {
   display: flex;
@@ -576,7 +585,6 @@
   100% { transform: scale(3); opacity: 0; }
 }
 
-/* ---- Field labels ---- */
 
 .dlh-pv__field {
   display: flex;
@@ -584,13 +592,19 @@
   gap: 10px;
 }
 
-/* Add breathing room before Duration / Date / Buggies / Add-ons blocks */
+[data-addon-field][hidden] {
+  display: none !important;
+}
+
 .dlh-pv__field + .dlh-pv__field {
   margin-top: 25px;
 }
 
-/* Date field follows the variant-picker custom element, so target it explicitly */
-.dlh-pv__date-field {
+#dlh-pdp-form > dlh-pdp-variant-picker + .dlh-pv__field {
+  margin-top: 25px;
+}
+
+#dlh-pdp-form > .dlh-pv__field + .dlh-pv__total {
   margin-top: 25px;
 }
 
@@ -614,7 +628,6 @@
   font-size: 12px;
 }
 
-/* ---- Variant cards ---- */
 
 .dlh-pv__variants {
   display: grid;
@@ -692,7 +705,6 @@
   margin-top: 4px;
 }
 
-/* ---- Duration pills ---- */
 
 .dlh-pv__pills {
   display: flex;
@@ -733,10 +745,11 @@
   margin-top: 1px;
 }
 
-/* ---- Date picker trigger ---- */
-
 .dlh-pv__date-field {
+  margin-top: 25px;
   position: relative;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .dlh-pv__date-trigger {
@@ -793,7 +806,6 @@
   flex-shrink: 0;
 }
 
-/* ---- Calendar popup ---- */
 
 .dlh-pv__cal {
   position: absolute;
@@ -925,7 +937,6 @@
   background: #fff;
 }
 
-/* ---- Time slots ---- */
 
 .dlh-pv__slots {
   display: grid;
@@ -974,7 +985,6 @@
   letter-spacing: .08em;
 }
 
-/* ---- Quantity stepper ---- */
 
 .dlh-pv__stepper {
   display: flex;
@@ -984,28 +994,85 @@
   border: 1.5px solid var(--border, rgba(10,28,58,.10));
   border-radius: 14px;
   padding: 6px 8px;
+  gap: 8px;
 }
 
 .dlh-pv__stepper-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
   padding: 6px 10px;
+  flex: 1;
 }
 
-.dlh-pv__stepper-info b {
+.dlh-pv__stepper-mainline {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  flex: 1;
+}
+
+.dlh-pv__stepper-info b,
+.dlh-pv__stepper-qtynum {
   font-size: 13px;
   color: var(--brand-navy, #0a1c3a);
   font-weight: 700;
   display: block;
+  line-height: 1.2;
 }
 
-.dlh-pv__stepper-info small {
+.dlh-pv__stepper-recap {
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+  flex: 1;
+  max-width: 100%;
+  font-size: 12px;
+  line-height: 1.35;
+  color: var(--brand-navy, #0a1c3a);
+  font-weight: 700;
+}
+
+.dlh-pv__stepper-recap[hidden] {
+  display: none !important;
+}
+
+.dlh-pv__stepper-recap-line {
+  margin: 0;
+  min-width: 0;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dlh-pv__stepper-suffix {
+  font-weight: 700;
+  color: var(--brand-navy, #0a1c3a);
+}
+
+.dlh-pv__stepper-sep {
+  color: var(--brand-navy, #0a1c3a);
+  font-weight: 700;
+}
+
+.dlh-pv__stepper-optional-sub {
+  display: inline;
+  flex-shrink: 0;
   font-size: 11px;
   color: var(--fg-muted, rgba(10,28,58,.66));
+  font-weight: 700;
+  margin: 0;
 }
 
 .dlh-pv__stepper-ctrls {
   display: flex;
   align-items: center;
   gap: 2px;
+  flex-shrink: 0;
+  margin-top: 0;
 }
 
 .dlh-pv__stepper-btn {
@@ -1047,7 +1114,6 @@
   font-size: 14px;
 }
 
-/* ---- Add-ons ---- */
 
 .dlh-pv__addons {
   display: flex;
@@ -1125,14 +1191,14 @@
 }
 
 .dlh-pv__addon-title b {
-  line-height: 20px;
+  line-height: 1.1;
   font-size: 13px;
   color: var(--brand-navy, #0a1c3a);
   font-weight: 700;
 }
 
 .dlh-pv__addon-price {
-  line-height: 20px;
+  line-height: 1.1;
   font-size: 12px;
   font-weight: 700;
   color: var(--brand-red, #b11c3d);
@@ -1140,13 +1206,12 @@
 }
 
 .dlh-pv__addon-desc {
-  font-size: 11.5px;
+  font-size: 12px;
   color: var(--fg-muted, rgba(10,28,58,.66));
   margin-top: 2px;
-  line-height: 1.45;
+  line-height: 1;
 }
 
-/* ---- Total row ---- */
 
 .dlh-pv__total {
   display: flex;
@@ -1178,7 +1243,6 @@
   letter-spacing: 0;
 }
 
-/* ---- CTAs ---- */
 
 .dlh-pv__ctas {
   display: flex;
@@ -1261,7 +1325,6 @@
   background: var(--brand-cream, #fcfaf7);
 }
 
-/* ---- Reassurance ---- */
 
 .dlh-pv__reass {
   display: flex;
@@ -1284,7 +1347,6 @@
   color: var(--brand-oasis, #6b8e5a);
 }
 
-/* ---- Booking ticker ---- */
 
 .dlh-pv__ticker {
   display: flex;
@@ -1318,7 +1380,6 @@
   color: var(--brand-navy, #0a1c3a);
 }
 
-/* ---- Toast notification ---- */
 
 .dlh-pv__toast {
   position: fixed;
@@ -1351,161 +1412,11 @@
   color: #3ed660;
 }
 
-/* ---- Sticky bottom buy bar ---- */
-
-.dlh-pv__sticky-bar {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: rgba(252,250,247,.96);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-top: 1px solid var(--border, rgba(10,28,58,.10));
-  padding: 0;
-  z-index: 70;
-  box-shadow: 0 -4px 20px rgba(0,0,0,.08);
-  transform: translateY(100%);
-  transition: transform .35s cubic-bezier(.33,1,.68,1);
+body:has(.sticky-add-to-cart__bar[data-stuck="true"]) .dlh-pv__wa,
+.dlh-pv__wa--bar-visible {
+  bottom: 88px;
 }
 
-.dlh-pv__sticky-bar.is-visible {
-  transform: translateY(0);
-}
-
-.dlh-pv__sticky-inner {
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 12px clamp(16px, 3vw, 32px);
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.dlh-pv__sticky-info {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  min-width: 0;
-}
-
-.dlh-pv__sticky-thumb {
-  width: 48px;
-  height: 48px;
-  border-radius: 8px;
-  overflow: hidden;
-  flex-shrink: 0;
-  background: var(--brand-sand, #f4efe6);
-}
-
-.dlh-pv__sticky-thumb img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.dlh-pv__sticky-details {
-  min-width: 0;
-}
-
-.dlh-pv__sticky-title {
-  font-family: var(--font-heading--family, var(--font-heading, 'Shantell Sans', sans-serif));
-  font-style: italic;
-  font-weight: 600;
-  font-size: 16px;
-  color: var(--brand-navy, #0a1c3a);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  line-height: 1.2;
-  margin: 0;
-}
-
-.dlh-pv__sticky-meta {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 12px;
-  color: var(--fg-muted, rgba(10,28,58,.66));
-  margin-top: 2px;
-}
-
-.dlh-pv__sticky-stars {
-  display: inline-flex;
-  gap: 1px;
-  color: #f2a104;
-}
-
-.dlh-pv__sticky-stars svg {
-  width: 11px;
-  height: 11px;
-  fill: currentColor;
-}
-
-.dlh-pv__sticky-price {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  flex-shrink: 0;
-}
-
-.dlh-pv__sticky-price b {
-  font-size: 20px;
-  color: var(--brand-navy, #0a1c3a);
-  font-weight: 700;
-  line-height: 1.1;
-}
-
-.dlh-pv__sticky-price small {
-  font-size: 11px;
-  color: var(--fg-muted, rgba(10,28,58,.66));
-}
-
-.dlh-pv__sticky-price-was {
-  font-size: 12px;
-  color: var(--fg-muted, rgba(10,28,58,.66));
-  text-decoration: line-through;
-}
-
-.dlh-pv__sticky-actions {
-  display: flex;
-  gap: 8px;
-  flex-shrink: 0;
-}
-
-.dlh-pv__sticky-bar .dlh-pv__cta {
-  padding: 12px 24px;
-  font-size: 14px;
-  white-space: nowrap;
-}
-
-.dlh-pv__sticky-bar .dlh-pv__cta svg {
-  width: 16px;
-  height: 16px;
-}
-
-@media (max-width: 768px) {
-  .dlh-pv__sticky-thumb {
-    display: none;
-  }
-
-  .dlh-pv__sticky-title {
-    font-size: 14px;
-  }
-
-  .dlh-pv__sticky-bar .dlh-pv__cta {
-    padding: 12px 16px;
-    font-size: 13px;
-  }
-
-  .dlh-pv__sticky-price b {
-    font-size: 18px;
-  }
-}
-
-/* ---- WhatsApp FAB ---- */
 
 .dlh-pv__wa {
   position: fixed;
@@ -1536,12 +1447,6 @@
   height: 28px;
 }
 
-.dlh-pv__sticky-bar.is-visible ~ .dlh-pv__wa,
-.dlh-pv__wa--bar-visible {
-  bottom: 88px;
-}
-
-/* ---- Responsive ---- */
 
 @media (max-width: 900px) {
   .dlh-pv__title {
@@ -1562,5 +1467,42 @@
   .dlh-pv__slide,
   .dlh-pv__slide img {
     border-radius: 0 !important;
+  }
+
+  .dlh-pv__trust {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+    justify-content: initial;
+    gap: 8px;
+    overflow: visible;
+  }
+
+  .dlh-pv__trust-item {
+    flex: initial;
+    min-width: 0;
+    white-space: normal;
+  }
+
+  .dlh-pv__addon {
+    padding: 10px;
+  }
+
+  .dlh-pv__addon-title {
+    min-height: 18px;
+    transform: none;
+  }
+
+  .dlh-pv__addon-title b,
+  .dlh-pv__addon-price {
+    line-height: 1.05;
+  }
+
+  .dlh-pv__addon-desc {
+    display: block;
+    font-size: 12px;
+    line-height: 1.15;
+    transform: none;
+    margin-top: 3px;
   }
 }

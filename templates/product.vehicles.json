@@ -166,13 +166,15 @@
         "price_unit": "Taxes & fees included",
         "urgency_text": "Only <b>4 slots</b> left for this weekend — 23 people viewing now",
         "show_trust_bar": true,
-        "option1_hint": "Capacity per buggy",
+        "option1_hint": "Seating & duration",
         "show_date_picker": true,
-        "qty_label": "Buggies",
-        "qty_hint": "How many vehicles",
-        "qty_sub": "Max riders per buggy",
+        "qty_label": "Vehicles",
+        "qty_hint": "How many to add to cart",
+        "qty_recap_first_suffix": " buggy",
+        "qty_sub": "",
         "addons_label": "Add to your evening",
         "show_buy_now": true,
+        "enable_sticky_add_to_cart": true,
         "show_reassurance": true
       }
     },
@@ -342,7 +344,7 @@
             "padding-inline-end": 0
           }
         },
-        "rec_card": {
+        "static-product-card": {
           "type": "_product-card",
           "name": "Product card",
           "static": true,

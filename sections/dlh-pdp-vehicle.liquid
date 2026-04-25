@@ -1,6 +1,6 @@
 {{ 'dlh-pdp-vehicle.css' | asset_url | stylesheet_tag }}
+{{ 'dlh-vehicle-sticky-add-to-cart.css' | asset_url | stylesheet_tag }}
 
-{%- comment -%} ── SVG icon sprite (inlined once) ── {%- endcomment -%}
 <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
   <symbol id="dlh-ico-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></symbol>
   <symbol id="dlh-ico-chevl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></symbol>
@@ -25,10 +25,9 @@
   <symbol id="dlh-ico-fire" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2s4 4 4 8a4 4 0 0 1-8 0c0-1 .5-2 1-3-1 0-3 1-3 4a6 6 0 0 0 12 0c0-5-6-9-6-9z"/></symbol>
 </svg>
 
-{%- comment -%} ── Main PDP grid ── {%- endcomment -%}
 <div class="dlh-pv__grid" data-section-id="{{ section.id }}">
 
-  {%- comment -%} ──────── Gallery ──────── {%- endcomment -%}
+  <div class="dlh-pv__left">
   {%- assign dlh_media_count = product.media.size -%}
   <dlh-pdp-gallery class="dlh-pv__gal{% if dlh_media_count <= 1 %} dlh-pv__gal--single{% endif %}">
     {%- if dlh_media_count > 1 -%}
@@ -49,7 +48,6 @@
     {%- endif -%}
 
     <div class="dlh-pv__main">
-      {%- comment -%} Breadcrumb overlay on gallery {%- endcomment -%}
       <nav class="dlh-pv__crumb dlh-pv__crumb--on-gallery" aria-label="Breadcrumb">
         <a href="{{ routes.root_url }}">{{ 'accessibility.home' | t | default: 'Home' }}</a>
         <span class="dlh-pv__crumb-sep">/</span>
@@ -79,7 +77,6 @@
         </div>
       {%- endfor -%}
 
-      {%- comment -%} Tags ── {%- endcomment -%}
       <div class="dlh-pv__tags">
         {%- for tag in product.tags -%}
           {%- if tag contains 'badge:' -%}
@@ -93,12 +90,10 @@
         {%- endif -%}
       </div>
 
-      {%- comment -%} Favourite ── {%- endcomment -%}
       <button class="dlh-pv__fav" data-fav aria-label="Save to wishlist">
         <svg width="20" height="20"><use href="#dlh-ico-heart"/></svg>
       </button>
 
-      {%- comment -%} Arrows ── {%- endcomment -%}
       {%- if dlh_media_count > 1 -%}
         <div class="dlh-pv__arrows">
           <button class="dlh-pv__arrow" data-prev aria-label="Previous">
@@ -110,7 +105,6 @@
         </div>
       {%- endif -%}
 
-      {%- comment -%} Dots ── {%- endcomment -%}
       {%- if dlh_media_count > 1 -%}
         <div class="dlh-pv__dots">
           {%- for media in product.media -%}
@@ -119,7 +113,6 @@
         </div>
       {%- endif -%}
 
-      {%- comment -%} Zoom ── {%- endcomment -%}
       {%- if dlh_media_count > 1 -%}
         <button class="dlh-pv__zoom">
           <svg width="14" height="14"><use href="#dlh-ico-zoom"/></svg>
@@ -129,10 +122,22 @@
     </div>
   </dlh-pdp-gallery>
 
-  {%- comment -%} ──────── Booking column ──────── {%- endcomment -%}
+  {%- if section.settings.show_trust_bar -%}
+    <div class="dlh-pv__trust">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'trust_item' -%}
+          <div class="dlh-pv__trust-item" {{ block.shopify_attributes }}>
+            <svg width="18" height="18"><use href="#dlh-ico-{{ block.settings.icon }}"/></svg>
+            {{ block.settings.label }}
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+  </div>
+
   <div class="dlh-pv__buy">
 
-    {%- comment -%} Header ── {%- endcomment -%}
     <div class="dlh-pv__head">
       {%- if section.settings.category_text != blank -%}
         <p class="dlh-pv__cat">{{ section.settings.category_text }}</p>
@@ -145,7 +150,6 @@
         {%- endif -%}
       </h1>
 
-      {%- comment -%} Rating ── {%- endcomment -%}
       {%- if section.settings.rating != blank -%}
         <div class="dlh-pv__rating">
           <span class="dlh-pv__stars">
@@ -159,21 +163,6 @@
       {%- endif -%}
     </div>
 
-    {%- comment -%} Trust bar ── {%- endcomment -%}
-    {%- if section.settings.show_trust_bar -%}
-      <div class="dlh-pv__trust">
-        {%- for block in section.blocks -%}
-          {%- if block.type == 'trust_item' -%}
-            <div class="dlh-pv__trust-item" {{ block.shopify_attributes }}>
-              <svg width="18" height="18"><use href="#dlh-ico-{{ block.settings.icon }}"/></svg>
-              {{ block.settings.label }}
-            </div>
-          {%- endif -%}
-        {%- endfor -%}
-      </div>
-    {%- endif -%}
-
-    {%- comment -%} Price ── {%- endcomment -%}
     <div class="dlh-pv__price-wrap">
       <div class="dlh-pv__price">
         <span class="dlh-pv__price-now" data-price-now>{{ product.selected_or_first_available_variant.price | money }}</span>
@@ -188,7 +177,6 @@
       {%- endif -%}
     </div>
 
-    {%- comment -%} Urgency ── {%- endcomment -%}
     {%- if section.settings.urgency_text != blank -%}
       <div class="dlh-pv__urgency">
         <span class="dlh-pv__pulse"></span>
@@ -196,11 +184,25 @@
       </div>
     {%- endif -%}
 
-    {%- comment -%} ── Product Form ── {%- endcomment -%}
-    {%- form 'product', product, id: 'dlh-pdp-form', novalidate: 'novalidate' -%}
-      <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+    <div class="dlh-pv__buy-form buy-buttons-block">
+    <product-form-component
+      data-section-id="{{ section.id }}"
+      data-product-id="{{ product.id }}"
+      data-product-url="{{ product.url }}"
+      on:submit="/handleSubmit"
+      data-quantity-default="{% if product.selected_or_first_available_variant.quantity_rule.min %}{{ product.selected_or_first_available_variant.quantity_rule.min }}{% else %}1{% endif %}"
+      data-quantity-error-max="{{ 'products.product.quantity_error_max' | t }}"
+    >
+      <div
+        class="visually-hidden"
+        aria-live="assertive"
+        role="status"
+        aria-atomic="true"
+        ref="liveRegion"
+      ></div>
+      {%- form 'product', product, id: 'dlh-pdp-form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+      <input type="hidden" name="id" ref="variantId" value="{{ product.selected_or_first_available_variant.id }}">
 
-      {%- comment -%} Variant picker — option 1 (e.g. Seating) as cards ── {%- endcomment -%}
       {%- if product.has_only_default_variant == false -%}
         <dlh-pdp-variant-picker
           data-variants='{{ product.variants | json }}'
@@ -216,7 +218,6 @@
               </div>
 
               {%- if forloop.first -%}
-                {%- comment -%} First option as variant cards ── {%- endcomment -%}
                 <div class="dlh-pv__variants">
                   {%- for value in option.values -%}
                     <button
@@ -233,7 +234,6 @@
                 </div>
 
               {%- else -%}
-                {%- comment -%} Other options as pills ── {%- endcomment -%}
                 <div class="dlh-pv__pills">
                   {%- for value in option.values -%}
                     <button
@@ -253,7 +253,50 @@
         </dlh-pdp-variant-picker>
       {%- endif -%}
 
-      {%- comment -%} Date picker ── {%- endcomment -%}
+      <div class="dlh-pv__field">
+        <div class="dlh-pv__label">
+          <span>{{ section.settings.qty_label | default: 'Quantity' }}</span>
+          <span class="dlh-pv__hint">{{ section.settings.qty_hint | default: 'How many to add' }}</span>
+        </div>
+        <dlh-pdp-stepper class="dlh-pv__stepper" data-max="8">
+          <div class="dlh-pv__stepper-info">
+            <div class="dlh-pv__stepper-mainline">
+              <b class="dlh-pv__stepper-qtynum" data-qty-display>1</b>
+              {%- if product.has_only_default_variant == false -%}
+                <div class="dlh-pv__stepper-recap" data-stepper-recap>
+                  <p class="dlh-pv__stepper-recap-line">
+                    {%- for option in product.options_with_values -%}
+                      {%- if forloop.first -%}
+                        <span data-stepper-bind="0">{{ option.selected_value | escape }}</span>
+                        {%- if section.settings.qty_recap_first_suffix != blank -%}
+                          <span class="dlh-pv__stepper-suffix">{{ section.settings.qty_recap_first_suffix | escape }}</span>
+                        {%- endif -%}
+                      {%- else -%}
+                        <span class="dlh-pv__stepper-sep" aria-hidden="true"> - </span>
+                        <span data-stepper-bind="{{ forloop.index0 }}">{{ option.selected_value | escape }}</span>
+                      {%- endif -%}
+                    {%- endfor -%}
+                  </p>
+                </div>
+              {%- endif -%}
+            </div>
+            {%- if section.settings.qty_sub != blank -%}
+              <small class="dlh-pv__stepper-optional-sub">{{ section.settings.qty_sub }}</small>
+            {%- endif -%}
+          </div>
+          <div class="dlh-pv__stepper-ctrls">
+            <button type="button" class="dlh-pv__stepper-btn" data-minus disabled>
+              <svg width="14" height="14"><use href="#dlh-ico-minus"/></svg>
+            </button>
+            <input type="hidden" name="quantity" value="1">
+            <span class="dlh-pv__stepper-val">1</span>
+            <button type="button" class="dlh-pv__stepper-btn" data-plus>
+              <svg width="14" height="14"><use href="#dlh-ico-plus"/></svg>
+            </button>
+          </div>
+        </dlh-pdp-stepper>
+      </div>
+
       {%- if section.settings.show_date_picker -%}
         <dlh-pdp-calendar class="dlh-pv__field dlh-pv__date-field">
           <div class="dlh-pv__label">
@@ -288,7 +331,6 @@
             </div>
           </div>
 
-          {%- comment -%} Time slots ── {%- endcomment -%}
           <dlh-pdp-slots class="dlh-pv__slots" data-slots style="display:none">
             <input type="hidden" name="properties[Time]" value="">
             {%- for block in section.blocks -%}
@@ -315,34 +357,9 @@
         </dlh-pdp-calendar>
       {%- endif -%}
 
-      {%- comment -%} Quantity stepper ── {%- endcomment -%}
-      <div class="dlh-pv__field">
-        <div class="dlh-pv__label">
-          <span>{{ section.settings.qty_label | default: 'Quantity' }}</span>
-          <span class="dlh-pv__hint">{{ section.settings.qty_hint | default: 'How many vehicles' }}</span>
-        </div>
-        <dlh-pdp-stepper class="dlh-pv__stepper" data-max="8">
-          <div class="dlh-pv__stepper-info">
-            <b data-qty-display>1</b>
-            <small>{{ section.settings.qty_sub | default: 'Max riders per vehicle' }}</small>
-          </div>
-          <div class="dlh-pv__stepper-ctrls">
-            <button type="button" class="dlh-pv__stepper-btn" data-minus disabled>
-              <svg width="14" height="14"><use href="#dlh-ico-minus"/></svg>
-            </button>
-            <input type="hidden" name="quantity" value="1">
-            <span class="dlh-pv__stepper-val">1</span>
-            <button type="button" class="dlh-pv__stepper-btn" data-plus>
-              <svg width="14" height="14"><use href="#dlh-ico-plus"/></svg>
-            </button>
-          </div>
-        </dlh-pdp-stepper>
-      </div>
-
-      {%- comment -%} Add-ons ── {%- endcomment -%}
       {%- assign addon_blocks = section.blocks | where: 'type', 'addon' -%}
       {%- if addon_blocks.size > 0 -%}
-        <div class="dlh-pv__field">
+        <div class="dlh-pv__field" data-addon-field hidden aria-hidden="true">
           <div class="dlh-pv__label">
             <span>{{ section.settings.addons_label | default: 'Add to your experience' }}</span>
             <span class="dlh-pv__hint">Optional</span>
@@ -369,15 +386,20 @@
         </div>
       {%- endif -%}
 
-      {%- comment -%} Total ── {%- endcomment -%}
       <div class="dlh-pv__total">
         <span class="dlh-pv__total-label">Total</span>
-        <span class="dlh-pv__total-val" data-total-val>{{ product.selected_or_first_available_variant.price | money }}</span>
+        <span
+          class="dlh-pv__total-val"
+          data-total-val
+          data-unit-price-cents="{{ product.selected_or_first_available_variant.price }}"
+          data-currency="{{ cart.currency.iso_code }}"
+        >
+          {{ product.selected_or_first_available_variant.price | money }}
+        </span>
       </div>
 
-      {%- comment -%} CTA buttons ── {%- endcomment -%}
       <div class="dlh-pv__ctas">
-        <button type="submit" name="add" class="dlh-pv__cta dlh-pv__cta--primary">
+        <button type="submit" name="add" ref="addToCartButton" class="dlh-pv__cta dlh-pv__cta--primary">
           <svg width="18" height="18"><use href="#dlh-ico-cart"/></svg>
           Add to cart
         </button>
@@ -398,8 +420,9 @@
         {%- endif -%}
       </div>
     {%- endform -%}
+    </product-form-component>
+    </div>
 
-    {%- comment -%} Reassurance ── {%- endcomment -%}
     {%- if section.settings.show_reassurance -%}
       <div class="dlh-pv__reass">
         {%- for block in section.blocks -%}
@@ -413,7 +436,6 @@
       </div>
     {%- endif -%}
 
-    {%- comment -%} Ticker ── {%- endcomment -%}
     {%- assign ticker_blocks = section.blocks | where: 'type', 'ticker_msg' -%}
     {%- if ticker_blocks.size > 0 -%}
       <dlh-pdp-ticker class="dlh-pv__ticker">
@@ -429,53 +451,16 @@
 
 </div>
 
-{%- comment -%} ── Sticky bottom buy bar ── {%- endcomment -%}
-<dlh-pdp-sticky-bar class="dlh-pv__sticky-bar" data-sticky-bar>
-  <div class="dlh-pv__sticky-inner">
-    <div class="dlh-pv__sticky-info">
-      {%- if product.featured_image -%}
-        <div class="dlh-pv__sticky-thumb">
-          <img src="{{ product.featured_image | image_url: width: 120 }}" alt="{{ product.featured_image.alt | escape }}" width="48" height="48" loading="lazy">
-        </div>
-      {%- endif -%}
-      <div class="dlh-pv__sticky-details">
-        <p class="dlh-pv__sticky-title">{{ product.title }}</p>
-        <div class="dlh-pv__sticky-meta">
-          {%- if section.settings.rating != blank -%}
-            <span class="dlh-pv__sticky-stars">
-              {%- for i in (1..5) -%}
-                <svg width="11" height="11" fill="#f2a104"><use href="#dlh-ico-star"/></svg>
-              {%- endfor -%}
-            </span>
-            <span>{{ section.settings.rating }} · {{ section.settings.review_count }} reviews</span>
-          {%- endif -%}
-        </div>
-      </div>
-    </div>
-    <div class="dlh-pv__sticky-price">
-      <b data-mob-price>{{ product.selected_or_first_available_variant.price | money }}</b>
-      {%- if product.compare_at_price > product.price -%}
-        <span class="dlh-pv__sticky-price-was">{{ product.compare_at_price | money }}</span>
-      {%- endif -%}
-      <small>per vehicle</small>
-    </div>
-    <div class="dlh-pv__sticky-actions">
-      <button class="dlh-pv__cta dlh-pv__cta--primary" onclick="document.getElementById('dlh-pdp-form')?.scrollIntoView({behavior:'smooth',block:'center'})">
-        <svg width="16" height="16"><use href="#dlh-ico-cart"/></svg>
-        Add to cart
-      </button>
-    </div>
-  </div>
-</dlh-pdp-sticky-bar>
+{%- if section.settings.enable_sticky_add_to_cart -%}
+  {%- render 'dlh-vehicle-sticky-add-to-cart', product: product -%}
+{%- endif -%}
 
-{%- comment -%} ── WhatsApp FAB ── {%- endcomment -%}
 {%- if section.settings.whatsapp_url != blank -%}
   <a href="{{ section.settings.whatsapp_url }}" class="dlh-pv__wa" aria-label="WhatsApp" target="_blank" rel="noopener">
     <svg width="28" height="28"><use href="#dlh-ico-wa"/></svg>
   </a>
 {%- endif -%}
 
-{%- comment -%} ── Toast ── {%- endcomment -%}
 <dlh-pdp-toast class="dlh-pv__toast">
   <svg width="20" height="20"><use href="#dlh-ico-check"/></svg>
   <span data-toast-text></span>
@@ -552,7 +537,7 @@
       "type": "text",
       "id": "option1_hint",
       "label": "First option hint text",
-      "default": "Capacity per buggy"
+      "default": "Seating & duration"
     },
     {
       "type": "header",
@@ -572,19 +557,26 @@
       "type": "text",
       "id": "qty_label",
       "label": "Quantity label",
-      "default": "Vehicles"
+      "default": "Quantity"
     },
     {
       "type": "text",
       "id": "qty_hint",
       "label": "Quantity hint",
-      "default": "How many vehicles"
+      "default": "How many to add"
+    },
+    {
+      "type": "text",
+      "id": "qty_recap_first_suffix",
+      "label": "After 1st option (recap, qty 1 only)",
+      "default": " buggy",
+      "info": "Appended to the first selected option in the summary next to the quantity, e.g. 'One Sitter' + this text. Clear in editor to remove."
     },
     {
       "type": "text",
       "id": "qty_sub",
-      "label": "Quantity sub-text",
-      "default": "Max riders per vehicle"
+      "label": "Quantity sub-text (optional)",
+      "info": "Leave empty to hide the line under the quantity number."
     },
     {
       "type": "header",
@@ -604,6 +596,12 @@
       "type": "checkbox",
       "id": "show_buy_now",
       "label": "Show Buy it now button",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sticky_add_to_cart",
+      "label": "t:settings.enable_sticky_add_to_cart",
       "default": true
     },
     {
