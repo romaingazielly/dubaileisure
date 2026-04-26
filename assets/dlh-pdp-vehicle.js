@@ -11,11 +11,16 @@ class DlhPdpGallery extends HTMLElement {
   #slides = [];
   #thumbs = [];
   #dots = [];
+  #mainEl = null;
+  #swipePointerId = null;
+  #swipeStartX = 0;
+  #swipeStartY = 0;
 
   connectedCallback() {
     this.#slides = [...this.querySelectorAll('[data-slide]')];
     this.#thumbs = [...this.querySelectorAll('[data-thumb]')];
     this.#dots = [...this.querySelectorAll('[data-dot]')];
+    this.#mainEl = this.querySelector('.dlh-pv__main');
 
     this.querySelector('[data-prev]')?.addEventListener('click', () => this.#go(this.#index - 1));
     this.querySelector('[data-next]')?.addEventListener('click', () => this.#go(this.#index + 1));
@@ -23,11 +28,49 @@ class DlhPdpGallery extends HTMLElement {
     this.#thumbs.forEach((t, i) => t.addEventListener('click', () => this.#go(i)));
     this.#dots.forEach((d, i) => d.addEventListener('click', () => this.#go(i)));
 
-    const fav = this.querySelector('[data-fav]');
-    if (fav) fav.addEventListener('click', () => fav.classList.toggle('is-active'));
+    this.#mainEl?.addEventListener('pointerdown', this.#onSwipePointerDown, { passive: true });
 
     this.#show(0);
   }
+
+  disconnectedCallback() {
+    this.#detachSwipeEnd();
+    this.#mainEl?.removeEventListener('pointerdown', this.#onSwipePointerDown);
+  }
+
+  #isSwipeViewport() {
+    return typeof window !== 'undefined' && window.matchMedia('(max-width: 768px)').matches;
+  }
+
+  #onSwipePointerDown = (e) => {
+    if (this.#slides.length < 2 || !this.#isSwipeViewport()) return;
+    if (e.button != null && e.button !== 0) return;
+    this.#swipePointerId = e.pointerId;
+    this.#swipeStartX = e.clientX;
+    this.#swipeStartY = e.clientY;
+    window.addEventListener('pointerup', this.#onSwipePointerEnd);
+    window.addEventListener('pointercancel', this.#onSwipePointerEnd);
+  };
+
+  #onSwipePointerEnd = (e) => {
+    if (e.pointerId !== this.#swipePointerId) return;
+    this.#detachSwipeEnd();
+    if (!this.#isSwipeViewport() || this.#slides.length < 2) return;
+    const dx = e.clientX - this.#swipeStartX;
+    const dy = e.clientY - this.#swipeStartY;
+    const min = 40;
+    if (Math.abs(dx) < min) return;
+    if (Math.abs(dx) < Math.abs(dy) * 1.15) return;
+    if (dx < 0) this.#go(this.#index + 1);
+    else this.#go(this.#index - 1);
+  };
+
+  #detachSwipeEnd = () => {
+    if (this.#swipePointerId == null) return;
+    this.#swipePointerId = null;
+    window.removeEventListener('pointerup', this.#onSwipePointerEnd);
+    window.removeEventListener('pointercancel', this.#onSwipePointerEnd);
+  };
 
   #go(n) {
     const len = this.#slides.length;

@@ -8,9 +8,7 @@
   <symbol id="dlh-ico-chevr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></symbol>
   <symbol id="dlh-ico-chevd" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></symbol>
   <symbol id="dlh-ico-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></symbol>
-  <symbol id="dlh-ico-heart" viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></symbol>
   <symbol id="dlh-ico-cal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></symbol>
-  <symbol id="dlh-ico-zoom" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h6M3 3v6M21 21h-6M21 21v-6M21 3h-6M21 3v6M3 21h6M3 21v-6"/></symbol>
   <symbol id="dlh-ico-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></symbol>
   <symbol id="dlh-ico-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2l8 3v6c0 5-3.5 9-8 11-4.5-2-8-6-8-11V5l8-3z"/><path d="M9 12l2 2 4-4"/></symbol>
   <symbol id="dlh-ico-bolt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z"/></symbol>
@@ -28,24 +26,7 @@
 
   <div class="dlh-pv__left">
   {%- assign dlh_media_count = product.media.size -%}
-  <dlh-pdp-gallery class="dlh-pv__gal{% if dlh_media_count <= 1 %} dlh-pv__gal--single{% endif %}">
-    {%- if dlh_media_count > 1 -%}
-      <div class="dlh-pv__thumbs">
-        {%- for media in product.media -%}
-          <button class="dlh-pv__thumb {% if forloop.first %}is-active{% endif %}" data-thumb aria-label="View media {{ forloop.index }}">
-            {%- if media.media_type == 'image' -%}
-              <img src="{{ media | image_url: width: 200 }}" alt="{{ media.alt | escape }}" loading="lazy" width="96" height="72">
-            {%- elsif media.media_type == 'video' or media.media_type == 'external_video' -%}
-              {%- if media.preview_image -%}
-                <img src="{{ media.preview_image | image_url: width: 200 }}" alt="{{ media.alt | escape }}" loading="lazy" width="96" height="72">
-              {%- endif -%}
-              <span class="dlh-pv__thumb-play"><svg width="20" height="20"><use href="#dlh-ico-play"/></svg></span>
-            {%- endif -%}
-          </button>
-        {%- endfor -%}
-      </div>
-    {%- endif -%}
-
+  <dlh-pdp-gallery class="dlh-pv__gal">
     <div class="dlh-pv__main">
       {%- for media in product.media -%}
         <div class="dlh-pv__slide {% if forloop.first %}is-active{% endif %}" data-slide>
@@ -78,10 +59,6 @@
         {%- endif -%}
       </div>
 
-      <button class="dlh-pv__fav" data-fav aria-label="Save to wishlist">
-        <svg width="20" height="20"><use href="#dlh-ico-heart"/></svg>
-      </button>
-
       {%- if dlh_media_count > 1 -%}
         <div class="dlh-pv__arrows">
           <button class="dlh-pv__arrow" data-prev aria-label="Previous">
@@ -102,10 +79,20 @@
       {%- endif -%}
 
       {%- if dlh_media_count > 1 -%}
-        <button class="dlh-pv__zoom">
-          <svg width="14" height="14"><use href="#dlh-ico-zoom"/></svg>
-          View all {{ product.media.size }}
-        </button>
+        <div class="dlh-pv__thumbs" aria-label="Product images">
+          {%- for media in product.media -%}
+            <button class="dlh-pv__thumb {% if forloop.first %}is-active{% endif %}" data-thumb type="button" aria-label="View media {{ forloop.index }}">
+              {%- if media.media_type == 'image' -%}
+                <img src="{{ media | image_url: width: 200 }}" alt="{{ media.alt | escape }}" loading="lazy" width="72" height="54">
+              {%- elsif media.media_type == 'video' or media.media_type == 'external_video' -%}
+                {%- if media.preview_image -%}
+                  <img src="{{ media.preview_image | image_url: width: 200 }}" alt="{{ media.alt | escape }}" loading="lazy" width="72" height="54">
+                {%- endif -%}
+                <span class="dlh-pv__thumb-play"><svg width="16" height="16"><use href="#dlh-ico-play"/></svg></span>
+              {%- endif -%}
+            </button>
+          {%- endfor -%}
+        </div>
       {%- endif -%}
     </div>
   </dlh-pdp-gallery>

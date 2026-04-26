@@ -18,9 +18,15 @@
   position: relative;
   max-width: var(--dlh-content-rail-max, 1440px);
   margin-inline: auto;
-  padding-inline: var(--dlh-content-rail-pad, 0px);
+  padding-inline: 0;
   box-sizing: border-box;
   text-align: center;
+}
+
+@media (max-width: 768px) {
+  .dlh-final-cta__inner {
+    padding-inline: clamp(16px, 3vw, 32px);
+  }
 }
 
 .dlh-final-cta__eyebrow {
