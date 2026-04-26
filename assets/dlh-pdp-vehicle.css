@@ -420,7 +420,7 @@
   font-style: italic;
   font-weight: 600;
   font-size: 40px;
-  line-height: .95;
+  line-height: 1;
   letter-spacing: -.02em;
   color: var(--brand-navy, #0a1c3a);
   margin: 0;
@@ -508,7 +508,7 @@
 .dlh-pv__price-wrap {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 0;
 }
 
 .dlh-pv__price {
@@ -544,6 +544,8 @@
 }
 
 .dlh-pv__price-unit {
+  margin-top: -6px;
+  line-height: 1.2;
   font-size: 12px;
   color: var(--fg-muted, rgba(10,28,58,.66));
   font-weight: 500;

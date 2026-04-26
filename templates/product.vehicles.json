@@ -219,7 +219,9 @@
         "eyebrow": "Why You'll Love It",
         "heading": "Built for the rush.",
         "heading_accent": "Safe enough for your mum.",
-        "lede": "Brand-new 2024 Polaris RZR buggies, full safety kit, named Bedouin marshals. Four things that set this apart from every other operator in Dubai."
+        "lede": "Brand-new 2024 Polaris RZR buggies, full safety kit, named Bedouin marshals. Four things that set this apart from every other operator in Dubai.",
+        "padding-block-start": 64,
+        "padding-block-end": 64
       }
     },
     "experience": {

@@ -1,6 +1,10 @@
 {{ 'dlh-pdp-highlights.css' | asset_url | stylesheet_tag }}
 
-<section class="dlh-ph" {{ section.shopify_attributes }}>
+<section
+  class="dlh-ph spacing-style"
+  style="{% render 'spacing-style', settings: section.settings %}"
+  {{ section.shopify_attributes }}
+>
   {%- if section.settings.eyebrow != blank -%}
     <p class="dlh-ph__eyebrow">{{ section.settings.eyebrow }}</p>
   {%- endif -%}
@@ -62,6 +66,30 @@
       "id": "lede",
       "label": "Lead text",
       "default": "Brand-new 2024 Polaris RZR buggies, full safety kit, named Bedouin marshals. Four things that set this apart from every other operator in Dubai."
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 64
     }
   ],
   "blocks": [
