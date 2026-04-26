@@ -384,6 +384,28 @@ class DlhPdpVariantPicker extends HTMLElement {
       input.value = match.id;
       this.#updatePrice(match);
       document.dispatchEvent(new CustomEvent('dlh:pdp-selection-update', { bubbles: true }));
+
+      const productForm = form?.closest('product-form-component');
+      const productId = productForm?.dataset.productId;
+      if (productForm && productId) {
+        const emptyDoc = new DOMParser().parseFromString(
+          '<!DOCTYPE html><html><body></body></html>',
+          'text/html'
+        );
+        this.dispatchEvent(
+          new CustomEvent('variant:update', {
+            bubbles: true,
+            detail: {
+              resource: match,
+              sourceId: 'dlh-pdp-variant-picker',
+              data: {
+                html: emptyDoc,
+                productId: String(productId),
+              },
+            },
+          })
+        );
+      }
     }
   }
 
