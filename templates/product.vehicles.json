@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
@@ -96,7 +105,7 @@
         "reass_2": {
           "type": "reassurance",
           "settings": {
-            "text": "Reserve now, pay later"
+            "text": "Secured Payment"
           }
         },
         "reass_3": {
@@ -107,6 +116,7 @@
         },
         "ticker_1": {
           "type": "ticker_msg",
+          "disabled": true,
           "settings": {
             "name": "Priya",
             "detail": "from Mumbai · booked this",
@@ -115,6 +125,7 @@
         },
         "ticker_2": {
           "type": "ticker_msg",
+          "disabled": true,
           "settings": {
             "name": "Marco",
             "detail": "from Milan · booked this",
@@ -123,6 +134,7 @@
         },
         "ticker_3": {
           "type": "ticker_msg",
+          "disabled": true,
           "settings": {
             "name": "The Ali family",
             "detail": "from Riyadh · booked this",
@@ -131,6 +143,7 @@
         },
         "ticker_4": {
           "type": "ticker_msg",
+          "disabled": true,
           "settings": {
             "name": "Emma",
             "detail": "from London · booked this",
@@ -164,17 +177,18 @@
         "rating": "4.9",
         "review_count": "1,247",
         "price_unit": "Taxes & fees included",
-        "urgency_text": "Only <b>4 slots</b> left for this weekend — 23 people viewing now",
+        "urgency_text": "",
         "show_trust_bar": true,
         "option1_hint": "Seating & duration",
         "show_date_picker": true,
         "qty_label": "Vehicles",
         "qty_hint": "How many to add to cart",
-        "qty_recap_first_suffix": " buggy",
+        "qty_recap_first_suffix": "buggy",
         "qty_sub": "",
         "addons_label": "Add to your evening",
         "show_buy_now": true,
         "enable_sticky_add_to_cart": true,
+        "whatsapp_url": "",
         "show_reassurance": true
       }
     },
@@ -214,39 +228,149 @@
           }
         }
       },
-      "block_order": ["hi_1", "hi_2", "hi_3", "hi_4"],
+      "block_order": [
+        "hi_1",
+        "hi_2",
+        "hi_3",
+        "hi_4"
+      ],
       "settings": {
         "eyebrow": "Why You'll Love It",
         "heading": "Built for the rush.",
         "heading_accent": "Safe enough for your mum.",
         "lede": "Brand-new 2024 Polaris RZR buggies, full safety kit, named Bedouin marshals. Four things that set this apart from every other operator in Dubai.",
-        "padding-block-start": 64,
+        "padding-block-start": 40,
         "padding-block-end": 64
       }
     },
     "experience": {
       "type": "dlh-pdp-experience",
       "blocks": {
-        "inc_1": { "type": "included", "settings": { "text": "Polaris RZR 1000cc (2024 model)" } },
-        "inc_2": { "type": "included", "settings": { "text": "DOT helmet, gloves, goggles, scarf" } },
-        "inc_3": { "type": "included", "settings": { "text": "5-point harness & safety briefing" } },
-        "inc_4": { "type": "included", "settings": { "text": "Named Bedouin marshal guide" } },
-        "inc_5": { "type": "included", "settings": { "text": "Fuel, water & Arabic coffee stop" } },
-        "inc_6": { "type": "included", "settings": { "text": "Comprehensive insurance" } },
-        "exc_1": { "type": "not_included", "settings": { "text": "Hotel pickup (add +AED 120)" } },
-        "exc_2": { "type": "not_included", "settings": { "text": "Photography (add +AED 150)" } },
-        "exc_3": { "type": "not_included", "settings": { "text": "Gratuities for your marshal" } },
-        "tl_1": { "type": "timeline_step", "settings": { "icon": "truck", "time_label": "30 min before", "name": "Hotel Pickup", "description": "Private transfer from any Dubai hotel." } },
-        "tl_2": { "type": "timeline_step", "settings": { "icon": "shield", "time_label": "On arrival", "name": "Safety Briefing", "description": "15 min walk-through with your Bedouin marshal." } },
-        "tl_3": { "type": "timeline_step", "settings": { "icon": "shield", "time_label": "Gear up", "name": "Helmet & Harness", "description": "Full kit fitted, radios paired, photo of your plate." } },
-        "tl_4": { "type": "timeline_step", "settings": { "icon": "bolt", "time_label": "Drive", "name": "Dune Run", "description": "45–90 min on the Al Badayer belt. Chase the lead." } },
-        "tl_5": { "type": "timeline_step", "settings": { "icon": "fire", "time_label": "Break", "name": "Sunset & Gahwa", "description": "Arabic coffee and dates on the ridge. Cameras ready." } },
-        "tl_6": { "type": "timeline_step", "settings": { "icon": "check", "time_label": "Return", "name": "Drop-off", "description": "Back to your hotel, sand still in your hair." } }
+        "inc_1": {
+          "type": "included",
+          "settings": {
+            "text": "Polaris RZR 1000cc (2024 model)"
+          }
+        },
+        "inc_2": {
+          "type": "included",
+          "settings": {
+            "text": "DOT helmet, gloves, goggles, scarf"
+          }
+        },
+        "inc_3": {
+          "type": "included",
+          "settings": {
+            "text": "5-point harness & safety briefing"
+          }
+        },
+        "inc_4": {
+          "type": "included",
+          "settings": {
+            "text": "Named Bedouin marshal guide"
+          }
+        },
+        "inc_5": {
+          "type": "included",
+          "settings": {
+            "text": "Fuel, water & Arabic coffee stop"
+          }
+        },
+        "inc_6": {
+          "type": "included",
+          "settings": {
+            "text": "Comprehensive insurance"
+          }
+        },
+        "exc_1": {
+          "type": "not_included",
+          "settings": {
+            "text": "Hotel pickup (add +AED 120)"
+          }
+        },
+        "exc_2": {
+          "type": "not_included",
+          "settings": {
+            "text": "Photography (add +AED 150)"
+          }
+        },
+        "exc_3": {
+          "type": "not_included",
+          "settings": {
+            "text": "Gratuities for your marshal"
+          }
+        },
+        "tl_1": {
+          "type": "timeline_step",
+          "settings": {
+            "icon": "truck",
+            "time_label": "30 min before",
+            "name": "Hotel Pickup",
+            "description": "Private transfer from any Dubai hotel."
+          }
+        },
+        "tl_2": {
+          "type": "timeline_step",
+          "settings": {
+            "icon": "shield",
+            "time_label": "On arrival",
+            "name": "Safety Briefing",
+            "description": "15 min walk-through with your Bedouin marshal."
+          }
+        },
+        "tl_3": {
+          "type": "timeline_step",
+          "settings": {
+            "icon": "shield",
+            "time_label": "Gear up",
+            "name": "Helmet & Harness",
+            "description": "Full kit fitted, radios paired, photo of your plate."
+          }
+        },
+        "tl_4": {
+          "type": "timeline_step",
+          "settings": {
+            "icon": "bolt",
+            "time_label": "Drive",
+            "name": "Dune Run",
+            "description": "45–90 min on the Al Badayer belt. Chase the lead."
+          }
+        },
+        "tl_5": {
+          "type": "timeline_step",
+          "settings": {
+            "icon": "fire",
+            "time_label": "Break",
+            "name": "Sunset & Gahwa",
+            "description": "Arabic coffee and dates on the ridge. Cameras ready."
+          }
+        },
+        "tl_6": {
+          "type": "timeline_step",
+          "settings": {
+            "icon": "check",
+            "time_label": "Return",
+            "name": "Drop-off",
+            "description": "Back to your hotel, sand still in your hair."
+          }
+        }
       },
       "block_order": [
-        "inc_1", "inc_2", "inc_3", "inc_4", "inc_5", "inc_6",
-        "exc_1", "exc_2", "exc_3",
-        "tl_1", "tl_2", "tl_3", "tl_4", "tl_5", "tl_6"
+        "inc_1",
+        "inc_2",
+        "inc_3",
+        "inc_4",
+        "inc_5",
+        "inc_6",
+        "exc_1",
+        "exc_2",
+        "exc_3",
+        "tl_1",
+        "tl_2",
+        "tl_3",
+        "tl_4",
+        "tl_5",
+        "tl_6"
       ],
       "settings": {
         "desc_eyebrow": "Your Drive",
@@ -305,13 +429,22 @@
           }
         }
       },
-      "block_order": ["faq_1", "faq_2", "faq_3", "faq_4", "faq_5", "faq_6"],
+      "block_order": [
+        "faq_1",
+        "faq_2",
+        "faq_3",
+        "faq_4",
+        "faq_5",
+        "faq_6"
+      ],
       "settings": {
+        "section_id": "faq",
         "eyebrow": "Good to know",
         "heading": "Your questions,",
         "heading_accent": "answered honestly.",
         "subheading": "Can't find your answer? Reach out on WhatsApp — real humans, 24/7.",
         "button_label": "Chat on WhatsApp",
+        "button_url": "",
         "color_scheme": "scheme-1",
         "section_width": "page-width",
         "padding-block-start": 72,
@@ -344,7 +477,8 @@
             "padding-block-end": 0,
             "padding-inline-start": 0,
             "padding-inline-end": 0
-          }
+          },
+          "blocks": {}
         },
         "static-product-card": {
           "type": "_product-card",
@@ -377,7 +511,8 @@
                 "padding-block-end": 0,
                 "padding-inline-start": 0,
                 "padding-inline-end": 0
-              }
+              },
+              "blocks": {}
             },
             "rec_title": {
               "type": "product-title",
@@ -401,7 +536,8 @@
                 "padding-block-end": 0,
                 "padding-inline-start": 0,
                 "padding-inline-end": 0
-              }
+              },
+              "blocks": {}
             },
             "rec_price": {
               "type": "price",
@@ -422,13 +558,20 @@
                 "padding-block-end": 0,
                 "padding-inline-start": 0,
                 "padding-inline-end": 0
-              }
+              },
+              "blocks": {}
             }
           },
-          "block_order": ["rec_gallery", "rec_title", "rec_price"]
+          "block_order": [
+            "rec_gallery",
+            "rec_title",
+            "rec_price"
+          ]
         }
       },
-      "block_order": ["rec_header"],
+      "block_order": [
+        "rec_header"
+      ],
       "settings": {
         "product": "{{ closest.product }}",
         "recommendation_type": "related",
