@@ -1,6 +1,6 @@
 /**
  * DLH PDP Vehicle — interactive behaviours
- * Gallery slideshow, calendar, quantity stepper, add-ons, ticker, toast.
+ * Gallery slideshow, calendar, add-ons, ticker, toast.
  */
 
 /* ============================================================
@@ -158,9 +158,8 @@ class DlhPdpCalendar extends HTMLElement {
   }
 
   #updateDisplay() {
-    const trigger = this.querySelector('[data-cal-trigger]');
     const txt = this.querySelector('[data-date-label]');
-    if (trigger) trigger.classList.add('is-filled');
+    this.classList.add('is-filled');
     if (txt && this.#selected) {
       txt.textContent = this.#selected.toLocaleDateString('en-US', {
         weekday: 'short', day: 'numeric', month: 'short'
@@ -213,76 +212,98 @@ if (!customElements.get('dlh-pdp-slots')) {
 }
 
 /* ============================================================
-   Quantity stepper
+   Vehicle PDP — headline + sticky from quantity (theme quantity-selector)
    ============================================================ */
-class DlhPdpStepper extends HTMLElement {
-  connectedCallback() {
-    const minus = this.querySelector('[data-minus]');
-    const plus = this.querySelector('[data-plus]');
-    const display = this.querySelector('[data-qty-display]');
-    const input = this.querySelector('input[name="quantity"]');
-    const max = parseInt(this.dataset.max || '8', 10);
+/**
+ * @param {HTMLFormElement | null} form
+ * @param {number} [quantityOverride] – from theme QuantitySelectorUpdateEvent (guaranteed in sync)
+ */
+function dlhPdpSyncLineTotalsForVehicleForm(form, quantityOverride) {
+  if (!form || form.id !== 'dlh-pdp-form') return;
+  // Prices live in .dlh-pv__buy (sibling of form ancestors); avoid relying only on .shopify-section
+  const scope = form.closest('.dlh-pv__buy') || form.closest('.shopify-section') || form.closest('section');
+  if (!scope) return;
+  const nowEl = scope.querySelector('[data-price-now]');
+  const wasEl = scope.querySelector('[data-price-was]');
+  const qtyInput = form.querySelector('input[name="quantity"]');
+  let qty;
+  if (typeof quantityOverride === 'number' && !Number.isNaN(quantityOverride) && quantityOverride > 0) {
+    qty = Math.floor(quantityOverride);
+  } else {
+    qty = Math.max(1, parseInt(String(qtyInput?.value || '1').trim() || '1', 10) || 1);
+  }
+  const currency = nowEl?.dataset?.currency || 'AED';
 
-    const fireQty = (v) => {
-      document.dispatchEvent(
-        new CustomEvent('quantity-selector:update', { bubbles: true, detail: { quantity: v } })
-      );
-    };
+  const unit = parseInt(
+    nowEl?.getAttribute('data-unit-price-cents') || nowEl?.dataset?.unitPriceCents || '0',
+    10
+  );
+  const compareCents = parseInt(
+    nowEl?.getAttribute('data-compare-at-cents') ||
+      nowEl?.dataset?.compareAtCents ||
+      nowEl?.dataset?.comparePriceCents ||
+      '0',
+    10
+  );
 
-    const update = () => {
-      const v = parseInt(input.value, 10);
-      if (display) display.textContent = v;
-      if (minus) minus.disabled = v <= 1;
-      if (plus) plus.disabled = v >= max;
-      const recapSuffix = this.querySelector('.dlh-pv__stepper-suffix');
-      if (recapSuffix) {
-        recapSuffix.textContent = v > 1 ? ' buggies' : ' buggy';
+  const fmt = (cents) => (cents / 100).toLocaleString();
+
+  if (unit > 0 && nowEl) {
+    nowEl.textContent = `${currency} ${fmt(unit * qty)}`;
+  }
+
+  if (wasEl && compareCents > 0) {
+    wasEl.textContent = `${currency} ${fmt(compareCents * qty)}`;
+  }
+
+  const priceWrap = scope.querySelector('[data-vehicle-sticky-price]');
+  if (priceWrap) {
+    const u = parseInt(priceWrap.dataset.unitPriceCents || '0', 10);
+    const c = parseInt(priceWrap.dataset.comparePriceCents || '0', 10);
+    const cur = priceWrap.dataset.currency || currency;
+    if (u > 0) {
+      const t = (u * qty) / 100;
+      const ct = (c * qty) / 100;
+      if (c > 0) {
+        priceWrap.textContent = `${cur} ${t.toLocaleString()} — ${cur} ${ct.toLocaleString()}`;
+      } else {
+        priceWrap.textContent = `${cur} ${t.toLocaleString()}`;
       }
-      const section =
-        this.closest('.shopify-section') || this.closest('[data-section-id]') || this.closest('section');
-      const totalEl = section?.querySelector('[data-total-val]');
-      if (totalEl) {
-        const unitPriceCents = parseInt(totalEl.dataset.unitPriceCents || '0', 10);
-        const currency = totalEl.dataset.currency || 'AED';
-        if (unitPriceCents > 0) {
-          const total = (unitPriceCents * v) / 100;
-          totalEl.textContent = `${currency} ${total.toLocaleString()}`;
-        }
-      }
-      const stickyPriceEl = section?.querySelector('[data-vehicle-sticky-price]');
-      if (stickyPriceEl) {
-        const unitPriceCents = parseInt(stickyPriceEl.dataset.unitPriceCents || '0', 10);
-        const comparePriceCents = parseInt(stickyPriceEl.dataset.comparePriceCents || '0', 10);
-        const currency = stickyPriceEl.dataset.currency || 'AED';
-        if (unitPriceCents > 0) {
-          const total = (unitPriceCents * v) / 100;
-          if (comparePriceCents > 0) {
-            const compareTotal = (comparePriceCents * v) / 100;
-            stickyPriceEl.textContent = `${currency} ${total.toLocaleString()} — ${currency} ${compareTotal.toLocaleString()}`;
-          } else {
-            stickyPriceEl.textContent = `${currency} ${total.toLocaleString()}`;
-          }
-        }
-      }
-      fireQty(v);
-    };
-
-    minus?.addEventListener('click', () => {
-      const v = parseInt(input.value, 10);
-      if (v > 1) { input.value = v - 1; update(); }
-    });
-    plus?.addEventListener('click', () => {
-      const v = parseInt(input.value, 10);
-      if (v < max) { input.value = v + 1; update(); }
-    });
-
-    update();
+    }
   }
 }
 
-if (!customElements.get('dlh-pdp-stepper')) {
-  customElements.define('dlh-pdp-stepper', DlhPdpStepper);
+function dlhPdpQuantityDetail(e) {
+  if (e && 'detail' in e && e.detail && typeof (/** @type {any} */(e).detail).quantity === 'number') {
+    return (/** @type {any} */(e).detail).quantity;
+  }
+  return undefined;
 }
+
+document.addEventListener('quantity-selector:update', (e) => {
+  const form = document.getElementById('dlh-pdp-form');
+  if (!form) return;
+  const t = e.target;
+  if (!t || (typeof t !== 'object')) return;
+  if (!form.contains(/** @type {Node} */(t)) && !e.composedPath?.().includes(form)) {
+    return;
+  }
+  const fromDetail = dlhPdpQuantityDetail(e);
+  dlhPdpSyncLineTotalsForVehicleForm(
+    /** @type {HTMLFormElement} */(form),
+    fromDetail
+  );
+});
+
+function dlhPdpOnQuantityFieldInput(/** @type {Event} */ e) {
+  const t = /** @type {HTMLElement | null} */ (e.target);
+  if (!t?.matches?.('input[name="quantity"]')) return;
+  const form = t.closest('form#dlh-pdp-form');
+  if (form) dlhPdpSyncLineTotalsForVehicleForm(/** @type {HTMLFormElement} */(form));
+}
+
+document.addEventListener('input', dlhPdpOnQuantityFieldInput, true);
+document.addEventListener('change', dlhPdpOnQuantityFieldInput, true);
 
 /* ============================================================
    Add-on toggles
@@ -385,7 +406,7 @@ class DlhPdpVariantPicker extends HTMLElement {
       this.#updatePrice(match);
       document.dispatchEvent(new CustomEvent('dlh:pdp-selection-update', { bubbles: true }));
 
-      const productForm = form?.closest('product-form-component');
+      const productForm = this.closest('product-form-component');
       const productId = productForm?.dataset.productId;
       if (productForm && productId) {
         const emptyDoc = new DOMParser().parseFromString(
@@ -411,35 +432,19 @@ class DlhPdpVariantPicker extends HTMLElement {
 
   #updatePrice(variant) {
     const section =
-      this.closest('.shopify-section') || this.closest('[data-section-id]') || this.closest('section');
+      this.closest('.dlh-pv__buy') ||
+      this.closest('.shopify-section') ||
+      this.closest('[data-section-id]') ||
+      this.closest('section');
     if (!section) return;
 
     const nowEl = section.querySelector('[data-price-now]');
-    const wasEl = section.querySelector('[data-price-was]');
-    const totalEl = section.querySelector('[data-total-val]');
 
     const currency = this.dataset.currency || 'AED';
-    const price = (variant.price / 100).toLocaleString();
-    const compare = variant.compare_at_price ? (variant.compare_at_price / 100).toLocaleString() : null;
-
-    if (nowEl) nowEl.textContent = `${currency} ${price}`;
-    if (wasEl && compare) wasEl.textContent = `${currency} ${compare}`;
-    if (totalEl) {
-      totalEl.dataset.unitPriceCents = String(variant.price);
-      totalEl.dataset.currency = currency;
-
-      const qtyInput = section.querySelector('input[name="quantity"]');
-      const qty = Math.max(1, parseInt(qtyInput?.value || '1', 10) || 1);
-      const total = ((variant.price || 0) * qty) / 100;
-      totalEl.textContent = `${currency} ${total.toLocaleString()}`;
-    }
-
-    const stepperRecap = section.querySelector('[data-stepper-recap]');
-    if (stepperRecap && Array.isArray(variant.options)) {
-      variant.options.forEach((optVal, i) => {
-        const el = stepperRecap.querySelector(`[data-stepper-bind="${i}"]`);
-        if (el) el.textContent = String(optVal);
-      });
+    if (nowEl) {
+      nowEl.setAttribute('data-unit-price-cents', String(variant.price));
+      nowEl.setAttribute('data-compare-at-cents', String(variant.compare_at_price || 0));
+      nowEl.dataset.currency = currency;
     }
 
     const sticky = section.querySelector('sticky-add-to-cart');
@@ -452,17 +457,6 @@ class DlhPdpVariantPicker extends HTMLElement {
         priceWrap.dataset.unitPriceCents = String(variant.price || 0);
         priceWrap.dataset.comparePriceCents = String(variant.compare_at_price || 0);
         priceWrap.dataset.currency = currency;
-
-        const qtyInput = section.querySelector('input[name="quantity"]');
-        const qty = Math.max(1, parseInt(qtyInput?.value || '1', 10) || 1);
-        const stickyTotal = ((variant.price || 0) * qty) / 100;
-        const stickyCompareTotal = ((variant.compare_at_price || 0) * qty) / 100;
-
-        if (variant.compare_at_price) {
-          priceWrap.textContent = `${currency} ${stickyTotal.toLocaleString()} — ${currency} ${stickyCompareTotal.toLocaleString()}`;
-        } else {
-          priceWrap.textContent = `${currency} ${stickyTotal.toLocaleString()}`;
-        }
       }
 
       const vLabel = sticky.querySelector('.sticky-add-to-cart__variant');
@@ -479,6 +473,11 @@ class DlhPdpVariantPicker extends HTMLElement {
       if (stickyBtn) {
         stickyBtn.disabled = !variant.available;
       }
+    }
+
+    const form = this.closest('form#dlh-pdp-form');
+    if (form) {
+      dlhPdpSyncLineTotalsForVehicleForm(/** @type {HTMLFormElement} */ (form));
     }
   }
 }
@@ -566,4 +565,15 @@ class DlhPdpToast extends HTMLElement {
 
 if (!customElements.get('dlh-pdp-toast')) {
   customElements.define('dlh-pdp-toast', DlhPdpToast);
+}
+
+/* Sync headline prices on load (quantity may be 1) */
+function dlhPdpInitVehicleFormTotals() {
+  const form = document.getElementById('dlh-pdp-form');
+  if (form) dlhPdpSyncLineTotalsForVehicleForm(/** @type {HTMLFormElement} */(form));
+}
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', dlhPdpInitVehicleFormTotals);
+} else {
+  dlhPdpInitVehicleFormTotals();
 }

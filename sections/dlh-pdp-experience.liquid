@@ -21,10 +21,9 @@
         {{ section.settings.description }}
       </div>
 
-      {%- comment -%} Right — included / not included card ── {%- endcomment -%}
+      {%- comment -%} Right — included card ── {%- endcomment -%}
       <aside class="dlh-pe__incl-card">
         {%- assign incl_yes = section.blocks | where: 'type', 'included' -%}
-        {%- assign incl_no  = section.blocks | where: 'type', 'not_included' -%}
 
         {%- if incl_yes.size > 0 -%}
           <h5>What's included</h5>
@@ -32,18 +31,6 @@
             {%- for block in incl_yes -%}
               <li {{ block.shopify_attributes }}>
                 <svg width="16" height="16"><use href="#dlh-ico-check"/></svg>
-                <span>{{ block.settings.text }}</span>
-              </li>
-            {%- endfor -%}
-          </ul>
-        {%- endif -%}
-
-        {%- if incl_no.size > 0 -%}
-          <h5>Not included</h5>
-          <ul class="dlh-pe__incl-list dlh-pe__incl-list--no">
-            {%- for block in incl_no -%}
-              <li {{ block.shopify_attributes }}>
-                <svg width="16" height="16"><use href="#dlh-ico-x"/></svg>
                 <span>{{ block.settings.text }}</span>
               </li>
             {%- endfor -%}
@@ -167,18 +154,6 @@
       ]
     },
     {
-      "type": "not_included",
-      "name": "Not included item",
-      "settings": [
-        {
-          "type": "text",
-          "id": "text",
-          "label": "Text",
-          "default": "Hotel pickup (add +AED 120)"
-        }
-      ]
-    },
-    {
       "type": "timeline_step",
       "name": "Timeline step",
       "settings": [
@@ -229,9 +204,6 @@
         { "type": "included", "settings": { "text": "Named Bedouin marshal guide" } },
         { "type": "included", "settings": { "text": "Fuel, water & Arabic coffee stop" } },
         { "type": "included", "settings": { "text": "Comprehensive insurance" } },
-        { "type": "not_included", "settings": { "text": "Hotel pickup (add +AED 120)" } },
-        { "type": "not_included", "settings": { "text": "Photography (add +AED 150)" } },
-        { "type": "not_included", "settings": { "text": "Gratuities for your marshal" } },
         { "type": "timeline_step", "settings": { "icon": "truck", "time_label": "30 min before", "name": "Hotel Pickup", "description": "Private transfer from any Dubai hotel." } },
         { "type": "timeline_step", "settings": { "icon": "shield", "time_label": "On arrival", "name": "Safety Briefing", "description": "15 min walk-through with your Bedouin marshal." } },
         { "type": "timeline_step", "settings": { "icon": "shield", "time_label": "Gear up", "name": "Helmet & Harness", "description": "Full kit fitted, radios paired, photo of your plate." } },

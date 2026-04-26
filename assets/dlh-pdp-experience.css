@@ -91,7 +91,7 @@
   }
 }
 
-/* ---- Included / Not-included card ---- */
+/* ---- What's included card ---- */
 
 .dlh-pe__incl-card {
   background: var(--brand-sand, #f4efe6);
@@ -107,10 +107,6 @@
   font-size: 18px;
   color: var(--brand-navy, #0a1c3a);
   margin: 0 0 14px;
-}
-
-.dlh-pe__incl-card h5 + h5 {
-  margin-top: 18px;
 }
 
 .dlh-pe__incl-list {
@@ -139,14 +135,6 @@
 
 .dlh-pe__incl-list--yes li svg {
   color: var(--brand-oasis-deep, #4f6b43);
-}
-
-.dlh-pe__incl-list--no li {
-  color: var(--fg-muted, rgba(10,28,58,.66));
-}
-
-.dlh-pe__incl-list--no li svg {
-  color: var(--border-strong, rgba(10,28,58,.30));
 }
 
 /* ---- Timeline section (inside sand bg) ---- */

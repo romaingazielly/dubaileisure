@@ -29,8 +29,10 @@
           <div class="dlh-ph__icon">
             <svg width="22" height="22"><use href="#dlh-ico-{{ block.settings.icon }}"/></svg>
           </div>
-          <h4>{{ block.settings.title }}</h4>
-          <p>{{ block.settings.description }}</p>
+          <div class="dlh-ph__card-body">
+            <h4>{{ block.settings.title }}</h4>
+            <p>{{ block.settings.description }}</p>
+          </div>
         </div>
       {%- endfor -%}
     </div>

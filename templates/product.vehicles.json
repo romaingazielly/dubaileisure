@@ -179,12 +179,7 @@
         "price_unit": "Taxes & fees included",
         "urgency_text": "",
         "show_trust_bar": true,
-        "option1_hint": "Seating & duration",
         "show_date_picker": true,
-        "qty_label": "Vehicles",
-        "qty_hint": "How many to add to cart",
-        "qty_recap_first_suffix": "buggy",
-        "qty_sub": "",
         "addons_label": "Add to your evening",
         "show_buy_now": true,
         "enable_sticky_add_to_cart": true,
@@ -282,24 +277,6 @@
             "text": "Comprehensive insurance"
           }
         },
-        "exc_1": {
-          "type": "not_included",
-          "settings": {
-            "text": "Hotel pickup (add +AED 120)"
-          }
-        },
-        "exc_2": {
-          "type": "not_included",
-          "settings": {
-            "text": "Photography (add +AED 150)"
-          }
-        },
-        "exc_3": {
-          "type": "not_included",
-          "settings": {
-            "text": "Gratuities for your marshal"
-          }
-        },
         "tl_1": {
           "type": "timeline_step",
           "settings": {
@@ -362,9 +339,6 @@
         "inc_4",
         "inc_5",
         "inc_6",
-        "exc_1",
-        "exc_2",
-        "exc_3",
         "tl_1",
         "tl_2",
         "tl_3",
