@@ -111,7 +111,7 @@
             "icon_type": "pickup",
             "number": "Free",
             "unit": "",
-            "label": "Hotel pickup"
+            "label": "Hotel pick & drop"
           }
         },
         "usp_cancel": {
@@ -120,25 +120,16 @@
             "icon_type": "cancel",
             "number": "24h",
             "unit": "",
-            "label": "Free cancellation"
-          }
-        },
-        "usp_certified": {
-          "type": "usp_item",
-          "settings": {
-            "icon_type": "shield",
-            "number": "ISO",
-            "unit": "·IATA",
-            "label": "Certified"
+            "label": "Prior Free cancelation"
           }
         },
         "usp_guides": {
           "type": "usp_item",
           "settings": {
             "icon_type": "guide",
-            "number": "12",
+            "number": "40",
             "unit": "",
-            "label": "Bedouin guides"
+            "label": "Desert guides"
           }
         },
         "usp_whatsapp": {
@@ -150,20 +141,20 @@
             "label": "WhatsApp concierge"
           }
         },
-        "usp_private": {
+        "usp_insured": {
           "type": "usp_item",
           "settings": {
-            "icon_type": "private",
+            "icon_type": "insured",
             "number": "100%",
             "unit": "",
-            "label": "Private options"
+            "label": "Insured 4x4's"
           }
         },
         "usp_reviews": {
           "type": "usp_item",
           "settings": {
             "icon_type": "quote",
-            "number": "1,247",
+            "number": "1,250+",
             "unit": "",
             "label": "Verified reviews"
           }
@@ -173,10 +164,9 @@
         "usp_rating",
         "usp_pickup",
         "usp_cancel",
-        "usp_certified",
         "usp_guides",
         "usp_whatsapp",
-        "usp_private",
+        "usp_insured",
         "usp_reviews"
       ],
       "name": "USP Ticker",
@@ -369,7 +359,7 @@
         "show_rating_block": true,
         "rating_score": "4.9",
         "review_count": "1,247 verified reviews",
-        "review_sources": "TripAdvisor · Google · GetYourGuide",
+        "review_sources": "TripAdvisor · Google",
         "card_width": 360,
         "card_gap": 20,
         "scroll_seconds": 60,

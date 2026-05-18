@@ -72,14 +72,6 @@
             "sold_out": true
           }
         },
-        "addon_1": {
-          "type": "addon",
-          "settings": {
-            "name": "Hotel pickup & drop-off",
-            "price_label": "AED 120",
-            "description": "Private AC transfer from any Dubai hotel, round trip."
-          }
-        },
         "addon_2": {
           "type": "addon",
           "settings": {
@@ -98,6 +90,7 @@
         },
         "reass_1": {
           "type": "reassurance",
+          "disabled": true,
           "settings": {
             "text": "No payment today"
           }
@@ -160,7 +153,6 @@
         "slot_2",
         "slot_3",
         "slot_4",
-        "addon_1",
         "addon_2",
         "addon_3",
         "reass_1",
@@ -179,6 +171,7 @@
         "price_unit": "Taxes & fees included",
         "urgency_text": "",
         "show_trust_bar": true,
+        "option1_hint": "",
         "show_date_picker": true,
         "addons_label": "Add to your evening",
         "show_buy_now": true,

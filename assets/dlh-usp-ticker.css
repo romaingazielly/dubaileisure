@@ -62,6 +62,11 @@
   height: 18px;
 }
 
+.dlh-usp-ticker__icon svg.dlh-usp-ticker__icon-suv {
+  width: 26px;
+  height: 18px;
+}
+
 /* Number + unit */
 .dlh-usp-ticker__value {
   display: flex;
@@ -128,6 +133,11 @@
 
   .dlh-usp-ticker__icon svg {
     width: 16px;
+    height: 16px;
+  }
+
+  .dlh-usp-ticker__icon svg.dlh-usp-ticker__icon-suv {
+    width: 24px;
     height: 16px;
   }
 
