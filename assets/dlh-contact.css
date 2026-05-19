@@ -1,0 +1,298 @@
+/* Dubai Leisure Holidays — Contact page custom blocks */
+
+/* Shared: brand icon chip (44×44, brand-red, centered SVG) */
+.dlh-reason__icon,
+.dlh-office__icon {
+  flex: 0 0 44px;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: var(--brand-red-bright, #c41e3a);
+  color: #fff;
+}
+
+.dlh-reason__icon svg,
+.dlh-office__icon svg {
+  width: 22px;
+  height: 22px;
+  stroke: #fff;
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Shared: eyebrow label (uppercase, brand-red, tracked) */
+.dlh-office__label,
+.dlh-next-steps__eyebrow {
+  display: inline-block;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--brand-red-bright, #c41e3a);
+}
+
+/* Reasons strip — 4 trust cards */
+.dlh-contact-reasons {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+  width: 100%;
+}
+
+.dlh-reason {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 22px 20px;
+  border-radius: 14px;
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.dlh-reason:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  border-color: color-mix(in srgb, var(--brand-red-bright, #c41e3a) 25%, transparent);
+}
+
+.dlh-reason__body {
+  flex: 1;
+  min-width: 0;
+}
+
+.dlh-reason__title {
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 1.3;
+  margin: 0 0 4px;
+}
+
+.dlh-reason__desc {
+  font-size: 13.5px;
+  line-height: 1.45;
+  margin: 0;
+  opacity: 0.7;
+}
+
+@media (max-width: 990px) {
+  .dlh-contact-reasons {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 540px) {
+  .dlh-contact-reasons {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Google Maps embed + map/form height sync */
+.dlh-contact-map {
+  width: 100%;
+}
+
+.dlh-contact-map iframe {
+  border: 0;
+  display: block;
+  width: 100%;
+  height: 360px;
+  border-radius: 14px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+@media (max-width: 749px) {
+  /* On mobile, the section is .layout-panel-flex.mobile-column with align-items: flex-start,
+     so each block stays at its content's natural width (the iframe's 600px intrinsic width).
+     Force the wrapper containing the map to span the full viewport, breaking out of
+     the page-width container with negative margins. */
+  .custom-liquid-block:has(> .dlh-contact-map) {
+    width: 100vw;
+    max-width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .dlh-contact-map iframe {
+    border-radius: 0;
+  }
+}
+
+@media (min-width: 750px) {
+  .layout-panel-flex--row > .contact-form,
+  .layout-panel-flex--row > .custom-liquid-block {
+    flex: 1 1 0;
+    min-width: 0;
+    width: auto;
+    max-width: none;
+  }
+
+  .dlh-contact-map iframe {
+    height: 540px;
+  }
+
+  .contact-form__form {
+    min-height: 540px;
+  }
+}
+
+/* Office details card (currently disabled but kept for re-enable) */
+.dlh-office {
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 32px;
+  background: #fff;
+  border-radius: 18px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+}
+
+.dlh-office__title {
+  font-family: var(--font-primary--family, inherit);
+  font-size: clamp(20px, 2vw, 26px);
+  font-weight: 600;
+  margin: 0 0 22px;
+  letter-spacing: -0.01em;
+}
+
+.dlh-office__items {
+  display: flex;
+  flex-direction: column;
+}
+
+.dlh-office__item {
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+  padding: 18px 0;
+}
+
+.dlh-office__item + .dlh-office__item {
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.dlh-office__body {
+  flex: 1;
+  min-width: 0;
+}
+
+.dlh-office__label {
+  margin: 0 0 6px;
+}
+
+.dlh-office__value {
+  font-size: 15px;
+  line-height: 1.55;
+  margin: 0;
+}
+
+.dlh-office__value a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.dlh-office__value a:hover {
+  text-decoration: underline;
+}
+
+/* Next steps — 3-step process */
+.dlh-next-steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  width: 100%;
+  position: relative;
+}
+
+.dlh-next-steps__head {
+  grid-column: 1 / -1;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.dlh-next-steps__eyebrow {
+  margin-bottom: 10px;
+}
+
+.dlh-next-steps__title {
+  font-family: var(--font-primary--family, inherit);
+  font-size: clamp(24px, 2.6vw, 32px);
+  line-height: 1.15;
+  margin: 0;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.dlh-step {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 8px;
+}
+
+.dlh-step__num {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--brand-red-bright, #c41e3a);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 22px;
+  margin-bottom: 14px;
+  position: relative;
+  z-index: 2;
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--brand-red-bright, #c41e3a) 30%, transparent);
+}
+
+.dlh-step__title {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1.3;
+  margin: 0 0 6px;
+}
+
+.dlh-step__desc {
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0;
+  opacity: 0.72;
+  max-width: 280px;
+}
+
+@media (min-width: 750px) {
+  .dlh-step:not(:last-of-type)::after {
+    content: "";
+    position: absolute;
+    top: 28px;
+    left: calc(50% + 32px);
+    width: calc(100% - 64px);
+    height: 2px;
+    background: linear-gradient(
+      to right,
+      color-mix(in srgb, var(--brand-red-bright, #c41e3a) 40%, transparent),
+      color-mix(in srgb, var(--brand-red-bright, #c41e3a) 10%, transparent)
+    );
+    z-index: 1;
+  }
+}
+
+@media (max-width: 749px) {
+  .dlh-next-steps {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}
