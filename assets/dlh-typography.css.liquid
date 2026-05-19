@@ -1,0 +1,50 @@
+/* Dubai Leisure Holidays — Custom typography (Kufam)
+ *
+ * Kufam is not in Shopify's font library, so it is self-hosted as a theme asset
+ * (Kufam.woff2 + Kufam-Italic.woff2 — variable fonts covering weight 400–900).
+ *
+ * Heading + subheading fonts in the theme editor are set to Inter (a clean
+ * Shopify-native default). Inter is never rendered — we override the CSS
+ * variables below to use 'Kufam' instead. The Inter preload is disabled in
+ * snippets/fonts.liquid to avoid downloading an unused font file.
+ *
+ * Anti-FOUT strategy: we declare a metric-overridden local fallback font that
+ * mimics Kufam's vertical metrics. While Kufam is loading (preloaded in
+ * layout/theme.liquid), the fallback renders headings with matching ascent,
+ * descent, and overall size — so when Kufam swaps in, the layout doesn't shift
+ * and the visual change is minimal. This is the modern "zero CLS, minimal FOUT"
+ * pattern used by Next.js Font Optimization, Vercel, Stripe, etc.
+ */
+
+@font-face {
+  font-family: 'Kufam';
+  src: url('{{ "Kufam.woff2" | asset_url }}') format('woff2');
+  font-weight: 400 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Kufam';
+  src: url('{{ "Kufam-Italic.woff2" | asset_url }}') format('woff2');
+  font-weight: 400 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Metric-matched fallback: Arial is on every OS (macOS, Windows, iOS, Android,
+   Linux ships Liberation Sans aliased as Arial), so it renders instantly and
+   the overrides align its box with Kufam's. */
+@font-face {
+  font-family: 'KufamFallback';
+  src: local('Arial');
+  size-adjust: 100%;
+  ascent-override: 88%;
+  descent-override: 24%;
+  line-gap-override: 0%;
+}
+
+:root {
+  --font-heading--family: 'Kufam', 'KufamFallback', sans-serif;
+  --font-subheading--family: 'Kufam', 'KufamFallback', sans-serif;
+}

@@ -9,26 +9,12 @@
     fetchpriority="low"
   >
 {%- endunless -%}
-{%- unless settings.type_subheading_font.system? -%}
-  <link
-    rel="preload"
-    as="font"
-    href="{{ settings.type_subheading_font | font_url }}"
-    type="font/woff2"
-    crossorigin
-    fetchpriority="low"
-  >
-{%- endunless -%}
-{%- unless settings.type_heading_font.system? -%}
-  <link
-    rel="preload"
-    as="font"
-    href="{{ settings.type_heading_font | font_url }}"
-    type="font/woff2"
-    crossorigin
-    fetchpriority="low"
-  >
-{%- endunless -%}
+{%- comment -%}
+  Heading + subheading fonts are intentionally not preloaded here:
+  Kufam (self-hosted) replaces them via assets/dlh-typography.css.liquid, and is
+  preloaded directly from layout/theme.liquid. Preloading the Shopify-selected
+  font would download an unused file.
+{%- endcomment -%}
 {%- unless settings.type_accent_font.system? -%}
   <link
     rel="preload"

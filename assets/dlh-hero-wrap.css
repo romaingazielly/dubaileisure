@@ -144,7 +144,7 @@
 /* ---- Title ---- */
 
 .dlh-hw__title {
-  font-family: var(--font-heading--family, 'Shantell Sans', sans-serif);
+  font-family: var(--font-heading--family, 'Kufam', sans-serif);
   font-style: italic;
   font-weight: 600;
   font-size: clamp(44px, 7.2vw, 92px);

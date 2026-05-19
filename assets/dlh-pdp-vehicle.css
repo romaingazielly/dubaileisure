@@ -287,7 +287,7 @@
 }
 
 .dlh-pv__title {
-  font-family: var(--font-heading--family, var(--font-heading, 'Shantell Sans', sans-serif));
+  font-family: var(--font-heading--family, var(--font-heading, 'Kufam', sans-serif));
   font-style: italic;
   font-weight: 600;
   font-size: 40px;

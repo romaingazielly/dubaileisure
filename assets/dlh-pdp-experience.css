@@ -34,7 +34,7 @@
 }
 
 .dlh-pe__heading {
-  font-family: var(--font-heading--family, var(--font-heading, 'Shantell Sans', sans-serif));
+  font-family: var(--font-heading--family, var(--font-heading, 'Kufam', sans-serif));
   font-style: italic;
   font-weight: 600;
   font-size: clamp(32px, 4.4vw, 52px);
@@ -83,7 +83,7 @@
 }
 
 .dlh-pe__copy p:first-child::first-letter {
-  font-family: var(--font-heading--family, var(--font-heading, 'Shantell Sans', sans-serif));
+  font-family: var(--font-heading--family, var(--font-heading, 'Kufam', sans-serif));
   font-style: italic;
   font-weight: 600;
   font-size: 60px;
@@ -109,7 +109,7 @@
 }
 
 .dlh-pe__incl-card h5 {
-  font-family: var(--font-heading--family, var(--font-heading, 'Shantell Sans', sans-serif));
+  font-family: var(--font-heading--family, var(--font-heading, 'Kufam', sans-serif));
   font-style: italic;
   font-weight: 600;
   font-size: 18px;
@@ -236,7 +236,7 @@
 }
 
 .dlh-pe__step-name {
-  font-family: var(--font-heading--family, var(--font-heading, 'Shantell Sans', sans-serif));
+  font-family: var(--font-heading--family, var(--font-heading, 'Kufam', sans-serif));
   font-style: italic;
   font-weight: 600;
   font-size: 17px;
