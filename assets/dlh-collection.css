@@ -1,0 +1,17 @@
+.product-grid-container .product-media-container {
+  --gallery-aspect-ratio: 1 / 1;
+}
+
+@media screen and (max-width: 749px) {
+  .product-grid-container .main-collection-grid {
+    padding-inline: var(--page-margin);
+  }
+
+  .product-grid-container .main-collection-grid .card-gallery {
+    margin-inline: 0;
+  }
+
+  .product-grid-container .main-collection-grid .product-grid__card {
+    padding-inline: 0;
+  }
+}
