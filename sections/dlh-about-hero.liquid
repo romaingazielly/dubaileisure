@@ -1,0 +1,259 @@
+{{ 'dlh-about-hero.css' | asset_url | stylesheet_tag }}
+
+<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+<section
+  class="section color-{{ section.settings.color_scheme }} dlh-about-hero spacing-style"
+  style="{% render 'spacing-style', settings: section.settings %}"
+  {{ section.shopify_attributes }}
+>
+  <div class="dlh-about-hero__wrap">
+    {%- if section.settings.crumb_home_label != blank or section.settings.crumb_current_label != blank -%}
+      <nav class="dlh-about-hero__crumbs" aria-label="Breadcrumb">
+        {%- if section.settings.crumb_home_label != blank -%}
+          <a href="{{ section.settings.crumb_home_url | default: '/' }}">{{ section.settings.crumb_home_label | escape }}</a>
+          <span aria-hidden="true">/</span>
+        {%- endif -%}
+        {%- if section.settings.crumb_current_label != blank -%}
+          <span class="dlh-about-hero__crumbs-current" aria-current="page">{{ section.settings.crumb_current_label | escape }}</span>
+        {%- endif -%}
+      </nav>
+    {%- endif -%}
+
+    <div class="dlh-about-hero__grid">
+      <div class="dlh-about-hero__copy">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="dlh-about-hero__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+        {%- endif -%}
+
+        {%- if section.settings.heading != blank or section.settings.heading_accent != blank -%}
+          <h1 class="dlh-about-hero__heading">
+            {%- if section.settings.heading != blank -%}{{ section.settings.heading | escape }}{%- endif -%}
+            {%- if section.settings.heading_accent != blank -%}
+              <span class="dlh-about-hero__heading-accent">{{ section.settings.heading_accent | escape }}</span>
+            {%- endif -%}
+          </h1>
+        {%- endif -%}
+
+        {%- if section.settings.lede != blank -%}
+          <div class="dlh-about-hero__lede">{{ section.settings.lede }}</div>
+        {%- endif -%}
+
+        {%- if section.settings.primary_label != blank -%}
+          <div class="dlh-about-hero__ctas">
+            <a
+              href="{{ section.settings.primary_url | default: '#' }}"
+              class="dlh-about-hero__btn dlh-about-hero__btn--primary"
+            >
+              {{ section.settings.primary_label | escape }}
+            </a>
+          </div>
+        {%- endif -%}
+      </div>
+
+      <figure class="dlh-about-hero__photo">
+        {%- if section.settings.image != blank -%}
+          {{
+            section.settings.image
+            | image_url: width: 1600
+            | image_tag:
+              class: 'dlh-about-hero__photo-img',
+              loading: 'eager',
+              fetchpriority: 'high',
+              sizes: '(max-width: 980px) 100vw, 55vw',
+              widths: '480, 800, 1100, 1400, 1800',
+              alt: section.settings.image.alt | default: section.settings.heading
+          }}
+        {%- else -%}
+          <div class="dlh-about-hero__photo-placeholder" role="img" aria-label="{{ section.settings.heading | escape }}"></div>
+        {%- endif -%}
+
+        {%- if section.settings.show_chip -%}
+          <div class="dlh-about-hero__chip color-{{ section.settings.chip_color_scheme }}">
+            {%- if section.settings.chip_number != blank -%}
+              <strong class="dlh-about-hero__chip-number">
+                {{- section.settings.chip_number | escape -}}
+                {%- if section.settings.chip_suffix != blank -%}
+                  <sup class="dlh-about-hero__chip-suffix">{{ section.settings.chip_suffix | escape }}</sup>
+                {%- endif -%}
+              </strong>
+            {%- endif -%}
+            {%- if section.settings.chip_label_line1 != blank or section.settings.chip_label_line2 != blank -%}
+              <span class="dlh-about-hero__chip-label">
+                {{- section.settings.chip_label_line1 | escape -}}
+                {%- if section.settings.chip_label_line2 != blank -%}<br>{{ section.settings.chip_label_line2 | escape }}{%- endif -%}
+              </span>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      </figure>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "DLH About — Hero",
+  "tag": "div",
+  "class": "section-wrapper",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Breadcrumb"
+    },
+    {
+      "type": "text",
+      "id": "crumb_home_label",
+      "label": "Home label",
+      "default": "Home"
+    },
+    {
+      "type": "url",
+      "id": "crumb_home_url",
+      "label": "Home URL"
+    },
+    {
+      "type": "text",
+      "id": "crumb_current_label",
+      "label": "Current page label",
+      "default": "About Us"
+    },
+    {
+      "type": "header",
+      "content": "Copy"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "About Us · Since 2004"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading (line 1)",
+      "default": "The Dream Of One Man,"
+    },
+    {
+      "type": "text",
+      "id": "heading_accent",
+      "label": "Heading accent (line 2, red)",
+      "default": "Shared With Many."
+    },
+    {
+      "type": "richtext",
+      "id": "lede",
+      "label": "Body text",
+      "default": "<p>Dubai Leisure Holidays began in 2004 as the dream of one man, Simon D'Mello — twenty-five years deep in tour & travel before he ever signed his own door. What started as one office, a handful of Land Cruisers and an unshakeable belief in personalised service is today a team trusted by guests from every continent.</p><p>We've stayed family-run on purpose. Every itinerary still passes through the same desk it did on day one — questions answered by the people who'll be running your evening, not a script. That's how we've kept a 4.9★ rating across more than 1,200 reviews.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Primary button"
+    },
+    {
+      "type": "text",
+      "id": "primary_label",
+      "label": "Label",
+      "default": "Plan Your Trip"
+    },
+    {
+      "type": "url",
+      "id": "primary_url",
+      "label": "URL"
+    },
+    {
+      "type": "header",
+      "content": "Hero image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image",
+      "info": "Recommended 1600x1067 (3:2). A guide-handoff or warm human moment works best."
+    },
+    {
+      "type": "header",
+      "content": "Chip (years badge)"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_chip",
+      "label": "Show chip",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "chip_number",
+      "label": "Number",
+      "default": "20"
+    },
+    {
+      "type": "text",
+      "id": "chip_suffix",
+      "label": "Suffix",
+      "default": "+"
+    },
+    {
+      "type": "text",
+      "id": "chip_label_line1",
+      "label": "Label line 1",
+      "default": "Years"
+    },
+    {
+      "type": "text",
+      "id": "chip_label_line2",
+      "label": "Label line 2",
+      "default": "of stories"
+    },
+    {
+      "type": "color_scheme",
+      "id": "chip_color_scheme",
+      "label": "Chip color scheme",
+      "default": "scheme-5",
+      "info": "Pick a scheme that contrasts with the section — typically a dark scheme."
+    },
+    {
+      "type": "header",
+      "content": "Section style"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top padding",
+      "min": 0,
+      "max": 240,
+      "step": 4,
+      "unit": "px",
+      "default": 132
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 240,
+      "step": 4,
+      "unit": "px",
+      "default": 92
+    }
+  ],
+  "presets": [
+    {
+      "name": "DLH About — Hero",
+      "category": "t:categories.storytelling"
+    }
+  ]
+}
+{% endschema %}

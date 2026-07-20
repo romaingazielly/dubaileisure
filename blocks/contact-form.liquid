@@ -202,9 +202,9 @@
 
   .contact-form__input:focus,
   .contact-form__input:focus-visible {
-    outline: none;
     border-color: var(--brand-red, #b11c3d);
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand-red, #b11c3d) 18%, transparent);
+    outline: 3px solid color-mix(in srgb, var(--brand-red, #b11c3d) 18%, transparent);
+    outline-offset: 0;
   }
 
   .contact-form__input--textarea {
@@ -231,7 +231,8 @@
 
   .contact-form__compose:focus-within {
     border-color: var(--brand-red, #b11c3d);
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand-red, #b11c3d) 18%, transparent);
+    outline: 3px solid color-mix(in srgb, var(--brand-red, #b11c3d) 18%, transparent);
+    outline-offset: 0;
   }
 
   .contact-form__compose .contact-form__input--textarea,

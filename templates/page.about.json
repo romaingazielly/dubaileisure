@@ -1,0 +1,14 @@
+{
+  "sections": {
+    "hero": {
+      "type": "dlh-about-hero",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "chip_color_scheme": "scheme-5"
+      }
+    }
+  },
+  "order": [
+    "hero"
+  ]
+}
