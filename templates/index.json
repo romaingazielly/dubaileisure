@@ -102,7 +102,16 @@
             "icon_type": "star",
             "number": "4.9",
             "unit": "/5",
-            "label": "Guest rating"
+            "label": "TripAdvisor · 1,250+ reviews"
+          }
+        },
+        "usp_heritage": {
+          "type": "usp_item",
+          "settings": {
+            "icon_type": "heritage",
+            "number": "Since 2004",
+            "unit": "",
+            "label": "Dubai desert specialists"
           }
         },
         "usp_pickup": {
@@ -111,25 +120,34 @@
             "icon_type": "pickup",
             "number": "Free",
             "unit": "",
-            "label": "Hotel pick & drop"
+            "label": "4x4 hotel pickup & drop-off"
           }
         },
-        "usp_cancel": {
+        "usp_licensed": {
           "type": "usp_item",
           "settings": {
-            "icon_type": "cancel",
-            "number": "24h",
+            "icon_type": "shield",
+            "number": "DET",
             "unit": "",
-            "label": "Prior Free cancelation"
+            "label": "Licensed & insured operator"
           }
         },
         "usp_guides": {
           "type": "usp_item",
           "settings": {
             "icon_type": "guide",
-            "number": "40",
+            "number": "Experienced",
             "unit": "",
-            "label": "Desert guides"
+            "label": "Desert safari guides"
+          }
+        },
+        "usp_cancel": {
+          "type": "usp_item",
+          "settings": {
+            "icon_type": "cancel",
+            "number": "Free",
+            "unit": "",
+            "label": "Cancellation up to 24h before"
           }
         },
         "usp_whatsapp": {
@@ -140,34 +158,16 @@
             "unit": "",
             "label": "WhatsApp concierge"
           }
-        },
-        "usp_insured": {
-          "type": "usp_item",
-          "settings": {
-            "icon_type": "insured",
-            "number": "100%",
-            "unit": "",
-            "label": "Insured 4x4's"
-          }
-        },
-        "usp_reviews": {
-          "type": "usp_item",
-          "settings": {
-            "icon_type": "quote",
-            "number": "1,250+",
-            "unit": "",
-            "label": "Verified reviews"
-          }
         }
       },
       "block_order": [
         "usp_rating",
+        "usp_heritage",
         "usp_pickup",
-        "usp_cancel",
+        "usp_licensed",
         "usp_guides",
-        "usp_whatsapp",
-        "usp_insured",
-        "usp_reviews"
+        "usp_cancel",
+        "usp_whatsapp"
       ],
       "name": "USP Ticker",
       "settings": {
@@ -184,61 +184,65 @@
           "type": "step",
           "name": "1",
           "settings": {
-            "time_label": "3:00 PM",
-            "title": "Hotel Pickup",
+            "title": "Hotel Pickup/Residence",
             "description": "Transfers from Dubai\nShared or Private.",
-            "show_icon": false,
-            "icon_name": "map_pin"
+            "illustration": "car"
           }
         },
         "step_GhE4xA": {
           "type": "step",
           "settings": {
-            "time_label": "4:00 PM",
             "title": "Desert Activities",
-            "description": "Quad, Sandboard, camel ride, falcon photo",
-            "show_icon": false,
-            "icon_name": "stopwatch"
+            "description": "Quadbike & Dune Buggy, falcon photo",
+            "illustration": "quad"
           }
         },
         "step_gz4rG9": {
           "type": "step",
           "settings": {
-            "time_label": "5:00 PM",
             "title": "Dune Bashing",
             "description": "30 minutes of Dune bashing in the Red Dunes",
-            "show_icon": false,
-            "icon_name": "truck"
+            "illustration": "dunes"
+          }
+        },
+        "step_sunsetStop": {
+          "type": "step",
+          "settings": {
+            "title": "Sunset Stop",
+            "description": "Enjoy sandboarding, sunset views and memorable desert photos.",
+            "illustration": "sunset"
+          }
+        },
+        "step_campWelcome": {
+          "type": "step",
+          "settings": {
+            "title": "Welcome to Our Desert Camp",
+            "description": "Enjoy a traditional Arabian welcome with Arabic coffee - Gahwa, Sweet - Luqaimat, and a short camel ride",
+            "illustration": "tent"
           }
         },
         "step_rGXa4C": {
           "type": "step",
           "settings": {
-            "time_label": "6:30 PM",
-            "title": "Sunset + BBQ",
+            "title": "BBQ Dinner",
             "description": "International BBQ buffet dinner (vegetarian options available)",
-            "show_icon": false,
-            "icon_name": "serving_dish"
+            "illustration": "grill"
           }
         },
         "step_NwiJtD": {
           "type": "step",
           "settings": {
-            "time_label": "7:30 PM",
             "title": "Live Shows",
             "description": "Tanoura dance, belly dance, fire show",
-            "show_icon": false,
-            "icon_name": "silhouette"
+            "illustration": "flame"
           }
         },
         "step_YX396a": {
           "type": "step",
           "settings": {
-            "time_label": "8:30 PM",
-            "title": "Hotel Drop-off",
-            "description": "Back around 9 PM",
-            "show_icon": false,
-            "icon_name": "map_pin"
+            "title": "Hotel/Residence Drop-off",
+            "description": "Relax as we drive you back to your hotel after an unforgettable evening.",
+            "illustration": "moon"
           }
         }
       },
@@ -246,17 +250,18 @@
         "step_yNykXf",
         "step_GhE4xA",
         "step_gz4rG9",
+        "step_sunsetStop",
+        "step_campWelcome",
         "step_rGXa4C",
         "step_NwiJtD",
         "step_YX396a"
       ],
       "name": "Timeline steps",
       "settings": {
-        "eyebrow": "Your Evening · Hour by Hour",
-        "heading": "What Actually",
-        "heading_accent": "Happens.",
-        "subheading": "No vague \"desert experience\" marketing. Here is exactly what six hours with us looks like, from the moment we ring your hotel buzzer to the moment we drop you back.",
-        "heading_layout": "split",
+        "eyebrow": "Your Desert Adventure – Step by Step",
+        "heading": "What Your Desert Safari",
+        "heading_accent": "Experience Looks Like.",
+        "subheading": "From the moment we pick you up to the last show under the stars, <strong>Dubai Leisure Holidays</strong> looks after every detail, so you can simply enjoy an unforgettable desert adventure.",
         "accent_color": "#c41e3a",
         "show_glow": true,
         "max_width": 1440,

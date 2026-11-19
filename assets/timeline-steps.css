@@ -1,133 +1,172 @@
-/* Timeline steps — cinematic vertical zigzag */
+/* Timeline steps — en-tête, décor (ciel étoilé en parallaxe + dunes), axe, pastilles et cartes d'étape */
 
 .timeline-steps {
-  content-visibility: auto;
-  contain-intrinsic-size: 0 900px;
   position: relative;
   overflow: hidden;
+  /* Contexte d'empilement : le ciel (z-index: -1) passe sous tout le reste, mais au-dessus du fond de section */
+  isolation: isolate;
+  content-visibility: auto;
+  contain-intrinsic-size: auto 1500px;
 }
 
 .timeline-steps__inner {
   --timeline-accent: #d7781a;
-  --timeline-max-width: var(--dlh-content-rail-max, 1440px);
   --timeline-dot-size: 44px;
-  --timeline-axis-width: 56px;
-  /* Cap dur à 1440px : ignore tout réglage admin supérieur */
-  max-width: min(var(--timeline-max-width), 1440px);
-  width: 100%;
-  margin-inline: auto;
   position: relative;
   box-sizing: border-box;
+  width: 100%;
+  /* Cap dur à 1440px : ignore tout réglage admin supérieur */
+  max-width: min(var(--timeline-max-width, 1440px), 1440px);
+  margin-inline: auto;
 }
 
 /* Même rail que FAQ / Experience grid : sortir de la colonne « page » du thème */
 .timeline-steps.section--page-width > .timeline-steps__inner {
   grid-column: 1 / -1;
-  width: 100%;
 }
 
-/* Decorative glows */
-.timeline-steps__glow {
+/* ---------- Décor (réglage « Afficher le decor ») ---------- */
+
+/* Ciel : deux plans d'étoiles, seuls éléments animés. Chaque plan est une petite tuile SVG répétée
+   (un seul bitmap en cache) qui déborde en haut et en bas de la distance parcourue en parallaxe. */
+.timeline-steps__sky {
   position: absolute;
-  border-radius: 50%;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  contain: strict;
   pointer-events: none;
-  z-index: 0;
 }
 
-.timeline-steps__glow--tr {
-  top: -7.5rem;
-  right: -7.5rem;
-  width: 30rem;
-  height: 30rem;
-  background: radial-gradient(
-    circle,
-    color-mix(in srgb, var(--timeline-accent) 18%, transparent),
-    transparent 65%
-  );
+.timeline-steps__sky::before,
+.timeline-steps__sky::after {
+  content: '';
+  position: absolute;
+  inset: calc(var(--stars-shift) * -1) 0;
 }
 
-.timeline-steps__glow--bl {
-  bottom: -10rem;
-  left: -7.5rem;
-  width: 32.5rem;
-  height: 32.5rem;
-  background: radial-gradient(circle, rgba(177, 28, 61, 0.15), transparent 65%);
+.timeline-steps__sky::before {
+  --stars-shift: 9rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='236' height='222'%3E%3Ccircle cx='24' cy='36' r='0.9' fill='%23fff' opacity='0.9'/%3E%3Ccircle cx='96' cy='148' r='0.8' fill='%23fff' opacity='0.75'/%3E%3Ccircle cx='150' cy='62' r='1' fill='%23ffecc8' opacity='0.85'/%3E%3Ccircle cx='204' cy='186' r='0.9' fill='%23fff' opacity='0.8'/%3E%3Ccircle cx='62' cy='204' r='1.2' fill='%23d6e2ff' opacity='0.95'/%3E%3Ccircle cx='182' cy='18' r='0.8' fill='%23fff' opacity='0.7'/%3E%3Ccircle cx='122' cy='104' r='1.2' fill='%23fff' opacity='0.95'/%3E%3Ccircle cx='214' cy='96' r='0.8' fill='%23fff' opacity='0.7'/%3E%3Ccircle cx='38' cy='118' r='0.7' fill='%23fff' opacity='0.65'/%3E%3Ccircle cx='84' cy='72' r='0.7' fill='%23fff' opacity='0.6'/%3E%3Ccircle cx='166' cy='140' r='0.8' fill='%23ffecc8' opacity='0.7'/%3E%3Ccircle cx='12' cy='170' r='0.7' fill='%23fff' opacity='0.6'/%3E%3Ccircle cx='138' cy='200' r='0.7' fill='%23d6e2ff' opacity='0.65'/%3E%3Ccircle cx='226' cy='44' r='0.6' fill='%23fff' opacity='0.55'/%3E%3C/svg%3E");
 }
 
-/* Header */
+.timeline-steps__sky::after {
+  --stars-shift: 3rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='480' height='440'%3E%3Ccircle cx='86' cy='112' r='4.5' fill='%23fff' opacity='.16'/%3E%3Ccircle cx='86' cy='112' r='1.6' fill='%23fff' opacity='1'/%3E%3Ccircle cx='398' cy='58' r='5' fill='%23ffecc8' opacity='.16'/%3E%3Ccircle cx='398' cy='58' r='1.8' fill='%23ffecc8' opacity='1'/%3E%3Ccircle cx='338' cy='342' r='4.5' fill='%23fff' opacity='.16'/%3E%3Ccircle cx='338' cy='342' r='1.5' fill='%23fff' opacity='1'/%3E%3Ccircle cx='182' cy='378' r='5' fill='%23d6e2ff' opacity='.16'/%3E%3Ccircle cx='182' cy='378' r='1.7' fill='%23d6e2ff' opacity='1'/%3E%3Ccircle cx='250' cy='196' r='4' fill='%23fff' opacity='.16'/%3E%3Ccircle cx='250' cy='196' r='1.3' fill='%23fff' opacity='0.95'/%3E%3C/svg%3E");
+}
+
+/* Voile fixe au-dessus des étoiles : lueur chaude en haut à droite, halo rouge à gauche, teinte du soir
+   qui fonce vers la nuit, et fondu qui masque les étoiles en haut de section.
+   Un voile plutôt qu'un mask-image : un masque sur des calques animés est recalculé à chaque image. */
+.timeline-steps--decor::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(60rem 28rem at 88% -6%, rgba(240, 160, 75, 0.22), transparent 70%),
+    radial-gradient(46rem 26rem at 6% 34%, rgba(196, 30, 58, 0.12), transparent 70%),
+    linear-gradient(to bottom, rgba(58, 36, 74, 0.32), transparent 36%, rgba(3, 8, 22, 0.62)),
+    linear-gradient(
+      to bottom,
+      var(--color-background) 5%,
+      color-mix(in srgb, var(--color-background) 50%, transparent) 26%,
+      transparent 55%
+    );
+}
+
+/* Parallaxe au défilement, uniquement en transform (géré par le compositeur, sans repaint) :
+   le plan lointain se décale le plus, donc paraît presque immobile à l'écran.
+   Sans prise en charge, ou si l'utilisateur limite les animations, le ciel reste fixe. */
+@keyframes timeline-steps-stars-drift {
+  from {
+    transform: translate3d(0, calc(var(--stars-shift) * -1), 0);
+  }
+
+  to {
+    transform: translate3d(0, var(--stars-shift), 0);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    /* Timeline nommée sur la section : son overflow: hidden en ferait sinon le conteneur de défilement de view() */
+    .timeline-steps {
+      view-timeline: --timeline-steps-view block;
+    }
+
+    .timeline-steps__sky::before,
+    .timeline-steps__sky::after {
+      animation: timeline-steps-stars-drift linear both;
+      animation-timeline: --timeline-steps-view;
+      will-change: transform;
+    }
+  }
+}
+
+/* Dunes : deux silhouettes ton sur ton (bleu nuit), la plus lointaine un peu plus claire que le fond,
+   celle de devant un peu plus sombre */
+.timeline-steps__dunes {
+  position: absolute;
+  inset: auto 0 0;
+  width: 100%;
+  height: clamp(5.5rem, 12vw, 10rem);
+  pointer-events: none;
+  stroke: color-mix(in srgb, var(--color-foreground) 10%, transparent);
+}
+
+.timeline-steps__dunes path {
+  vector-effect: non-scaling-stroke;
+}
+
+.timeline-steps__dunes path:nth-child(1) {
+  fill: color-mix(in srgb, var(--color-background) 90%, #8aa0d8);
+}
+
+.timeline-steps__dunes path:nth-child(2) {
+  fill: color-mix(in srgb, var(--color-background) 88%, #030816);
+}
+
+/* Laisse respirer les dunes sous la dernière étape */
+.timeline-steps--decor .timeline-steps__inner {
+  padding-bottom: clamp(3rem, 6.5vw, 5.5rem);
+}
+
+/* ---------- En-tête : sur-titre, puis titre (colonne à la largeur de son texte) et sous-titre à droite ---------- */
+
 .timeline-steps__header {
-  position: relative;
-  z-index: 1;
+  display: grid;
+  grid-template-columns: fit-content(70%) minmax(0, 1fr);
+  column-gap: 3.75rem;
+  align-items: start;
   margin-bottom: 4rem;
 }
 
-.timeline-steps--layout-split .timeline-steps__header {
-  display: grid;
-  grid-template-columns: 1fr 1.4fr;
-  grid-template-rows: auto auto;
-  column-gap: 3.75rem;
-  row-gap: 0;
-  align-items: start;
-  justify-items: start;
-}
-
-/* Le wrapper « title » disparaît de la grille pour que l'eyebrow et le h2 deviennent
-   des enfants directs : on peut alors aligner le sous-titre sur la même ligne que le h2 */
-.timeline-steps--layout-split .timeline-steps__header-title {
-  display: contents;
-}
-
-.timeline-steps--layout-split .timeline-steps__eyebrow {
-  grid-column: 1;
-  grid-row: 1;
-  justify-self: start;
-}
-
-.timeline-steps--layout-split .timeline-steps__heading {
-  grid-column: 1;
-  grid-row: 2;
-  justify-self: stretch;
-  text-align: start;
-  width: 100%;
-}
-
-.timeline-steps--layout-split .timeline-steps__subheading {
-  grid-column: 2;
-  grid-row: 2;
-  justify-self: stretch;
-  width: 100%;
-  /* Aligne le top du sous-titre avec le top du h2 (compense le margin-top du h2) */
-  margin-top: 1rem;
-}
-
-.timeline-steps--layout-stacked .timeline-steps__header {
-  text-align: center;
-  max-width: 48rem;
-  margin-inline: auto;
-}
-
 .timeline-steps__eyebrow {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
   margin: 0;
+  font-family: var(--font-body--family);
   font-size: 0.75rem;
+  font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--timeline-accent);
-  font-family: var(--font-body--family);
-  font-weight: 700;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.625rem;
 }
 
-.timeline-steps__eyebrow-mark {
+.timeline-steps__eyebrow::before {
+  content: '';
+  flex: none;
   width: 1.125rem;
   height: 1px;
   background: currentColor;
   opacity: 0.7;
-  display: inline-block;
 }
 
 .timeline-steps__heading {
+  grid-column: 1;
   margin: 1rem 0 0;
   font-family: var(--font-heading--family);
   font-weight: var(--font-heading--weight);
@@ -137,232 +176,304 @@
   letter-spacing: -0.025em;
 }
 
-.timeline-steps--layout-split .timeline-steps__heading {
-  text-align: start;
-}
-
+/* Seconde ligne du titre, dans la couleur d'accent */
 .timeline-steps__heading-accent {
+  display: block;
   color: var(--timeline-accent);
-  display: inline-block;
 }
 
 .timeline-steps__subheading {
-  margin: 0;
+  grid-column: 2;
+  /* Aligne le haut du sous-titre sur le haut du h2 */
+  margin: 1rem 0 0;
   font-size: clamp(1rem, 1.4vw, 1.0625rem);
   line-height: 1.6;
   color: color-mix(in srgb, var(--color-foreground) 78%, transparent);
-  max-width: 34rem;
 }
 
-.timeline-steps--layout-stacked .timeline-steps__subheading {
-  margin: 0.85rem auto 0;
-  max-width: 52rem;
+/* Mise en avant (gras posé dans l'éditeur) : doré de la première étape de la timeline */
+.timeline-steps__subheading strong {
+  color: #f6c56f;
+  font-weight: 600;
 }
 
-/* List + central axis */
+/* ---------- Liste et axe ---------- */
+
 .timeline-steps__list {
-  list-style: none;
+  position: relative;
   margin: 0;
   padding: 0;
-  position: relative;
-  z-index: 1;
+  list-style: none;
+  counter-reset: timeline-step;
 }
 
+/* Axe : dégradé de l'or de l'après-midi à l'indigo de la nuit */
 .timeline-steps__list::before {
   content: '';
   position: absolute;
   top: 0.75rem;
   bottom: 0.75rem;
   left: 50%;
-  width: 1px;
+  width: 2px;
   background: linear-gradient(
     to bottom,
     transparent,
-    color-mix(in srgb, var(--timeline-accent) 50%, transparent) 12%,
-    color-mix(in srgb, var(--timeline-accent) 50%, transparent) 88%,
+    #f6c56f 6%,
+    #ee8a3c 30%,
+    #dc4a45 54%,
+    #9358b8 78%,
+    #7183e0 90%,
     transparent
   );
+  opacity: 0.55;
   transform: translateX(-50%);
   pointer-events: none;
 }
 
+/* --step-color est posé en ligne sur chaque étape (palette après-midi → nuit) */
 .timeline-steps__item {
+  --step-color: var(--timeline-accent);
   display: grid;
-  align-items: start;
-  margin-bottom: 2.5rem;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  counter-increment: timeline-step;
 }
 
 .timeline-steps__item:last-child {
   margin-bottom: 0;
 }
 
-/* Desktop zigzag */
-@media screen and (min-width: 821px) {
-  .timeline-steps__item {
-    grid-template-columns: 1fr var(--timeline-axis-width) 1fr;
-  }
-
-  .timeline-steps__item--left .timeline-steps__dot-wrapper,
-  .timeline-steps__item--right .timeline-steps__dot-wrapper {
-    grid-column: 2;
-    grid-row: 1;
-  }
-
-  .timeline-steps__item--left .timeline-steps__content {
-    grid-column: 1;
-    grid-row: 1;
-    text-align: right;
-    padding-right: 2rem;
-  }
-
-  .timeline-steps__item--right .timeline-steps__content {
-    grid-column: 3;
-    grid-row: 1;
-    text-align: left;
-    padding-left: 2rem;
-  }
-}
-
-/* Dot */
-.timeline-steps__dot-wrapper {
-  display: flex;
-  justify-content: center;
-  position: relative;
-}
+/* ---------- Pastille ---------- */
 
 .timeline-steps__dot {
+  /* position: relative pour passer au-dessus de l'axe, que l'anneau couleur de fond interrompt */
+  position: relative;
+  display: grid;
+  place-items: center;
+  justify-self: center;
   width: var(--timeline-dot-size);
   height: var(--timeline-dot-size);
+  border: 1.5px solid var(--step-color);
   border-radius: 50%;
-  background: #071426;
-  border: 2px solid var(--timeline-accent);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  z-index: 1;
+  background: radial-gradient(circle at 30% 25%, color-mix(in srgb, var(--step-color) 30%, #0a1830), #071426 72%);
+  color: var(--step-color);
   box-shadow:
     0 0 0 6px var(--color-background),
-    0 0 24px color-mix(in srgb, var(--timeline-accent) 30%, transparent);
+    0 0 28px color-mix(in srgb, var(--step-color) 45%, transparent);
+  transition: box-shadow 0.35s ease;
 }
 
-.timeline-steps__dot-number {
-  font-family: var(--font-heading--family);
-  font-style: italic;
-  font-weight: 700;
-  color: var(--timeline-accent);
-  font-size: 0.9375rem;
-  line-height: 1;
+/* Sans illustration, la pastille affiche le numéro de l'étape */
+.timeline-steps__dot:empty::before {
+  content: counter(timeline-step);
+  font: italic 700 0.9375rem / 1 var(--font-heading--family);
 }
 
 .timeline-steps__dot-icon {
-  width: 22px;
-  height: 22px;
-  color: var(--timeline-accent);
-  object-fit: contain;
+  width: 48%;
+  height: 48%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
-/* Step content starts at row top; dot is shifted down to align with title center */
+/* ---------- Carte d'étape ---------- */
+
 .timeline-steps__content {
-  padding-block-start: 0;
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 31rem;
+  padding: 1.25rem 1.5rem 1.375rem;
+  border: 1px solid color-mix(in srgb, var(--color-foreground) 11%, transparent);
+  border-radius: 1.125rem;
+  /* Fond bleu nuit semi-opaque : les étoiles restent devinées derrière la carte sans gêner la lecture */
+  background-color: color-mix(in srgb, var(--color-background) 80%, transparent);
+  background-image:
+    linear-gradient(135deg, color-mix(in srgb, var(--step-color) 10%, transparent), transparent 55%),
+    linear-gradient(
+      color-mix(in srgb, var(--color-foreground) 5%, transparent),
+      color-mix(in srgb, var(--color-foreground) 5%, transparent)
+    );
+  box-shadow: 0 1.25rem 2.5rem -1.5rem rgba(0, 0, 0, 0.65);
+  transition:
+    transform 0.35s ease,
+    border-color 0.35s ease;
 }
 
-/* Time label (12px) + title margin (0.375rem) + half of title line-height, minus half of dot */
-.timeline-steps__dot-wrapper {
-  margin-block-start: calc(
-    0.75rem + 0.375rem +
-      (clamp(1.25rem, 2vw, 1.625rem) * 1.1 - var(--timeline-dot-size)) / 2
-  );
-}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .timeline-steps__item:hover .timeline-steps__content {
+    transform: translateY(-3px);
+    border-color: color-mix(in srgb, var(--step-color) 55%, transparent);
+  }
 
-.timeline-steps__time {
-  margin: 0;
-  color: var(--timeline-accent);
-  font-size: 0.75rem;
-  line-height: 1;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  font-family: var(--font-body--family);
+  .timeline-steps__item:hover .timeline-steps__dot {
+    box-shadow:
+      0 0 0 6px var(--color-background),
+      0 0 40px color-mix(in srgb, var(--step-color) 70%, transparent);
+  }
 }
 
 .timeline-steps__title {
-  margin: 0.375rem 0 0;
-  font-size: clamp(1.25rem, 2vw, 1.625rem);
-  line-height: 1.1;
+  margin: 0;
+  font-family: var(--font-heading--family);
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
   font-weight: var(--font-heading--weight);
   font-style: italic;
+  line-height: 1.15;
   letter-spacing: -0.01em;
-  font-family: var(--font-heading--family);
 }
 
 .timeline-steps__description {
   margin: 0.5rem 0 0;
-  font-size: 0.90625rem;
-  line-height: 1.55;
-  color: color-mix(in srgb, var(--color-foreground) 72%, transparent);
   font-family: var(--font-body--family);
-  max-width: 22.5rem;
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: color-mix(in srgb, var(--color-foreground) 76%, transparent);
 }
 
-.timeline-steps__item--left .timeline-steps__description {
-  margin-left: auto;
+/* Grand numéro « fantôme » (01, 02…) généré par le compteur de la liste : dégradé qui s'estompe, dans la teinte
+   de l'étape. Pas de contour : la police a des tracés qui se chevauchent et le contour les révèle. */
+.timeline-steps__item::after {
+  content: counter(timeline-step, decimal-leading-zero);
+  /* Purement décoratif : texte alternatif vide pour les lecteurs d'écran qui le gèrent */
+  content: counter(timeline-step, decimal-leading-zero) / '';
+  font-family: var(--font-heading--family);
+  font-style: italic;
+  font-weight: 700;
+  font-size: clamp(3.75rem, 7.5vw, 6.5rem);
+  /* Le dégradé est découpé sur la boîte du texte : une hauteur de ligne trop serrée
+     rogne le haut des chiffres, et l'italique a besoin de marge sur les côtés */
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  padding-inline: 0.08em 0.12em;
+  color: transparent;
+  background: linear-gradient(
+    color-mix(in srgb, var(--step-color) 62%, transparent) 10%,
+    color-mix(in srgb, var(--step-color) 6%, transparent) 92%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  user-select: none;
+  pointer-events: none;
 }
 
-/* Mobile — linear stack with axis on left */
-@media screen and (max-width: 820px) {
+/* ---------- Desktop : zigzag, carte d'un côté de l'axe et grand numéro de l'autre ---------- */
+@media screen and (min-width: 821px) {
   .timeline-steps__inner {
-    --timeline-axis-width: 44px;
-    padding-inline: var(--dlh-content-rail-pad, 1.25rem);
+    --timeline-dot-size: 56px;
   }
 
-  .timeline-steps--layout-split .timeline-steps__header {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto;
-    gap: 1.25rem;
-    align-items: start;
-  }
-
-  /* Sur mobile : flux naturel, on annule le placement explicite du desktop */
-  .timeline-steps--layout-split .timeline-steps__eyebrow,
-  .timeline-steps--layout-split .timeline-steps__heading,
-  .timeline-steps--layout-split .timeline-steps__subheading {
-    grid-column: 1;
-    grid-row: auto;
-  }
-
-  .timeline-steps--layout-split .timeline-steps__subheading {
-    margin-top: 0;
-  }
-
-  .timeline-steps__header {
-    margin-bottom: 2.5rem;
-  }
-
-  .timeline-steps__list::before {
-    left: calc(var(--timeline-axis-width) / 2);
-    transform: translateX(-50%);
+  /* Sous-titre plus généreux sur desktop (18px à 1024, 21px à partir de 1440) */
+  .timeline-steps__subheading {
+    font-size: clamp(1.125rem, 1.45vw, 1.3125rem);
+    line-height: 1.55;
   }
 
   .timeline-steps__item {
-    grid-template-columns: var(--timeline-axis-width) 1fr;
+    grid-template-columns: 1fr var(--timeline-dot-size) 1fr;
+    column-gap: 2rem;
+  }
+
+  .timeline-steps__dot,
+  .timeline-steps__content,
+  .timeline-steps__item::after {
+    grid-row: 1;
+  }
+
+  .timeline-steps__dot {
+    grid-column: 2;
+  }
+
+  /* Étapes impaires : carte à gauche, numéro à droite. Étapes paires : l'inverse. */
+  .timeline-steps__item:nth-child(odd) .timeline-steps__content,
+  .timeline-steps__item:nth-child(even)::after {
+    grid-column: 1;
+    justify-self: end;
+  }
+
+  .timeline-steps__item:nth-child(even) .timeline-steps__content,
+  .timeline-steps__item:nth-child(odd)::after {
+    grid-column: 3;
+    justify-self: start;
+  }
+
+  /* Trait qui relie la carte à sa pastille */
+  .timeline-steps__content::before {
+    --connector-fade: color-mix(in srgb, var(--step-color) 15%, transparent);
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 2rem;
+    height: 1px;
+  }
+
+  .timeline-steps__item:nth-child(odd) .timeline-steps__content::before {
+    left: 100%;
+    background: linear-gradient(to right, var(--connector-fade), var(--step-color));
+  }
+
+  .timeline-steps__item:nth-child(even) .timeline-steps__content::before {
+    right: 100%;
+    background: linear-gradient(to left, var(--connector-fade), var(--step-color));
+  }
+}
+
+/* ---------- Mobile : en-tête empilé, axe à gauche, cartes à droite ---------- */
+@media screen and (max-width: 820px) {
+  .timeline-steps__inner {
+    padding-inline: var(--dlh-content-rail-pad, 1.25rem);
+  }
+
+  .timeline-steps__header {
+    grid-template-columns: minmax(0, 1fr);
     margin-bottom: 2.5rem;
   }
 
-  .timeline-steps__dot-wrapper {
+  /* Titre fluide pour que chaque ligne tienne dans la largeur ; sur-titre rapproché du titre */
+  .timeline-steps__heading {
+    margin-top: 1.125rem;
+    font-size: clamp(1.5rem, 7.6vw, 2.25rem);
+  }
+
+  .timeline-steps__subheading {
     grid-column: 1;
-    justify-content: center;
+    margin-top: 1.25rem;
+  }
+
+  .timeline-steps__list::before {
+    left: calc(var(--timeline-dot-size) / 2);
+  }
+
+  .timeline-steps__item {
+    grid-template-columns: var(--timeline-dot-size) 1fr;
+    column-gap: 0.875rem;
+    margin-bottom: 1rem;
+  }
+
+  .timeline-steps__dot {
+    grid-area: 1 / 1;
   }
 
   .timeline-steps__content {
-    grid-column: 2;
-    text-align: left;
-    padding-left: 1.25rem;
-    padding-right: 0;
+    grid-area: 1 / 2;
+    max-width: none;
+    padding: 1rem 1.125rem 1.125rem;
   }
 
-  .timeline-steps__item--left .timeline-steps__description,
-  .timeline-steps__item--right .timeline-steps__description {
-    margin-left: 0;
+  /* Le numéro se loge dans le coin de la carte */
+  .timeline-steps__item::after {
+    grid-area: 1 / 2;
+    justify-self: end;
+    align-self: start;
+    z-index: 1;
+    margin: 0.875rem 1rem 0 0;
+    font-size: 1.375rem;
+  }
+
+  .timeline-steps__title {
+    padding-inline-end: 2.25rem;
   }
 }

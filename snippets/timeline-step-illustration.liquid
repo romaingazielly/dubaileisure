@@ -1,0 +1,41 @@
+{%- comment -%}
+  Renders the inner shapes of a desert-themed line illustration for a timeline step.
+  Designed for a 24x24 viewBox, stroke-based (the parent <svg> sets stroke, caps and joins).
+  Required: name (string) — car, quad, dunes, sunset, tent, grill, flame, moon, hotel.
+{%- endcomment -%}
+
+{%- case name -%}
+  {%- when 'car' -%}
+    {%- comment -%} Meme SUV que l'icone « pickup » du bandeau USP (sections/dlh-usp-ticker.liquid) {%- endcomment -%}
+    <path d="M4.25 17.5H3a1 1 0 0 1-1-1v-8a1 1 0 0 1 1-1h10.2a1 1 0 0 1 .8.4l2.6 3.6 4.3.9a1.4 1.4 0 0 1 1.1 1.4v2.7a1 1 0 0 1-1 1h-1.25"/>
+    <path d="M8.75 17.5h6.5M2 11.5h14.6M8.5 7.5v4M4.5 5h7.5M6 5v2.5M10.5 5v2.5"/>
+    <circle cx="6.5" cy="17.5" r="2.25"/>
+    <circle cx="17.5" cy="17.5" r="2.25"/>
+  {%- when 'quad' -%}
+    <circle cx="6" cy="17.5" r="3"/>
+    <circle cx="18.5" cy="17.5" r="3"/>
+    <path d="M9 17.5h6.5M4.2 13.2h4.6l2 2.3h3.4l2.6-3.6M17.4 12.6l-1.3-3.4h-2"/>
+    <circle cx="10.4" cy="4.4" r="1.7"/>
+    <path d="M9.8 6.8 7.8 12.6l3.2 2.2M10 7.8l4.1 1.4"/>
+  {%- when 'dunes' -%}
+    <path d="M2 18.5c2.5-5 5-7.5 7.5-7.5 3 0 3.8 4 6.5 4 1.8 0 3.5-1.5 6-4.5"/>
+    <path d="M2 21.5h20M14 6.5h6M16.5 9.5H21M11 3.5h5"/>
+  {%- when 'sunset' -%}
+    <path d="M6 16a6 6 0 0 1 12 0"/>
+    <path d="M2.5 16h19M12 4.5V7M5.3 7.8 7 9.5M18.7 7.8 17 9.5M2.8 12.2l2.2.6M21.2 12.2l-2.2.6M6.5 19.5h11M9.5 22h5"/>
+  {%- when 'tent' -%}
+    <path d="M12 5 3 20h18L12 5z"/>
+    <path d="M12 12.5 9.2 20h5.6L12 12.5zM12 5V2.5l2.5 1.2L12 5"/>
+  {%- when 'grill' -%}
+    <path d="M4.5 11h15a7.5 7.5 0 0 1-15 0z"/>
+    <path d="M3 11h18M8.6 17.2 6.5 21.5M15.4 17.2l2.1 4.3M9 7.5c0-1.6 1.2-1.6 1.2-3.2M13.8 7.5c0-1.6 1.2-1.6 1.2-3.2"/>
+  {%- when 'flame' -%}
+    <path d="M12 21.5a6 6 0 0 0 6-6c0-3.2-2-5.2-3.2-7.2-.6 1.6-1.4 2.4-2.6 2.9.3-3-.6-6-3.2-8.7.2 3.2-1 4.8-2.2 6.6C5.7 11 6 13 6 15.5a6 6 0 0 0 6 6z"/>
+    <path d="M12 21.5a2.8 2.8 0 0 0 2.8-2.8c0-1.5-1-2.4-2.8-4.2-1.8 1.8-2.8 2.7-2.8 4.2a2.8 2.8 0 0 0 2.8 2.8z"/>
+  {%- when 'moon' -%}
+    <path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5a8.5 8.5 0 1 0 10.7 10.7z"/>
+    <path d="M17 3.5v3M15.5 5h3M20.5 8.3v1.6M19.7 9.1h1.6"/>
+  {%- when 'hotel' -%}
+    <path d="M5 21V5.5A1.5 1.5 0 0 1 6.5 4h11A1.5 1.5 0 0 1 19 5.5V21"/>
+    <path d="M3 21h18M9 8h2M13 8h2M9 12h2M13 12h2M10 21v-4.5h4V21"/>
+{%- endcase -%}

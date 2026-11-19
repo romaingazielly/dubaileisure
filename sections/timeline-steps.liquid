@@ -5,90 +5,78 @@
   if scheme == blank
     assign scheme = 'scheme-5'
   endif
-  assign layout = section.settings.heading_layout | default: 'split'
+
+  comment
+    Palette apres-midi vers nuit : chaque etape prend la teinte correspondant a sa position.
+    Les numeros (pastille sans illustration, grand numero en face de la carte) viennent d'un compteur CSS.
+  endcomment
+  assign step_palette = '#f6c56f,#f3a650,#ee8a3c,#e86a38,#dc4a45,#c2457a,#9358b8,#7183e0' | split: ','
+  assign last_step_index = section.blocks.size | minus: 1 | at_least: 1
 -%}
 
 <div class="section-background color-{{ scheme }}"></div>
 <div
-  class="section section--{{ section.settings.section_width }} color-{{ scheme }} timeline-steps timeline-steps--layout-{{ layout }} spacing-style"
+  class="section section--{{ section.settings.section_width }} color-{{ scheme }} timeline-steps{% if section.settings.show_glow %} timeline-steps--decor{% endif %} spacing-style"
   style="{% render 'spacing-style', settings: section.settings %}"
 >
+  {%- if section.settings.show_glow -%}
+    <span class="timeline-steps__sky"></span>
+    {%- comment -%} Les traces debordent du cadre pour que leur contour ne dessine pas de trait sur les bords {%- endcomment -%}
+    <svg class="timeline-steps__dunes" aria-hidden="true" viewBox="0 0 1440 260" preserveAspectRatio="none">
+      <path d="M-20 200C200 130 380 110 560 155s320 65 500 5 260-60 400-15V290H-20z"/>
+      <path d="M-20 250c170-50 310-80 490-50s290 65 490 20 320-60 500-10V290H-20z"/>
+    </svg>
+  {%- endif -%}
+
   <div
     class="timeline-steps__inner"
     style="--timeline-max-width: {{ section.settings.max_width }}px; --timeline-accent: {{ section.settings.accent_color }};"
   >
-    {% if section.settings.show_glow %}
-      <span class="timeline-steps__glow timeline-steps__glow--tr" aria-hidden="true"></span>
-      <span class="timeline-steps__glow timeline-steps__glow--bl" aria-hidden="true"></span>
-    {% endif %}
-
     <div class="timeline-steps__header">
-      <div class="timeline-steps__header-title">
-        {% if section.settings.eyebrow != blank %}
-          <p class="timeline-steps__eyebrow">
-            <span class="timeline-steps__eyebrow-mark" aria-hidden="true"></span>
-            {{ section.settings.eyebrow }}
-          </p>
-        {% endif %}
-        {% if section.settings.heading != blank %}
-          <h2 class="timeline-steps__heading">
-            {{ section.settings.heading }}{% if section.settings.heading_accent != blank %}<br><span class="timeline-steps__heading-accent">{{ section.settings.heading_accent }}</span>{% endif %}
-          </h2>
-        {% endif %}
-      </div>
-      {% if section.settings.subheading != blank %}
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="timeline-steps__eyebrow">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="timeline-steps__heading">
+          {{- section.settings.heading -}}
+          {%- if section.settings.heading_accent != blank %}
+            <span class="timeline-steps__heading-accent">{{ section.settings.heading_accent }}</span>
+          {%- endif -%}
+        </h2>
+      {%- endif -%}
+      {%- if section.settings.subheading != blank -%}
         <p class="timeline-steps__subheading">{{ section.settings.subheading }}</p>
-      {% endif %}
+      {%- endif -%}
     </div>
 
     <ol class="timeline-steps__list" role="list">
-      {% for block in section.blocks %}
+      {%- for block in section.blocks -%}
         {%- liquid
-          assign side = 'left'
-          assign parity = forloop.index0 | modulo: 2
-          if parity == 1
-            assign side = 'right'
-          endif
+          assign palette_index = forloop.index0 | times: 7.0 | divided_by: last_step_index | round
+          assign illustration = block.settings.illustration | default: 'none'
         -%}
         <li
-          class="timeline-steps__item timeline-steps__item--{{ side }}"
+          class="timeline-steps__item"
+          style="--step-color: {{ step_palette[palette_index] }};"
           {{ block.shopify_attributes }}
         >
-          <div class="timeline-steps__dot-wrapper">
-            <div class="timeline-steps__dot" aria-hidden="true">
-              {% if block.settings.show_icon and block.settings.icon_image != blank %}
-                {{
-                  block.settings.icon_image
-                  | image_url: width: 60
-                  | image_tag:
-                    widths: '20, 30, 40, 60',
-                    sizes: '22px',
-                    loading: 'lazy',
-                    class: 'timeline-steps__dot-icon',
-                    alt: ''
-                }}
-              {% elsif block.settings.show_icon and block.settings.icon_name != 'none' %}
-                <svg
-                  class="timeline-steps__dot-icon"
-                  focusable="false"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  width="18"
-                  height="18"
-                >
-                  {%- render 'icon', icon: block.settings.icon_name -%}
-                </svg>
-              {% else %}
-                <span class="timeline-steps__dot-number">{{ forloop.index }}</span>
-              {% endif %}
-            </div>
+          <div class="timeline-steps__dot" aria-hidden="true">
+            {%- if illustration != 'none' -%}
+              <svg class="timeline-steps__dot-icon" viewBox="0 0 24 24">
+                {%- render 'timeline-step-illustration', name: illustration -%}
+              </svg>
+            {%- endif -%}
           </div>
           <div class="timeline-steps__content">
-            {% render 'timeline-step-content', block: block %}
+            {%- if block.settings.title != blank -%}
+              <h3 class="timeline-steps__title">{{ block.settings.title }}</h3>
+            {%- endif -%}
+            {%- if block.settings.description != blank -%}
+              <p class="timeline-steps__description">{{ block.settings.description }}</p>
+            {%- endif -%}
           </div>
         </li>
-      {% endfor %}
+      {%- endfor -%}
     </ol>
   </div>
 </div>
@@ -123,20 +111,11 @@
       "default": "happens."
     },
     {
-      "type": "textarea",
+      "type": "inline_richtext",
       "id": "subheading",
       "label": "Sous-titre",
+      "info": "Le texte en gras est mis en avant en dore.",
       "default": "No vague desert experience marketing. Here is exactly what six hours with us looks like, from pickup to drop-off."
-    },
-    {
-      "type": "select",
-      "id": "heading_layout",
-      "label": "Disposition de l'entete",
-      "options": [
-        { "value": "split", "label": "Titre a gauche, description a droite" },
-        { "value": "stacked", "label": "Titre centre au-dessus" }
-      ],
-      "default": "split"
     },
     {
       "type": "color",
@@ -147,8 +126,8 @@
     {
       "type": "checkbox",
       "id": "show_glow",
-      "label": "Afficher les halos decoratifs",
-      "info": "Deux halos radiaux ember et rouge en fond de section.",
+      "label": "Afficher le decor",
+      "info": "Lueurs, ciel etoile et dunes en fond de section.",
       "default": true
     },
     {
@@ -209,12 +188,6 @@
       "settings": [
         {
           "type": "text",
-          "id": "time_label",
-          "label": "Horaire",
-          "default": "3:00 PM"
-        },
-        {
-          "type": "text",
           "id": "title",
           "label": "Titre",
           "default": "Hotel Pickup"
@@ -226,35 +199,23 @@
           "default": "AC Land Cruiser, direct a la porte"
         },
         {
-          "type": "header",
-          "content": "Icone (optionnel)"
-        },
-        {
-          "type": "checkbox",
-          "id": "show_icon",
-          "label": "Afficher l'icone a la place du numero",
-          "default": false
-        },
-        {
-          "type": "image_picker",
-          "id": "icon_image",
-          "label": "Image icone (prioritaire)"
-        },
-        {
           "type": "select",
-          "id": "icon_name",
-          "label": "Icone SVG (si pas d'image)",
+          "id": "illustration",
+          "label": "Illustration dans la pastille",
+          "info": "Remplace le numero dans la pastille.",
           "options": [
             { "value": "none", "label": "Aucune" },
-            { "value": "truck", "label": "Truck" },
-            { "value": "map_pin", "label": "Map pin" },
-            { "value": "star", "label": "Star" },
-            { "value": "leaf", "label": "Leaf" },
-            { "value": "stopwatch", "label": "Stopwatch" },
-            { "value": "serving_dish", "label": "Serving dish" },
-            { "value": "silhouette", "label": "Silhouette" }
+            { "value": "car", "label": "4x4 / transfert" },
+            { "value": "quad", "label": "Quad" },
+            { "value": "dunes", "label": "Dunes" },
+            { "value": "sunset", "label": "Coucher de soleil" },
+            { "value": "tent", "label": "Campement" },
+            { "value": "grill", "label": "Barbecue" },
+            { "value": "flame", "label": "Spectacle de feu" },
+            { "value": "moon", "label": "Nuit" },
+            { "value": "hotel", "label": "Hotel" }
           ],
-          "default": "map_pin"
+          "default": "none"
         }
       ]
     }
@@ -263,12 +224,12 @@
     {
       "name": "Timeline steps",
       "blocks": [
-        { "type": "step", "settings": { "time_label": "3:00 PM", "title": "Hotel Pickup", "description": "AC Land Cruiser, direct a la porte", "icon_name": "truck" } },
-        { "type": "step", "settings": { "time_label": "4:00 PM", "title": "Desert Activities", "description": "Quad, sandboard, camel ride, falcon photo", "icon_name": "stopwatch" } },
-        { "type": "step", "settings": { "time_label": "5:00 PM", "title": "Dune Bashing", "description": "30 min dans les dunes rouges", "icon_name": "map_pin" } },
-        { "type": "step", "settings": { "time_label": "6:30 PM", "title": "Sunset + BBQ", "description": "Buffet international, lanternes arabes", "icon_name": "serving_dish" } },
-        { "type": "step", "settings": { "time_label": "7:30 PM", "title": "Live Shows", "description": "Tanoura, belly dance, fire show", "icon_name": "silhouette" } },
-        { "type": "step", "settings": { "time_label": "8:30 PM", "title": "Hotel Drop-off", "description": "Retour vers 9 PM", "icon_name": "map_pin" } }
+        { "type": "step", "settings": { "title": "Hotel Pickup", "description": "AC Land Cruiser, direct a la porte", "illustration": "car" } },
+        { "type": "step", "settings": { "title": "Desert Activities", "description": "Quad, sandboard, camel ride, falcon photo", "illustration": "quad" } },
+        { "type": "step", "settings": { "title": "Dune Bashing", "description": "30 min dans les dunes rouges", "illustration": "dunes" } },
+        { "type": "step", "settings": { "title": "Sunset + BBQ", "description": "Buffet international, lanternes arabes", "illustration": "grill" } },
+        { "type": "step", "settings": { "title": "Live Shows", "description": "Tanoura, belly dance, fire show", "illustration": "flame" } },
+        { "type": "step", "settings": { "title": "Hotel Drop-off", "description": "Retour vers 9 PM", "illustration": "moon" } }
       ]
     }
   ]
