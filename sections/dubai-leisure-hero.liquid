@@ -8,6 +8,14 @@
 %}
 
 {{ 'dubai-leisure-hero.css' | asset_url | stylesheet_tag: preload: true }}
+{%- comment -%} Without JS nothing releases the held-back slide images: show them straight away {%- endcomment -%}
+<noscript>
+  <style>
+    .dlh-hero:not(.dlh-hero--media-ready) .dlh-hero__slide:not([data-dlh-prime]) .dlh-hero__img {
+      display: block;
+    }
+  </style>
+</noscript>
 
 <div class="section section--full-width dlh-hero-section">
   <div
@@ -48,8 +56,14 @@
                 <div class="dlh-hero__media">
                   {% if block.settings.image != blank %}
                     {% liquid
+                      comment
+                        First slide of the first section = LCP element: eager, preloaded, high fetch priority.
+                        Other slides stay lazy and low priority (and are held back by CSS until it has loaded).
+                        The alt text is resolved here: a filter inside the image_tag arguments would apply to
+                        the whole tag and silently drop every argument that follows it.
+                      endcomment
                       assign dlh_loading = 'lazy'
-                      assign dlh_fetch = 'auto'
+                      assign dlh_fetch = 'low'
                       assign dlh_decoding = 'async'
                       assign dlh_preload = false
                       if dlh_slide_i == 1 and section.index == 1
@@ -58,10 +72,7 @@
                         assign dlh_decoding = 'sync'
                         assign dlh_preload = true
                       endif
-                      assign dlh_img_style = ''
-                      if block.settings.image.width and block.settings.image.height and block.settings.image.width > 0
-                        assign dlh_img_style = 'aspect-ratio: ' | append: block.settings.image.width | append: ' / ' | append: block.settings.image.height | append: ';'
-                      endif
+                      assign dlh_alt = block.settings.image.alt | default: block.settings.heading_line_1
                     %}
                     {{
                       block.settings.image
@@ -70,14 +81,11 @@
                         loading: dlh_loading,
                         decoding: dlh_decoding,
                         preload: dlh_preload,
-                        widths: '375, 550, 750, 1100, 1500, 2000, 2880',
+                        fetchpriority: dlh_fetch,
+                        widths: '375, 550, 750, 900, 1100, 1200, 1500, 2000, 2880',
                         sizes: '100vw',
                         class: 'dlh-hero__img',
-                        alt: block.settings.image.alt | default: block.settings.heading_line_1,
-                        fetchpriority: dlh_fetch,
-                        width: block.settings.image.width,
-                        height: block.settings.image.height,
-                        style: dlh_img_style
+                        alt: dlh_alt
                     }}
                   {% else %}
                     {{ 'hero-apparel-1' | placeholder_svg_tag: 'dlh-hero__img dlh-hero__img--placeholder' }}

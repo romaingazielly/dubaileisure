@@ -73,12 +73,33 @@ class DlhHeroCarousel extends HTMLElement {
   /** @type {number} */
   #activeDotIndex = -1;
 
+  /**
+   * The other slides' images are held back by CSS (see dubai-leisure-hero.css) so they do not compete with
+   * the first slide image, which is the page's LCP element. Release them once it has loaded, or as soon as
+   * the visitor interacts, or after a delay on very slow connections.
+   */
+  #releaseMediaWhenPrimed() {
+    const release = () => this.classList.add('dlh-hero--media-ready');
+    const prime = this.querySelector('[data-dlh-prime] .dlh-hero__img');
+    if (!(prime instanceof HTMLImageElement) || prime.complete) {
+      release();
+      return;
+    }
+    prime.addEventListener('load', release, { once: true });
+    prime.addEventListener('error', release, { once: true });
+    this.addEventListener('pointerdown', release, { once: true, passive: true });
+    this.addEventListener('keydown', release, { once: true });
+    window.setTimeout(release, 5000);
+  }
+
   connectedCallback() {
     this.#track = this.querySelector('[data-dlh-track]');
     if (!this.#track) return;
 
     this.#dots = /** @type {HTMLButtonElement[]} */ ([...this.querySelectorAll('.dlh-hero__dot')]);
     this.#slides = /** @type {HTMLElement[]} */ ([...this.querySelectorAll('.dlh-hero__slide')]);
+
+    this.#releaseMediaWhenPrimed();
 
     const hydrate = () => this.#hydrate();
 

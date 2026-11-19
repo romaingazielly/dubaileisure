@@ -33,11 +33,11 @@
 
     {%- comment -%}
       Kufam (self-hosted as theme assets — see assets/Kufam*.woff2).
-      Only the regular variant is preloaded: with the editor set to Inter normal 400,
-      headings render in Kufam normal. The italic file is fetched on demand by the
-      browser when an italic element is encountered (rare).
+      Only the small Latin subsets are preloaded (regular + italic, ~33 KB each: headings use both).
+      No fetchpriority="high": the LCP image must not queue behind the fonts.
     {%- endcomment -%}
-    <link rel="preload" as="font" href="{{ 'Kufam.woff2' | asset_url }}" type="font/woff2" crossorigin fetchpriority="high">
+    <link rel="preload" as="font" href="{{ 'Kufam-latin.woff2' | asset_url }}" type="font/woff2" crossorigin>
+    <link rel="preload" as="font" href="{{ 'Kufam-Italic-latin.woff2' | asset_url }}" type="font/woff2" crossorigin>
     {{ 'dlh-typography.css' | asset_url | stylesheet_tag }}
 
     {% if request.design_mode %}

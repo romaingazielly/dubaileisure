@@ -101,6 +101,13 @@
   display: block;
 }
 
+/* Until the first slide image (the LCP element) has loaded, the other slides' images are not rendered:
+   being lazy, they are then not fetched, so they do not compete with it for bandwidth.
+   dubai-leisure-hero.js adds the class once that image has arrived. */
+.dlh-hero:not(.dlh-hero--media-ready) .dlh-hero__slide:not([data-dlh-prime]) .dlh-hero__img {
+  display: none;
+}
+
 .dlh-hero__img--placeholder {
   background: #2a2a2a;
   object-fit: contain;

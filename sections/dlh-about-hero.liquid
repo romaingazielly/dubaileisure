@@ -52,6 +52,8 @@
 
       <figure class="dlh-about-hero__photo">
         {%- if section.settings.image != blank -%}
+          {%- comment -%} Alt resolved first: a filter inside the image_tag arguments applies to the whole tag {%- endcomment -%}
+          {%- assign dlh_about_alt = section.settings.image.alt | default: section.settings.heading -%}
           {{
             section.settings.image
             | image_url: width: 1600
@@ -61,7 +63,7 @@
               fetchpriority: 'high',
               sizes: '(max-width: 980px) 100vw, 55vw',
               widths: '480, 800, 1100, 1400, 1800',
-              alt: section.settings.image.alt | default: section.settings.heading
+              alt: dlh_about_alt
           }}
         {%- else -%}
           <div class="dlh-about-hero__photo-placeholder" role="img" aria-label="{{ section.settings.heading | escape }}"></div>

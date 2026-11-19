@@ -1,7 +1,13 @@
 /* Dubai Leisure Holidays — Custom typography (Kufam)
  *
  * Kufam is not in Shopify's font library, so it is self-hosted as a theme asset
- * (Kufam.woff2 + Kufam-Italic.woff2 — variable fonts covering weight 400–900).
+ * (variable fonts covering weight 400–900).
+ *
+ * Each style ships as two files split by unicode-range, so the browser only downloads what a page uses:
+ *   - Kufam-latin.woff2 / Kufam-Italic-latin.woff2 (~33 KB each): Latin subset covering the store's
+ *     languages (English, Spanish, French). Regenerate with fonttools' pyftsubset if a language is added.
+ *   - Kufam.woff2 / Kufam-Italic.woff2 (~135 KB each): the complete fonts (Latin Extended, Arabic…),
+ *     fetched only when a page contains a character outside the Latin subset.
  *
  * Heading + subheading fonts in the theme editor are set to Inter (a clean
  * Shopify-native default). Inter is never rendered — we override the CSS
@@ -16,12 +22,39 @@
  * pattern used by Next.js Font Optimization, Vercel, Stripe, etc.
  */
 
+{%- capture kufam_latin_range -%}
+  U+0020-007E, U+00A0-00FF, U+0152-0153, U+0178, U+2010-2015, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030,
+  U+2032-2033, U+2039-203A, U+2044, U+20AC, U+2122, U+2190-2193, U+2212, U+2215
+{%- endcapture -%}
+{%- capture kufam_full_range -%}
+  U+0100-0151, U+0154-0177, U+0179-200F, U+2070-20AB, U+20AD-2121, U+2123-218F, U+2194-2211, U+2216-FFFF
+{%- endcapture -%}
+
+@font-face {
+  font-family: 'Kufam';
+  src: url('{{ "Kufam-latin.woff2" | asset_url }}') format('woff2');
+  font-weight: 400 900;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: {{ kufam_latin_range }};
+}
+
+@font-face {
+  font-family: 'Kufam';
+  src: url('{{ "Kufam-Italic-latin.woff2" | asset_url }}') format('woff2');
+  font-weight: 400 900;
+  font-style: italic;
+  font-display: swap;
+  unicode-range: {{ kufam_latin_range }};
+}
+
 @font-face {
   font-family: 'Kufam';
   src: url('{{ "Kufam.woff2" | asset_url }}') format('woff2');
   font-weight: 400 900;
   font-style: normal;
   font-display: swap;
+  unicode-range: {{ kufam_full_range }};
 }
 
 @font-face {
@@ -30,6 +63,7 @@
   font-weight: 400 900;
   font-style: italic;
   font-display: swap;
+  unicode-range: {{ kufam_full_range }};
 }
 
 /* Metric-matched fallback: Arial is on every OS (macOS, Windows, iOS, Android,

@@ -31,13 +31,32 @@
       {%- for media in product.media -%}
         <div class="dlh-pv__slide {% if forloop.first %}is-active{% endif %}" data-slide>
           {%- if media.media_type == 'image' -%}
-            <img
-              src="{{ media | image_url: width: 1200 }}"
-              alt="{{ media.alt | escape }}"
-              loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
-              width="{{ media.width }}"
-              height="{{ media.height }}"
-            >
+            {%- liquid
+              comment
+                First gallery image = LCP element: eager, preloaded, high fetch priority.
+                srcset + sizes let phones download a lighter file than the 1200px desktop one.
+                Layout: single column up to 1100px, then the gallery sits beside a 440px column (48px gap).
+              endcomment
+              assign dlh_loading = 'lazy'
+              assign dlh_fetch = 'low'
+              assign dlh_preload = false
+              if forloop.first
+                assign dlh_loading = 'eager'
+                assign dlh_fetch = 'high'
+                assign dlh_preload = true
+              endif
+            -%}
+            {{
+              media
+              | image_url: width: 1600
+              | image_tag:
+                loading: dlh_loading,
+                fetchpriority: dlh_fetch,
+                preload: dlh_preload,
+                widths: '480, 750, 900, 1200, 1600',
+                sizes: '(min-width: 1101px) min(calc(100vw - 488px), 952px), 100vw',
+                alt: media.alt
+            }}
           {%- elsif media.media_type == 'video' -%}
             {{ media | video_tag: autoplay: false, loop: true, muted: true, controls: true, class: 'dlh-pv__video' }}
           {%- elsif media.media_type == 'external_video' -%}
