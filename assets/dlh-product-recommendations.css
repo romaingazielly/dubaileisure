@@ -1,0 +1,8 @@
+.product-recommendations .resource-list__item {
+  height: 100%;
+}
+
+.product-recommendations .resource-list__carousel slideshow-slides {
+  margin-block: -64px;
+  padding-block: 64px;
+}

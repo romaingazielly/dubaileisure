@@ -1,3 +1,5 @@
+{{ 'dlh-experience-card.css' | asset_url | stylesheet_tag }}
+{{ 'dlh-product-recommendations.css' | asset_url | stylesheet_tag }}
 
 <script
   src="{{ 'product-recommendations.js' | asset_url }}"
@@ -25,13 +27,10 @@
   endcapture
 %}
 
-{% render 'quick-add-styles' %}
-{% render 'quick-add-modal-styles' %}
-{% render 'product-badges-styles' %}
 <product-recommendations
   id="product-recommendations-{{ section.id }}"
   class="product-recommendations"
-  data-url="{{ routes.product_recommendations_url }}?limit={{ section.settings.max_products }}"
+  data-url="{{ routes.product_recommendations_url }}?limit={{ section.settings.max_products | at_most: 10 }}"
   data-section-id="{{ section.id }}"
   data-product-id="{{ section.settings.product.id | default: product.id }}"
   data-intent="{{ section.settings.recommendation_type }}"
@@ -69,27 +68,42 @@
             assign products = products | append: ', '
             assign products = products | split: ','
           endfor
-        elsif recommendations.performed and recommendations.products_count == 0
-          # No recommendations found, pull from catalog
+        elsif recommendations.performed and recommendations.products_count < section.settings.max_products
           if section.settings.recommendation_type == 'related'
-            assign products = collections.all.products | reject: 'id', section.settings.product.id
+            assign catalog_products = collections.all.products | reject: 'id', section.settings.product.id
+            assign products = recommendations.products | concat: catalog_products
           elsif section.settings.recommendation_type == 'complementary'
-            # Do not recommend the All collection as complementary products
-            assign products = null
+            assign products = recommendations.products
           endif
-
         else
           assign products = recommendations.products
         endif
       %}
       {% capture list_items %}
-        {% for product in products limit: section.settings.max_products %}
-          <div class="resource-list__item">
-            {% content_for 'block', type: '_product-card', id: 'static-product-card', closest.product: product %}
-          </div>
-          {% unless forloop.last %}
+        {% liquid
+          assign recommended_count = recommendations.products_count | default: 0
+          assign recommended_ids = recommendations.products | map: 'id' | join: '|' | prepend: '|' | append: '|'
+          assign rendered_count = 0
+        %}
+        {% for product in products %}
+          {% liquid
+            if rendered_count >= section.settings.max_products
+              break
+            endif
+            if recommended_count > 0 and forloop.index > recommended_count
+              assign product_key = product.id | prepend: '|' | append: '|'
+              if recommended_ids contains product_key
+                continue
+              endif
+            endif
+            assign rendered_count = rendered_count | plus: 1
+          %}
+          {% if rendered_count > 1 %}
             <!--@list/split-->
-          {% endunless %}
+          {% endif %}
+          <div class="resource-list__item">
+            {% render 'dlh-experience-card', product: product, section_settings: section.settings %}
+          </div>
         {% endfor %}
       {% endcapture %}
 
@@ -128,7 +142,7 @@
             {% render 'resource-list-carousel',
               ref: 'resourceListCarousel',
               slides: slides,
-              slide_count: recommendations.products.size,
+              slide_count: slides.size,
               settings: section.settings
             %}
         {% endcase %}
@@ -152,7 +166,7 @@
           {% render 'resource-list-carousel',
             ref: 'resourceListCarouselMobile',
             slides: slides,
-            slide_count: recommendations.products.size,
+            slide_count: slides.size,
             settings: section.settings
           %}
         </div>
@@ -268,9 +282,23 @@
       "id": "max_products",
       "label": "t:settings.product_count",
       "min": 3,
-      "max": 10,
+      "max": 20,
       "step": 1,
       "default": 4
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "Show rating pill",
+      "info": "Uses product metafield reviews.rating or falls back to 4.9",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_tags",
+      "label": "Show product tags as pills",
+      "info": "Displays tags that don't start with badge: or meta:",
+      "default": true
     },
     {
       "type": "range",
@@ -466,78 +494,6 @@
             "text": "t:html_defaults.related_product",
             "type_preset": "h3"
           }
-        },
-        "static-product-card": {
-          "type": "_product-card",
-          "name": "t:names.product_card",
-          "static": true,
-          "settings": {
-            "product_card_gap": 4
-          },
-          "blocks": {
-            "product-card-gallery": {
-              "type": "_product-card-gallery",
-              "name": "t:names.product_card_media",
-              "settings": {
-                "image_ratio": "adapt",
-                "border": "none",
-                "border_width": 1,
-                "border_opacity": 100,
-                "border_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              }
-            },
-            "product_title": {
-              "type": "product-title",
-              "name": "t:names.product_title",
-              "settings": {
-                "width": "fit-content",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "paragraph",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "var(--color-foreground)",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 4,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              }
-            },
-            "price": {
-              "type": "price",
-              "name": "t:names.product_price",
-              "settings": {
-                "show_sale_price_first": true,
-                "show_installments": false,
-                "show_tax_info": false,
-                "type_preset": "h6",
-                "width": "100%",
-                "alignment": "left",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "color": "var(--color-foreground)",
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              }
-            }
-          },
-          "block_order": ["product-card-gallery", "product_title", "price"]
         }
       },
       "block_order": ["header"]
