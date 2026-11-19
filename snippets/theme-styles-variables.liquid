@@ -133,9 +133,11 @@
     --normal-page-width: 120rem;
     --wide-page-width: 150rem;
 
-    /* DLH home: one content rail so titles and blocks share the same width */
+    /* DLH home: one content rail so titles and blocks share the same width.
+       The pad is the minimum side gutter when the window is narrower than the rail: 2.5rem (like the
+       header) up to 1440px wide, easing to 0 at 1520px, where the 1440px rail already has that margin. */
     --dlh-content-rail-max: 1440px;
-    --dlh-content-rail-pad: 0px;
+    --dlh-content-rail-pad: clamp(0px, calc((1520px - 100vw) / 2), 2.5rem);
 
     @media screen and (max-width: 820px) {
       --dlh-content-rail-pad: 1.25rem;
