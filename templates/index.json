@@ -289,6 +289,143 @@
         "padding-block-end": 96
       }
     },
+    "dlh_camp_gallery": {
+      "type": "dlh-camp-gallery",
+      "blocks": {
+        "photo_stage": {
+          "type": "photo",
+          "settings": {
+            "image_asset": "dlh-camp-stage.webp",
+            "title": "The main stage",
+            "caption": "Open-air seating around the show floor",
+            "layout": "feature"
+          }
+        },
+        "photo_entrance": {
+          "type": "photo",
+          "settings": {
+            "image_asset": "dlh-camp-entrance.webp",
+            "title": "Camp entrance",
+            "caption": "",
+            "layout": "standard"
+          }
+        },
+        "photo_tents": {
+          "type": "photo",
+          "settings": {
+            "image_asset": "dlh-camp-tents.webp",
+            "title": "Tented courtyards",
+            "caption": "",
+            "layout": "tall"
+          }
+        },
+        "photo_bbq": {
+          "type": "photo",
+          "settings": {
+            "image_asset": "dlh-camp-bbq.webp",
+            "title": "Live BBQ grill",
+            "caption": "",
+            "layout": "standard"
+          }
+        },
+        "photo_henna": {
+          "type": "photo",
+          "settings": {
+            "image_asset": "dlh-camp-henna.webp",
+            "title": "Henna corner",
+            "caption": "",
+            "layout": "tall"
+          }
+        },
+        "photo_luqaimat": {
+          "type": "photo",
+          "settings": {
+            "image_asset": "dlh-camp-luqaimat.webp",
+            "title": "Fresh luqaimat",
+            "caption": "",
+            "layout": "standard"
+          }
+        },
+        "photo_lounge": {
+          "type": "photo",
+          "settings": {
+            "image_asset": "dlh-camp-lounge.webp",
+            "title": "Air-conditioned majlis",
+            "caption": "Cushioned seating, out of the heat",
+            "layout": "feature"
+          }
+        },
+        "photo_souvenirs": {
+          "type": "photo",
+          "settings": {
+            "image_asset": "dlh-camp-souvenirs.webp",
+            "title": "Souvenir souk",
+            "caption": "",
+            "layout": "standard"
+          }
+        },
+        "photo_buffet": {
+          "type": "photo",
+          "settings": {
+            "image_asset": "dlh-camp-buffet.webp",
+            "title": "Buffet hall",
+            "caption": "",
+            "layout": "standard"
+          }
+        },
+        "photo_shisha": {
+          "type": "photo",
+          "settings": {
+            "image_asset": "dlh-camp-shisha.webp",
+            "title": "Shisha terrace",
+            "caption": "",
+            "layout": "standard"
+          }
+        },
+        "photo_garden": {
+          "type": "photo",
+          "settings": {
+            "image_asset": "dlh-camp-garden.webp",
+            "title": "Lantern-lit gardens",
+            "caption": "",
+            "layout": "standard"
+          }
+        },
+        "photo_lanterns": {
+          "type": "photo",
+          "settings": {
+            "image_asset": "dlh-camp-lanterns.webp",
+            "title": "Arabian lanterns",
+            "caption": "",
+            "layout": "standard"
+          }
+        }
+      },
+      "block_order": [
+        "photo_stage",
+        "photo_entrance",
+        "photo_tents",
+        "photo_bbq",
+        "photo_henna",
+        "photo_luqaimat",
+        "photo_lounge",
+        "photo_souvenirs",
+        "photo_buffet",
+        "photo_shisha",
+        "photo_garden",
+        "photo_lanterns"
+      ],
+      "name": "Camp gallery",
+      "settings": {
+        "eyebrow": "Our Desert Camp",
+        "heading": "Where your evening",
+        "heading_accent": "unfolds.",
+        "subheading": "No stock photos here. This is the <strong>Dubai Leisure Holidays</strong> camp exactly as you will find it, from the lantern-lit entrance to the live grill and the open-air stage.",
+        "color_scheme": "scheme-5",
+        "padding-block-start": 96,
+        "padding-block-end": 96
+      }
+    },
     "guest_reviews_home_k8mN2p": {
       "type": "guest-reviews",
       "blocks": {
@@ -445,18 +582,56 @@
     },
     "dlh_final_cta": {
       "type": "dlh-final-cta",
+      "blocks": {
+        "dunes": {
+          "type": "moment",
+          "settings": {
+            "title": "Feel the rush",
+            "detail": "4x4 dune bashing"
+          }
+        },
+        "sunset": {
+          "type": "moment",
+          "settings": {
+            "title": "Chase the sunset",
+            "detail": "Golden-hour views"
+          }
+        },
+        "camp": {
+          "type": "moment",
+          "settings": {
+            "title": "Stay for the stars",
+            "detail": "BBQ & live shows"
+          }
+        }
+      },
+      "block_order": [
+        "dunes",
+        "sunset",
+        "camp"
+      ],
       "settings": {
-        "eyebrow": "Book your evening",
+        "eyebrow": "Your Dubai trip deserves this",
+        "experience_name": "Evening Desert Safari",
+        "product": "desert-safari",
+        "reassurance": "Hotel pickup included · Free cancellation up to 24 hours · Instant confirmation",
+        "featured_image_asset": "dlh-safari-sunset.webp",
+        "featured_image_alt": "4x4 safari vehicles crossing golden desert dunes at sunset",
+        "image_eyebrow": "Beyond the skyline",
+        "image_caption": "A different side of Dubai.",
         "heading": "The dunes are",
         "heading_accent": "waiting.",
-        "subheading": "Free cancellation up to 24 hours. Instant confirmation. Real humans on WhatsApp 24/7.",
-        "primary_label": "Book evening safari",
-        "primary_url": "",
-        "secondary_label": "Chat on WhatsApp",
-        "secondary_url": "",
-        "color_scheme": "scheme-5",
-        "padding-block-start": 88,
-        "padding-block-end": 88
+        "subheading": "Leave the skyline behind. Chase the sunset across the red dunes, then settle into a desert camp for BBQ and live shows under the stars.",
+        "primary_label": "Book evening desert safari",
+        "primary_url": "shopify://products/desert-safari",
+        "secondary_label": "Questions? Explore the FAQs",
+        "secondary_url": "#faq",
+        "color_scheme": "scheme-1",
+        "image_asset": "dlh-camp-evening.webp",
+        "image_veil": 85,
+        "image_position": 75,
+        "padding-block-start": 112,
+        "padding-block-end": 112
       }
     },
     "section_FQQqfN": {
@@ -1154,6 +1329,83 @@
         "padding-block-start": 40,
         "padding-block-end": 40
       }
+    },
+    "dlh_signature_safari": {
+      "type": "dlh-signature-safari",
+      "blocks": {
+        "dunes": {
+          "type": "scene",
+          "settings": {
+            "label": "Golden hour",
+            "title": "The dunes",
+            "detail": "30 minutes of 4x4 dune bashing across the Red Dunes, then sandboarding.",
+            "tone": "gold",
+            "image_asset": "dlh-safari-sunset.webp",
+            "image_alt": "4x4 safari vehicles crossing golden dunes at sunset"
+          }
+        },
+        "camp": {
+          "type": "scene",
+          "settings": {
+            "label": "Sunset",
+            "title": "The camp",
+            "detail": "Arabic coffee, fresh luqaimat and a short camel ride as the sky turns pink.",
+            "tone": "dusk",
+            "image_asset": "dlh-camp-evening.webp",
+            "image_alt": "Desert camp tents lit up at dusk"
+          }
+        },
+        "feast": {
+          "type": "scene",
+          "settings": {
+            "label": "Nightfall",
+            "title": "The feast",
+            "detail": "BBQ buffet dinner with halal, vegetarian and vegan options.",
+            "tone": "twilight",
+            "image_asset": "dlh-camp-bbq.webp",
+            "image_alt": "Live BBQ grill at the desert camp"
+          }
+        },
+        "show": {
+          "type": "scene",
+          "settings": {
+            "label": "Under the stars",
+            "title": "The show",
+            "detail": "Tanoura, belly dance and a fire show in the open-air arena.",
+            "tone": "night",
+            "image_asset": "dlh-safari-starlight.webp",
+            "image_alt": "Fire show at the desert camp under the Milky Way"
+          }
+        }
+      },
+      "block_order": [
+        "dunes",
+        "camp",
+        "feast",
+        "show"
+      ],
+      "settings": {
+        "eyebrow": "Our signature experience",
+        "heading_before": "Desert",
+        "heading_accent": "Sunset",
+        "heading_after": "Safari",
+        "rating": "4.9",
+        "review_count": "1,247 verified reviews",
+        "lede": "The evening our guests talk about long after their trip. Golden-hour dune bashing, a sunset over the Red Dunes, then dinner and live shows at our desert camp under the stars.",
+        "tabs_label": "Your evening, scene by scene",
+        "product": "desert-safari",
+        "price_prefix": "From",
+        "price_fallback": "",
+        "price_unit": "per adult",
+        "primary_label": "Book your evening",
+        "primary_url": "shopify://products/desert-safari",
+        "secondary_label": "",
+        "secondary_url": "",
+        "reassurance": "Hotel pickup & drop-off · Free cancellation up to 24h · Instant confirmation",
+        "color_scheme": "scheme-5",
+        "padding-block-start": 112,
+        "padding-block-end": 112
+      }
     }
   },
   "order": [
@@ -1162,9 +1414,11 @@
     "trust_certs_DLHx7p",
     "timeline_steps_JxzJqk",
     "dlh_experiences_grid",
+    "dlh_camp_gallery",
     "guest_reviews_home_k8mN2p",
     "dlh_faq",
     "dlh_final_cta",
+    "dlh_signature_safari",
     "section_FQQqfN",
     "section_6xMaEE",
     "section_QawMUr"

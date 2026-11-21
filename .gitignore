@@ -7,6 +7,7 @@
 Thumbs.db
 .vscode/
 .idea/
+.zed/
 
 .agents/
 .aidesigner/
@@ -18,3 +19,6 @@ node_modules/
 dist/
 .aidesigner/*
 !.aidesigner/.gitkeep
+
+# --- Shopify CLI (config locale) ---
+shopify.theme.toml

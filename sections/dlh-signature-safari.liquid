@@ -1,0 +1,292 @@
+{{ 'dlh-signature-safari.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'dlh-signature-safari.js' | asset_url }}" defer="defer"></script>
+
+{%- comment -%}
+  Signature safari spotlight. One evening told in up to four scenes (golden hour → stars):
+  picking a scene swaps the photo and shifts the sky behind the whole section, while a sun
+  travels along an arc above the scene tabs. Without JavaScript the first scene stays visible.
+  Each scene photo comes from the image picker or, failing that, from a theme asset.
+{%- endcomment -%}
+
+{%- liquid
+  assign safari = section.settings.product
+  assign primary_url = section.settings.primary_url
+  if primary_url == blank and safari != blank
+    assign primary_url = safari.url
+  endif
+  assign lead_price = section.settings.price_fallback
+  if safari != blank
+    # Same lead price as the safari product page: the most expensive variant (Adult, not Children).
+    assign lead_variant = safari.variants | sort: 'price' | reverse | first
+    assign lead_price = lead_variant.price | money
+  endif
+  assign scene_count = section.blocks.size
+  assign first_tone = section.blocks.first.settings.tone | default: 'gold'
+  assign heading_id = 'SignatureSafari-' | append: section.id
+-%}
+
+<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+<section
+  class="section section--full-width color-{{ section.settings.color_scheme }} dlh-ss spacing-style"
+  aria-labelledby="{{ heading_id }}"
+  style="{% render 'spacing-style', settings: section.settings %}"
+>
+  <dlh-signature-safari class="dlh-ss__stage" data-tone="{{ first_tone }}" {{ section.shopify_attributes }}>
+    <div class="dlh-ss__sky" aria-hidden="true">
+      <span class="dlh-ss__glow dlh-ss__glow--gold"></span>
+      <span class="dlh-ss__glow dlh-ss__glow--dusk"></span>
+      <span class="dlh-ss__glow dlh-ss__glow--twilight"></span>
+      <span class="dlh-ss__glow dlh-ss__glow--night"></span>
+      <span class="dlh-ss__stars"></span>
+    </div>
+
+    <div class="dlh-ss__inner">
+      <div class="dlh-ss__intro">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="dlh-ss__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+        {%- endif -%}
+
+        <h2 id="{{ heading_id }}" class="dlh-ss__heading">
+          {%- if section.settings.heading_before != blank -%}{{ section.settings.heading_before | escape }} {% endif -%}
+          {%- if section.settings.heading_accent != blank -%}<span class="dlh-ss__heading-accent">{{ section.settings.heading_accent | escape }}</span>{%- endif -%}
+          {%- if section.settings.heading_after != blank %} {{ section.settings.heading_after | escape }}{% endif -%}
+        </h2>
+
+        {%- if section.settings.rating != blank -%}
+          <p class="dlh-ss__rating">
+            <span class="dlh-ss__stars-row" aria-hidden="true">
+              {%- for i in (1..5) -%}
+                <svg width="14" height="14" viewBox="0 0 24 24" focusable="false"><path d="m12 2.5 2.9 6.1 6.6.8-4.9 4.5 1.3 6.6L12 17.2l-5.9 3.3 1.3-6.6-4.9-4.5 6.6-.8z" fill="currentColor"/></svg>
+              {%- endfor -%}
+            </span>
+            <strong>{{ section.settings.rating | escape }}</strong>
+            {%- if section.settings.review_count != blank %}
+              <span class="dlh-ss__rating-count">{{ section.settings.review_count | escape }}</span>
+            {%- endif -%}
+          </p>
+        {%- endif -%}
+
+        {%- if section.settings.lede != blank -%}
+          <p class="dlh-ss__lede">{{ section.settings.lede | escape }}</p>
+        {%- endif -%}
+      </div>
+
+      {%- if scene_count > 0 -%}
+        <div class="dlh-ss__visual">
+          <div class="dlh-ss__frame">
+            {%- for block in section.blocks -%}
+              {%- liquid
+                assign photo = block.settings.image
+                assign photo_asset = block.settings.image_asset
+                assign alt_text = block.settings.image_alt | default: block.settings.title
+                assign loading = 'lazy'
+              -%}
+              <figure
+                class="dlh-ss__scene{% if forloop.first %} is-active{% endif %}"
+                id="SignatureScene-{{ section.id }}-{{ forloop.index }}"
+                role="tabpanel"
+                aria-labelledby="SignatureTab-{{ section.id }}-{{ forloop.index }}"
+                data-scene="{{ forloop.index0 }}"
+                {{ block.shopify_attributes }}
+              >
+                {%- if photo != blank -%}
+                  {{
+                    photo
+                    | image_url: width: 1400
+                    | image_tag:
+                      class: 'dlh-ss__img',
+                      loading: loading,
+                      decoding: 'async',
+                      widths: '420, 640, 860, 1100, 1400',
+                      sizes: '(min-width: 990px) 46vw, 100vw',
+                      alt: alt_text
+                  }}
+                {%- elsif photo_asset != blank -%}
+                  <img
+                    class="dlh-ss__img"
+                    src="{{ photo_asset | asset_url }}"
+                    alt="{{ alt_text | escape }}"
+                    width="1000"
+                    height="1241"
+                    loading="{{ loading }}"
+                    decoding="async"
+                  >
+                {%- endif -%}
+                <figcaption class="dlh-ss__caption">
+                  <span class="dlh-ss__count">
+                    {{- forloop.index | prepend: '0' | slice: -2, 2 }}
+                    <span aria-hidden="true">/</span>
+                    {{ scene_count | prepend: '0' | slice: -2, 2 -}}
+                  </span>
+                  <span class="dlh-ss__caption-title">{{ block.settings.title | escape }}</span>
+                  {%- if block.settings.detail != blank -%}
+                    <span class="dlh-ss__caption-detail">{{ block.settings.detail | escape }}</span>
+                  {%- endif -%}
+                </figcaption>
+              </figure>
+            {%- endfor -%}
+          </div>
+        </div>
+
+        <div class="dlh-ss__path">
+          <div class="dlh-ss__arc" aria-hidden="true">
+            <svg class="dlh-ss__arc-line" viewBox="0 0 400 100" preserveAspectRatio="none" focusable="false">
+              <path d="M0 100A200 100 0 0 1 400 100" vector-effect="non-scaling-stroke"/>
+            </svg>
+            <span class="dlh-ss__orb"></span>
+          </div>
+          <div
+            class="dlh-ss__tabs"
+            role="tablist"
+            aria-label="{{ section.settings.tabs_label | escape }}"
+            style="--dlh-ss-count: {{ scene_count }};"
+          >
+            {%- for block in section.blocks -%}
+              <button
+                type="button"
+                class="dlh-ss__tab"
+                id="SignatureTab-{{ section.id }}-{{ forloop.index }}"
+                role="tab"
+                aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+                aria-controls="SignatureScene-{{ section.id }}-{{ forloop.index }}"
+                tabindex="{% if forloop.first %}0{% else %}-1{% endif %}"
+                data-tone="{{ block.settings.tone }}"
+              >
+                {%- if block.settings.label != blank -%}
+                  <span class="dlh-ss__tab-label">{{ block.settings.label | escape }}</span>
+                {%- endif -%}
+                <span class="dlh-ss__tab-title">{{ block.settings.title | escape }}</span>
+              </button>
+            {%- endfor -%}
+          </div>
+        </div>
+      {%- endif -%}
+
+      <div class="dlh-ss__book">
+        {%- if lead_price != blank -%}
+          <p class="dlh-ss__price">
+            {%- if section.settings.price_prefix != blank -%}
+              <span class="dlh-ss__price-prefix">{{ section.settings.price_prefix | escape }}</span>
+            {%- endif -%}
+            <span class="dlh-ss__price-amount">{{ lead_price }}</span>
+            {%- if section.settings.price_unit != blank -%}
+              <span class="dlh-ss__price-unit">{{ section.settings.price_unit | escape }}</span>
+            {%- endif -%}
+          </p>
+        {%- endif -%}
+
+        <div class="dlh-ss__actions">
+          {%- if primary_url != blank and section.settings.primary_label != blank -%}
+            <a class="dlh-ss__btn" href="{{ primary_url }}">
+              {{ section.settings.primary_label | escape }}
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+          {%- endif -%}
+          {%- if section.settings.secondary_url != blank and section.settings.secondary_label != blank -%}
+            <a class="dlh-ss__link" href="{{ section.settings.secondary_url }}">{{ section.settings.secondary_label | escape }}</a>
+          {%- endif -%}
+        </div>
+
+        {%- if section.settings.reassurance != blank -%}
+          {%- assign reassurance_items = section.settings.reassurance | split: '·' -%}
+          <ul class="dlh-ss__reassure" role="list">
+            {%- for item in reassurance_items -%}
+              {%- assign clean_item = item | strip -%}
+              {%- if clean_item != blank -%}
+                <li>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+                  {{ clean_item | escape }}
+                </li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+      </div>
+    </div>
+  </dlh-signature-safari>
+</section>
+
+{% schema %}
+{
+  "name": "Signature safari",
+  "tag": "div",
+  "class": "section-wrapper",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "max_blocks": 4,
+  "blocks": [
+    {
+      "type": "scene",
+      "name": "Scene",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Time of day", "default": "Golden hour" },
+        { "type": "text", "id": "title", "label": "Title", "default": "The dunes" },
+        { "type": "text", "id": "detail", "label": "Photo caption", "default": "30 minutes of 4x4 dune bashing across the Red Dunes." },
+        {
+          "type": "select",
+          "id": "tone",
+          "label": "Sky color behind the section",
+          "options": [
+            { "value": "gold", "label": "Golden hour" },
+            { "value": "dusk", "label": "Sunset" },
+            { "value": "twilight", "label": "Twilight" },
+            { "value": "night", "label": "Night with stars" }
+          ],
+          "default": "gold"
+        },
+        { "type": "image_picker", "id": "image", "label": "Photo" },
+        { "type": "text", "id": "image_asset", "label": "Photo (theme asset file name)", "info": "Used when no photo is picked, e.g. dlh-safari-sunset.webp" },
+        { "type": "text", "id": "image_alt", "label": "Photo description", "info": "Read by screen readers. Defaults to the title." }
+      ]
+    }
+  ],
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Our signature experience" },
+    { "type": "text", "id": "heading_before", "label": "Heading start", "default": "Desert" },
+    { "type": "text", "id": "heading_accent", "label": "Heading highlight", "default": "Sunset" },
+    { "type": "text", "id": "heading_after", "label": "Heading end", "default": "Safari" },
+    { "type": "text", "id": "rating", "label": "Rating", "default": "4.9" },
+    { "type": "text", "id": "review_count", "label": "Review count", "default": "1,247 verified reviews" },
+    {
+      "type": "textarea",
+      "id": "lede",
+      "label": "Introduction",
+      "default": "The evening our guests talk about long after their trip. Golden-hour dune bashing, a sunset over the Red Dunes, then dinner and live shows at our desert camp under the stars."
+    },
+    { "type": "text", "id": "tabs_label", "label": "Scene list name (screen readers)", "default": "Your evening, scene by scene" },
+    { "type": "header", "content": "Booking" },
+    { "type": "product", "id": "product", "label": "Safari product", "info": "Shows its price and links the button when no URL is set below." },
+    { "type": "text", "id": "price_prefix", "label": "Text before the price", "default": "From" },
+    { "type": "text", "id": "price_fallback", "label": "Price when no product is picked" },
+    { "type": "text", "id": "price_unit", "label": "Text after the price", "default": "per adult" },
+    { "type": "text", "id": "primary_label", "label": "Button label", "default": "Book your evening" },
+    { "type": "url", "id": "primary_url", "label": "Button URL" },
+    { "type": "text", "id": "secondary_label", "label": "Link label" },
+    { "type": "url", "id": "secondary_url", "label": "Link URL" },
+    {
+      "type": "text",
+      "id": "reassurance",
+      "label": "Reassurance points",
+      "info": "Separate each point with ·",
+      "default": "Hotel pickup & drop-off · Free cancellation up to 24h · Instant confirmation"
+    },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-5" },
+    { "type": "header", "content": "Spacing" },
+    { "type": "range", "id": "padding-block-start", "label": "Top padding", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 112 },
+    { "type": "range", "id": "padding-block-end", "label": "Bottom padding", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 112 }
+  ],
+  "presets": [
+    {
+      "name": "Signature safari",
+      "category": "t:categories.storytelling",
+      "blocks": [
+        { "type": "scene", "settings": { "label": "Golden hour", "title": "The dunes", "detail": "30 minutes of 4x4 dune bashing across the Red Dunes, then sandboarding.", "tone": "gold", "image_asset": "dlh-safari-sunset.webp" } },
+        { "type": "scene", "settings": { "label": "Sunset", "title": "The camp", "detail": "Arabic coffee, fresh luqaimat and a short camel ride as the sky turns pink.", "tone": "dusk", "image_asset": "dlh-camp-evening.webp" } },
+        { "type": "scene", "settings": { "label": "Nightfall", "title": "The feast", "detail": "BBQ buffet dinner with halal, vegetarian and vegan options.", "tone": "twilight", "image_asset": "dlh-camp-bbq.webp" } },
+        { "type": "scene", "settings": { "label": "Under the stars", "title": "The show", "detail": "Tanoura, belly dance and a fire show in the open-air arena.", "tone": "night", "image_asset": "dlh-safari-starlight.webp" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

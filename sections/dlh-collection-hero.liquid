@@ -1,0 +1,303 @@
+{{ 'dlh-collection-hero.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign hero_image = section.settings.image | default: collection.image
+  assign heading = section.settings.heading | default: collection.title
+
+  assign flagship = section.settings.flagship_product
+  if flagship != blank
+    assign flagship_name = section.settings.flagship_name | default: flagship.title
+    assign flagship_price = flagship.price_min
+    if section.settings.flagship_price_source == 'max'
+      assign flagship_price = flagship.price_max
+    endif
+  endif
+-%}
+
+{%- comment -%}
+  No .section-background here: the photo is the background, and the page background must stay visible behind the
+  transparent header. "spacing-style" is what receives --section-top-offset (the header height) from header.liquid.
+{%- endcomment -%}
+<section
+  class="section section--full-width color-{{ section.settings.color_scheme }} dlh-ch spacing-style"
+  style="--dlh-ch-min-h: {{ section.settings.min_height }}px; --padding-block-start: 0px; --padding-block-end: 0px;"
+  {{ section.shopify_attributes }}
+>
+  <div class="dlh-ch__media" aria-hidden="true">
+    {%- if hero_image != blank -%}
+      {{
+        hero_image
+        | image_url: width: 2400
+        | image_tag:
+          class: 'dlh-ch__img',
+          loading: 'eager',
+          fetchpriority: 'high',
+          sizes: '100vw',
+          widths: '480, 750, 1100, 1500, 1900, 2400',
+          alt: ''
+      }}
+    {%- endif -%}
+  </div>
+
+  <div class="dlh-ch__inner">
+    {%- if section.settings.crumb_home_label != blank -%}
+      <nav class="dlh-ch__crumbs" aria-label="Breadcrumb">
+        <a href="{{ routes.root_url }}">{{ section.settings.crumb_home_label | escape }}</a>
+        <span aria-hidden="true">/</span>
+        <span aria-current="page">{{ section.settings.crumb_current_label | default: collection.title | escape }}</span>
+      </nav>
+    {%- endif -%}
+
+    <div class="dlh-ch__main">
+      <div class="dlh-ch__copy">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="dlh-ch__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+        {%- endif -%}
+
+        <h1 class="dlh-ch__heading">
+          {{- heading | escape -}}
+          {%- if section.settings.heading_accent != blank -%}
+            <span class="dlh-ch__heading-accent">{{ section.settings.heading_accent | escape }}</span>
+          {%- endif -%}
+        </h1>
+
+        {%- if section.settings.lede != blank -%}
+          <p class="dlh-ch__lede">{{ section.settings.lede | escape }}</p>
+        {%- elsif collection.description != blank -%}
+          <div class="dlh-ch__lede">{{ collection.description }}</div>
+        {%- endif -%}
+
+        {%- if section.settings.button_label != blank -%}
+          <div class="dlh-ch__ctas">
+            <a href="{{ section.settings.button_url | default: '#experiences' }}" class="dlh-ch__btn">
+              {{ section.settings.button_label | escape }}
+            </a>
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- if flagship != blank -%}
+        <a href="{{ flagship.url }}" class="dlh-ch__flagship">
+          {%- if flagship.featured_image != blank -%}
+            {{
+              flagship.featured_image
+              | image_url: width: 240
+              | image_tag: class: 'dlh-ch__flagship-img', loading: 'eager', widths: '120, 240', sizes: '72px', alt: ''
+            }}
+          {%- endif -%}
+          <span class="dlh-ch__flagship-text">
+            {%- if section.settings.flagship_label != blank -%}
+              <span class="dlh-ch__flagship-label">{{ section.settings.flagship_label | escape }}</span>
+            {%- endif -%}
+            <span class="dlh-ch__flagship-name">{{ flagship_name | escape }}</span>
+            <span class="dlh-ch__flagship-price">
+              {{ section.settings.flagship_price_prefix | escape }}
+              <b>{{ flagship_price | money_without_trailing_zeros }}</b>
+              {{ section.settings.flagship_price_unit | escape }}
+            </span>
+          </span>
+          <span class="dlh-ch__flagship-arrow" aria-hidden="true">→</span>
+        </a>
+      {%- endif -%}
+    </div>
+
+    {%- if section.blocks.size > 0 or section.settings.show_count -%}
+      <ul class="dlh-ch__stats" role="list">
+        {%- if section.settings.show_count and collection.products_count > 0 -%}
+          <li class="dlh-ch__stat">
+            <span class="dlh-ch__stat-value">{{ collection.products_count }}</span>
+            <span class="dlh-ch__stat-label">{{ section.settings.count_label | escape }}</span>
+          </li>
+        {%- endif -%}
+        {%- for block in section.blocks -%}
+          <li class="dlh-ch__stat" {{ block.shopify_attributes }}>
+            <span class="dlh-ch__stat-value">{{ block.settings.value | escape }}</span>
+            <span class="dlh-ch__stat-label">{{ block.settings.label | escape }}</span>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Collection hero",
+  "tag": "div",
+  "class": "section-wrapper",
+  "enabled_on": {
+    "templates": ["collection"]
+  },
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Breadcrumb"
+    },
+    {
+      "type": "text",
+      "id": "crumb_home_label",
+      "label": "Home label",
+      "default": "Home"
+    },
+    {
+      "type": "text",
+      "id": "crumb_current_label",
+      "label": "Current page label",
+      "info": "Leave empty to use the collection title."
+    },
+    {
+      "type": "header",
+      "content": "Copy"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Desert experiences · Dubai Red Dunes"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading (line 1)",
+      "info": "Leave empty to use the collection title.",
+      "default": "Every way to live"
+    },
+    {
+      "type": "text",
+      "id": "heading_accent",
+      "label": "Heading accent (line 2)",
+      "default": "the Dubai desert."
+    },
+    {
+      "type": "textarea",
+      "id": "lede",
+      "label": "Intro text",
+      "info": "Leave empty to use the collection description."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Browse the experiences"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Button URL",
+      "info": "Leave empty to scroll to the experiences list."
+    },
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image",
+      "info": "Leave empty to use the collection image. A wide landscape photo works best (2400 px wide)."
+    },
+    {
+      "type": "range",
+      "id": "min_height",
+      "label": "Minimum height (desktop)",
+      "min": 420,
+      "max": 760,
+      "step": 20,
+      "unit": "px",
+      "default": 560
+    },
+    {
+      "type": "header",
+      "content": "Signature experience card"
+    },
+    {
+      "type": "product",
+      "id": "flagship_product",
+      "label": "Product"
+    },
+    {
+      "type": "text",
+      "id": "flagship_name",
+      "label": "Display name",
+      "info": "Leave empty to use the product title."
+    },
+    {
+      "type": "text",
+      "id": "flagship_label",
+      "label": "Label",
+      "default": "Our signature experience"
+    },
+    {
+      "type": "text",
+      "id": "flagship_price_prefix",
+      "label": "Price prefix",
+      "default": "From"
+    },
+    {
+      "type": "select",
+      "id": "flagship_price_source",
+      "label": "Price shown",
+      "options": [
+        { "value": "min", "label": "Lowest variant price" },
+        { "value": "max", "label": "Highest variant price (e.g. adult)" }
+      ],
+      "default": "max"
+    },
+    {
+      "type": "text",
+      "id": "flagship_price_unit",
+      "label": "Price unit",
+      "default": "per adult"
+    },
+    {
+      "type": "header",
+      "content": "Key figures"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_count",
+      "label": "Show the number of experiences in the collection",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "count_label",
+      "label": "Label for the number of experiences",
+      "default": "Desert experiences"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-5"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Key figure",
+      "settings": [
+        {
+          "type": "text",
+          "id": "value",
+          "label": "Value",
+          "default": "4.9/5"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Guest rating"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection hero",
+      "category": "t:categories.collection"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,700 @@
+/* Signature safari spotlight: a night-blue stage whose sky follows the evening, golden hour to stars. */
+.dlh-ss {
+  --dlh-ss-ink: #fcfaf7;
+  --dlh-ss-muted: rgb(252 250 247 / 0.72);
+  --dlh-ss-faint: rgb(252 250 247 / 0.5);
+  --dlh-ss-line: rgb(252 250 247 / 0.16);
+  --dlh-ss-gold: #f2b45a;
+  --dlh-ss-ember: #d7781a;
+  --dlh-ss-red: var(--brand-red, #b11c3d);
+  --dlh-ss-red-dark: var(--brand-red-dark, #8d1631);
+  --dlh-ss-night: #0a1c3a;
+  --dlh-ss-ease: cubic-bezier(0.65, 0, 0.35, 1);
+
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: var(--color-background, var(--dlh-ss-night));
+  color: var(--dlh-ss-ink);
+}
+
+.dlh-ss__stage {
+  display: block;
+}
+
+/* Sky: one glow per time of day, cross-faded, plus a star field for the night. */
+.dlh-ss__sky,
+.dlh-ss__glow,
+.dlh-ss__stars {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.dlh-ss__sky {
+  z-index: -1;
+}
+
+.dlh-ss__glow {
+  opacity: 0;
+  transition: opacity 1.4s ease;
+}
+
+.dlh-ss__glow--gold {
+  background:
+    radial-gradient(70% 60% at 88% 0%, rgb(215 120 26 / 0.55), transparent 70%),
+    radial-gradient(50% 45% at 0% 100%, rgb(242 180 90 / 0.16), transparent 70%);
+}
+
+.dlh-ss__glow--dusk {
+  background:
+    radial-gradient(70% 60% at 85% 0%, rgb(196 30 58 / 0.5), transparent 70%),
+    radial-gradient(55% 50% at 30% 0%, rgb(215 120 26 / 0.22), transparent 70%);
+}
+
+.dlh-ss__glow--twilight {
+  background:
+    radial-gradient(70% 60% at 75% 0%, rgb(104 64 150 / 0.5), transparent 70%),
+    radial-gradient(50% 40% at 100% 100%, rgb(196 30 58 / 0.14), transparent 70%);
+}
+
+.dlh-ss__glow--night {
+  background: radial-gradient(70% 60% at 60% 0%, rgb(46 82 150 / 0.45), transparent 70%);
+}
+
+.dlh-ss__stage[data-tone='gold'] .dlh-ss__glow--gold,
+.dlh-ss__stage[data-tone='dusk'] .dlh-ss__glow--dusk,
+.dlh-ss__stage[data-tone='twilight'] .dlh-ss__glow--twilight,
+.dlh-ss__stage[data-tone='night'] .dlh-ss__glow--night {
+  opacity: 1;
+}
+
+.dlh-ss__stars {
+  opacity: 0;
+  background-image:
+    radial-gradient(1.2px 1.2px at 22px 38px, #fff 50%, transparent 55%),
+    radial-gradient(1px 1px at 140px 92px, rgb(255 255 255 / 0.8) 50%, transparent 55%),
+    radial-gradient(1.5px 1.5px at 210px 24px, #fff 50%, transparent 55%),
+    radial-gradient(1px 1px at 76px 150px, rgb(255 255 255 / 0.7) 50%, transparent 55%),
+    radial-gradient(1px 1px at 280px 170px, rgb(255 255 255 / 0.6) 50%, transparent 55%),
+    radial-gradient(1.3px 1.3px at 330px 70px, #fff 50%, transparent 55%);
+  background-size: 360px 220px;
+  mask-image: linear-gradient(to bottom, #000 0%, transparent 75%);
+  transition: opacity 1.6s ease;
+}
+
+/* A second, offset tile breaks up the repeat of the first one. */
+.dlh-ss__stars::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(1px 1px at 48px 120px, rgb(255 255 255 / 0.75) 50%, transparent 55%),
+    radial-gradient(1.4px 1.4px at 260px 44px, #fff 50%, transparent 55%),
+    radial-gradient(1px 1px at 410px 210px, rgb(255 255 255 / 0.6) 50%, transparent 55%),
+    radial-gradient(1px 1px at 170px 260px, rgb(255 255 255 / 0.7) 50%, transparent 55%);
+  background-size: 530px 310px;
+  background-position: 137px 61px;
+}
+
+.dlh-ss__stage[data-tone='twilight'] .dlh-ss__stars {
+  opacity: 0.3;
+}
+
+.dlh-ss__stage[data-tone='night'] .dlh-ss__stars {
+  opacity: 0.85;
+}
+
+/* Layout */
+.dlh-ss__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1fr);
+  grid-template-areas:
+    'intro visual'
+    'path visual'
+    'book visual';
+  grid-template-rows: auto auto 1fr;
+  column-gap: clamp(48px, 6vw, 112px);
+  width: 100%;
+  max-width: var(--dlh-content-rail-max, 1440px);
+  margin-inline: auto;
+  padding-inline: max(24px, var(--dlh-content-rail-pad, 0px));
+  box-sizing: border-box;
+}
+
+.dlh-ss__intro {
+  grid-area: intro;
+  align-self: end;
+  min-width: 0;
+}
+
+.dlh-ss__visual {
+  grid-area: visual;
+  align-self: center;
+  min-width: 0;
+}
+
+.dlh-ss__path {
+  grid-area: path;
+  min-width: 0;
+  margin-top: 56px;
+}
+
+.dlh-ss__book {
+  grid-area: book;
+  align-self: start;
+  min-width: 0;
+  margin-top: 40px;
+}
+
+/* Intro */
+.dlh-ss__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 24px;
+  color: var(--dlh-ss-gold);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  line-height: 1.6;
+  text-transform: uppercase;
+}
+
+.dlh-ss__eyebrow::before {
+  content: '';
+  width: 28px;
+  height: 1px;
+  flex: none;
+  background: currentColor;
+}
+
+.dlh-ss__heading {
+  margin: 0;
+  font-family: var(--font-heading--family, var(--font-heading));
+  font-style: italic;
+  font-weight: var(--font-heading--weight, 600);
+  font-size: clamp(48px, 6.4vw, 96px);
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+  color: var(--dlh-ss-ink);
+  text-wrap: balance;
+}
+
+.dlh-ss__heading-accent {
+  /* Room for the italic overhang so the gradient does not clip the last letter. */
+  padding-inline-end: 0.08em;
+  background: linear-gradient(100deg, #ffd38a 0%, var(--dlh-ss-gold) 30%, var(--dlh-ss-ember) 62%, #e0425a 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.dlh-ss__rating {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+  margin: 28px 0 0;
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--dlh-ss-muted);
+}
+
+.dlh-ss__rating strong {
+  font-weight: 700;
+  color: var(--dlh-ss-ink);
+}
+
+.dlh-ss__stars-row {
+  display: inline-flex;
+  gap: 2px;
+  color: var(--dlh-ss-gold);
+}
+
+.dlh-ss__rating-count::before {
+  content: '·';
+  margin-inline-end: 10px;
+  color: var(--dlh-ss-faint);
+}
+
+.dlh-ss__lede {
+  max-width: 520px;
+  margin: 20px 0 0;
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--dlh-ss-muted);
+}
+
+/* Photo stage */
+.dlh-ss__frame {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  max-height: 760px;
+  margin-inline-start: auto;
+  overflow: hidden;
+  border-radius: 28px;
+  background: #101f3d;
+  box-shadow:
+    0 0 0 1px rgb(252 250 247 / 0.08),
+    0 50px 100px -40px rgb(0 0 0 / 0.7);
+}
+
+.dlh-ss__scene {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.9s ease,
+    visibility 0s linear 0.9s;
+}
+
+.dlh-ss__scene.is-active {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.9s ease;
+}
+
+.dlh-ss__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.08);
+  transition: transform 7s cubic-bezier(0.2, 0.6, 0.2, 1);
+}
+
+.dlh-ss__scene.is-active .dlh-ss__img {
+  transform: scale(1);
+}
+
+.dlh-ss__caption {
+  position: absolute;
+  inset: auto 0 0;
+  display: grid;
+  gap: 6px;
+  padding: 96px clamp(22px, 2.6vw, 36px) clamp(22px, 2.6vw, 34px);
+  background: linear-gradient(to top, rgb(6 14 32 / 0.88) 0%, rgb(6 14 32 / 0.5) 55%, transparent 100%);
+}
+
+.dlh-ss__count {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--dlh-ss-gold);
+  font-variant-numeric: tabular-nums;
+}
+
+.dlh-ss__count span {
+  margin-inline: 4px;
+  color: var(--dlh-ss-faint);
+}
+
+.dlh-ss__caption-title {
+  font-family: var(--font-heading--family, var(--font-heading));
+  font-style: italic;
+  font-weight: var(--font-heading--weight, 600);
+  font-size: clamp(26px, 2.4vw, 34px);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--dlh-ss-ink);
+}
+
+.dlh-ss__caption-detail {
+  max-width: 420px;
+  font-size: 15px;
+  line-height: 1.55;
+  color: rgb(252 250 247 / 0.82);
+}
+
+/* Sun path + scene tabs */
+.dlh-ss__arc {
+  position: relative;
+  height: 64px;
+}
+
+.dlh-ss__arc-line {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.dlh-ss__arc-line path {
+  fill: none;
+  stroke: rgb(252 250 247 / 0.3);
+  stroke-width: 1;
+  stroke-dasharray: 2 7;
+  stroke-linecap: round;
+}
+
+.dlh-ss__orb {
+  position: absolute;
+  left: var(--dlh-ss-sun-x, 12.5%);
+  bottom: calc(var(--dlh-ss-sun-y, 0.661) * 100%);
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  transform: translate(-50%, 50%);
+  background: radial-gradient(circle at 40% 35%, #fff1cc 0%, #ffc56b 45%, var(--dlh-ss-ember) 100%);
+  box-shadow:
+    0 0 0 6px rgb(242 154 58 / 0.18),
+    0 0 32px 10px rgb(242 154 58 / 0.45);
+  transition:
+    left 1s var(--dlh-ss-ease),
+    bottom 1s var(--dlh-ss-ease),
+    background 1s ease,
+    box-shadow 1s ease;
+}
+
+.dlh-ss__stage[data-tone='dusk'] .dlh-ss__orb {
+  background: radial-gradient(circle at 40% 35%, #ffe0c2 0%, #ff8a5c 50%, #c41e3a 100%);
+  box-shadow:
+    0 0 0 6px rgb(228 80 70 / 0.2),
+    0 0 32px 10px rgb(228 80 70 / 0.4);
+}
+
+/* After dark the sun becomes a crescent moon. */
+.dlh-ss__stage[data-tone='twilight'] .dlh-ss__orb,
+.dlh-ss__stage[data-tone='night'] .dlh-ss__orb {
+  background: transparent;
+  box-shadow:
+    inset 6px -3px 0 0 #eef2fb,
+    0 0 26px 2px rgb(190 210 255 / 0.28);
+}
+
+.dlh-ss__tabs {
+  display: grid;
+  grid-template-columns: repeat(var(--dlh-ss-count, 4), minmax(0, 1fr));
+  border-top: 1px solid var(--dlh-ss-line);
+}
+
+.dlh-ss__tab {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  align-content: start;
+  gap: 6px;
+  margin: 0;
+  padding: 18px 6px 4px;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: center;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Track on the horizon line; it fills while the scene plays. */
+.dlh-ss__tab::before,
+.dlh-ss__tab::after {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 18%;
+  right: 18%;
+  height: 2px;
+  border-radius: 2px;
+}
+
+.dlh-ss__tab::after {
+  background: var(--dlh-ss-gold);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.dlh-ss__tab[aria-selected='true']::after {
+  transform: scaleX(1);
+}
+
+.dlh-ss__stage.is-playing .dlh-ss__tab[aria-selected='true']::after {
+  animation: dlh-ss-progress 6.5s linear both;
+}
+
+/* Pause while the visitor looks at the photo or the scene list, not anywhere over the large section. */
+.dlh-ss__stage.is-playing:has(.dlh-ss__frame:hover, .dlh-ss__tabs:hover, .dlh-ss__tabs:focus-within) .dlh-ss__tab::after {
+  animation-play-state: paused;
+}
+
+@keyframes dlh-ss-progress {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.dlh-ss__tab-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  color: var(--dlh-ss-faint);
+  transition: color 0.3s ease;
+}
+
+.dlh-ss__tab-title {
+  font-family: var(--font-heading--family, var(--font-heading));
+  font-style: italic;
+  font-weight: var(--font-heading--weight, 600);
+  font-size: 19px;
+  line-height: 1.2;
+  color: var(--dlh-ss-muted);
+  transition: color 0.3s ease;
+}
+
+.dlh-ss__tab:hover .dlh-ss__tab-title,
+.dlh-ss__tab[aria-selected='true'] .dlh-ss__tab-title {
+  color: var(--dlh-ss-ink);
+}
+
+.dlh-ss__tab[aria-selected='true'] .dlh-ss__tab-label {
+  color: var(--dlh-ss-gold);
+}
+
+.dlh-ss__tab:focus-visible {
+  outline: 2px solid var(--dlh-ss-gold);
+  outline-offset: 2px;
+  border-radius: 10px;
+}
+
+/* Booking ticket */
+.dlh-ss__book {
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px 24px;
+  padding: 24px 28px;
+  border: 1px solid rgb(252 250 247 / 0.12);
+  border-radius: 20px;
+  background: rgb(252 250 247 / 0.045);
+  backdrop-filter: blur(6px);
+}
+
+.dlh-ss__price {
+  display: grid;
+  margin: 0;
+  line-height: 1.1;
+}
+
+.dlh-ss__price-prefix,
+.dlh-ss__price-unit {
+  font-size: 13px;
+  color: var(--dlh-ss-faint);
+}
+
+.dlh-ss__price-amount {
+  margin: 2px 0;
+  font-family: var(--font-heading--family, var(--font-heading));
+  font-weight: var(--font-heading--weight, 600);
+  font-size: clamp(30px, 2.6vw, 38px);
+  letter-spacing: -0.02em;
+  color: var(--dlh-ss-ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.dlh-ss__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+.dlh-ss__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 56px;
+  padding: 0 28px;
+  border-radius: 999px;
+  background: var(--dlh-ss-red);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  box-shadow: 0 14px 30px -12px rgb(177 28 61 / 0.7);
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.dlh-ss__btn svg {
+  transition: transform 0.2s ease;
+}
+
+.dlh-ss__btn:hover {
+  background: var(--dlh-ss-red-dark);
+  transform: translateY(-1px);
+}
+
+.dlh-ss__btn:hover svg {
+  transform: translateX(3px);
+}
+
+.dlh-ss__link {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--dlh-ss-muted);
+  text-decoration: underline;
+  text-decoration-color: rgb(252 250 247 / 0.35);
+  text-underline-offset: 4px;
+  transition: color 0.2s ease;
+}
+
+.dlh-ss__link:hover {
+  color: var(--dlh-ss-ink);
+}
+
+.dlh-ss__btn:focus-visible,
+.dlh-ss__link:focus-visible {
+  outline: 2px solid var(--dlh-ss-gold);
+  outline-offset: 4px;
+}
+
+.dlh-ss__reassure {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  margin: 0;
+  padding: 18px 0 0;
+  border-top: 1px dashed rgb(252 250 247 / 0.16);
+  list-style: none;
+  font-size: 13.5px;
+  line-height: 1.4;
+  color: var(--dlh-ss-muted);
+}
+
+.dlh-ss__reassure li {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dlh-ss__reassure svg {
+  flex: none;
+  color: var(--dlh-ss-gold);
+}
+
+/* Tablet and mobile: heading, photo, scenes, then the booking ticket. */
+@media (max-width: 989px) {
+  .dlh-ss__inner {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      'intro'
+      'visual'
+      'path'
+      'book';
+    grid-template-rows: none;
+  }
+
+  .dlh-ss__visual {
+    margin-top: 40px;
+  }
+
+  .dlh-ss__frame {
+    max-height: none;
+    margin-inline: auto;
+    max-width: 560px;
+  }
+
+  .dlh-ss__path {
+    width: 100%;
+    max-width: 560px;
+    margin: 28px auto 0;
+  }
+
+  .dlh-ss__book {
+    width: 100%;
+    max-width: 560px;
+    margin: 32px auto 0;
+    box-sizing: border-box;
+  }
+}
+
+/* Tablet: a landscape crop keeps the photo from filling the whole screen. */
+@media (min-width: 600px) and (max-width: 989px) {
+  .dlh-ss__frame,
+  .dlh-ss__path,
+  .dlh-ss__book {
+    max-width: none;
+  }
+
+  .dlh-ss__frame {
+    aspect-ratio: 3 / 2;
+  }
+
+  .dlh-ss__img {
+    object-position: center 60%;
+  }
+}
+
+@media (max-width: 560px) {
+  .dlh-ss__arc {
+    height: 48px;
+  }
+
+  .dlh-ss__tab {
+    padding-inline: 2px;
+  }
+
+  .dlh-ss__tab-label {
+    display: none;
+  }
+
+  .dlh-ss__tab-title {
+    font-size: 14px;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+  }
+
+  .dlh-ss__lede {
+    font-size: 16px;
+  }
+
+  .dlh-ss__book {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 22px;
+  }
+
+  .dlh-ss__actions {
+    align-items: stretch;
+    text-align: center;
+  }
+}
+
+@media (max-width: 359px) {
+  .dlh-ss__tab-title {
+    font-size: 13px;
+    white-space: normal;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dlh-ss__glow,
+  .dlh-ss__stars,
+  .dlh-ss__scene,
+  .dlh-ss__scene.is-active,
+  .dlh-ss__img,
+  .dlh-ss__orb,
+  .dlh-ss__btn,
+  .dlh-ss__btn svg {
+    transition: none;
+  }
+
+  .dlh-ss__img,
+  .dlh-ss__btn:hover,
+  .dlh-ss__btn:hover svg {
+    transform: none;
+  }
+}

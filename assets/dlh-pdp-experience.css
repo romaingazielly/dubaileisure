@@ -266,3 +266,321 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* ---- Not included list ---- */
+
+.dlh-pe__incl-group + .dlh-pe__incl-group {
+  margin-top: 22px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border, rgba(10,28,58,.10));
+}
+
+.dlh-pe__incl-list--no li svg {
+  color: var(--fg-subtle, rgba(10,28,58,.45));
+}
+
+/* ---- Long timelines (7+ steps): two rows on medium screens ---- */
+
+@media (min-width: 901px) and (max-width: 1200px) {
+  .dlh-pe__timeline-grid--long {
+    grid-template-columns: repeat(4, 1fr);
+    row-gap: 32px;
+  }
+
+  .dlh-pe__timeline-grid--long::before {
+    display: none;
+  }
+}
+
+/* ---- Good to know cards ---- */
+
+.dlh-pe__know-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 18px;
+  margin-top: 28px;
+}
+
+.dlh-pe__know {
+  padding: 22px 24px;
+  border: 1px solid var(--border, rgba(10,28,58,.10));
+  border-radius: 18px;
+  background: #fff;
+}
+
+.dlh-pe__know h3 {
+  font-family: var(--font-heading--family, var(--font-heading, 'Kufam', sans-serif));
+  font-style: italic;
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--brand-navy, #0a1c3a);
+  margin: 0 0 10px;
+}
+
+.dlh-pe__know-text,
+.dlh-pe__know-text p {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--fg, rgba(10,28,58,.81));
+  margin: 0;
+}
+
+.dlh-pe__know-text p + p {
+  margin-top: 8px;
+}
+
+/* ============================================================
+   Layout "Sunset to starlight" (desc_layout: dusk)
+   Night-sky band: copy on the left, two offset photos on the right,
+   included card stretched underneath.
+   ============================================================ */
+
+.dlh-pe--dusk {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 55% 45% at 88% 100%, rgba(215, 120, 26, .32), transparent 70%),
+    radial-gradient(ellipse 45% 35% at 8% 0%, rgba(196, 30, 58, .16), transparent 70%),
+    linear-gradient(180deg, #081631 0%, var(--brand-navy, #0a1c3a) 55%, #24192b 100%);
+}
+
+/* Star field, fading out towards the warm horizon */
+.dlh-pe--dusk::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    radial-gradient(1px 1px at 22px 34px, rgba(255, 255, 255, .75), transparent 60%),
+    radial-gradient(1px 1px at 118px 82px, rgba(255, 255, 255, .5), transparent 60%),
+    radial-gradient(1.5px 1.5px at 204px 148px, rgba(255, 255, 255, .85), transparent 60%),
+    radial-gradient(1px 1px at 62px 188px, rgba(255, 255, 255, .45), transparent 60%),
+    radial-gradient(1px 1px at 262px 42px, rgba(255, 255, 255, .6), transparent 60%),
+    radial-gradient(1.5px 1.5px at 168px 16px, rgba(255, 255, 255, .55), transparent 60%);
+  background-size: 300px 220px;
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, transparent 70%);
+  mask-image: linear-gradient(180deg, #000 0%, transparent 70%);
+  opacity: .8;
+}
+
+.dlh-pe--dusk .dlh-pe__inner {
+  padding-block: clamp(64px, 8vw, 112px);
+}
+
+.dlh-pe--dusk .dlh-pe__eyebrow {
+  color: #f0a35a;
+}
+
+.dlh-pe--dusk .dlh-pe__heading {
+  color: #fff;
+  margin-bottom: 0;
+}
+
+.dlh-pe--dusk .dlh-pe__heading-accent {
+  background: linear-gradient(90deg, #f6c27a 0%, #ec8a3c 55%, #e0573f 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  padding-bottom: .08em;
+}
+
+.dlh-pe--dusk .dlh-pe__copy {
+  margin-top: 28px;
+}
+
+.dlh-pe--dusk .dlh-pe__copy p {
+  color: rgba(255, 255, 255, .78);
+}
+
+.dlh-pe--dusk .dlh-pe__copy p:first-child::first-letter {
+  color: #f0a35a;
+}
+
+/* ---- Copy + photos ---- */
+
+.dlh-pe__dusk-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  gap: clamp(40px, 5vw, 80px);
+  align-items: center;
+}
+
+.dlh-pe__dusk-media {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  align-items: start;
+}
+
+.dlh-pe__dusk-fig {
+  position: relative;
+  margin: 0;
+  aspect-ratio: 4 / 5;
+  border-radius: 22px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, .06);
+  box-shadow: 0 30px 60px -24px rgba(0, 0, 0, .6);
+}
+
+.dlh-pe__dusk-fig--2 {
+  margin-top: 64px;
+}
+
+.dlh-pe__dusk-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .8s cubic-bezier(.33, 1, .68, 1);
+}
+
+.dlh-pe__dusk-fig:hover .dlh-pe__dusk-img {
+  transform: scale(1.04);
+}
+
+.dlh-pe__dusk-fig figcaption {
+  position: absolute;
+  inset: auto 0 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 56px 18px 16px;
+  background: linear-gradient(180deg, transparent 0%, rgba(5, 12, 26, .85) 100%);
+}
+
+.dlh-pe__dusk-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-heading--family, var(--font-heading, 'Kufam', sans-serif));
+  font-style: italic;
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 1.1;
+  color: #fff;
+}
+
+.dlh-pe__dusk-label::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: #f0a35a;
+  box-shadow: 0 0 10px 2px rgba(240, 163, 90, .7);
+}
+
+.dlh-pe__dusk-fig--2 .dlh-pe__dusk-label::before {
+  background: #dbe6ff;
+  box-shadow: 0 0 10px 2px rgba(219, 230, 255, .6);
+}
+
+.dlh-pe__dusk-caption {
+  font-size: 12.5px;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, .78);
+}
+
+/* ---- Included card, stretched under the grid ---- */
+
+.dlh-pe--dusk .dlh-pe__incl-card {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  margin-top: clamp(48px, 6vw, 88px);
+  padding: 28px 32px;
+  background: rgba(255, 255, 255, .05);
+  border-color: rgba(255, 255, 255, .12);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+
+.dlh-pe--dusk .dlh-pe__incl-card h5 {
+  color: #fff;
+}
+
+.dlh-pe--dusk .dlh-pe__incl-list li {
+  color: rgba(255, 255, 255, .82);
+}
+
+.dlh-pe--dusk .dlh-pe__incl-list--yes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px 32px;
+}
+
+.dlh-pe--dusk .dlh-pe__incl-list--yes li svg {
+  color: #f0a35a;
+}
+
+.dlh-pe--dusk .dlh-pe__incl-list--no li svg {
+  color: rgba(255, 255, 255, .4);
+}
+
+.dlh-pe--dusk .dlh-pe__incl-group + .dlh-pe__incl-group {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+  padding-left: 32px;
+  border-left: 1px solid rgba(255, 255, 255, .12);
+}
+
+@media (max-width: 900px) {
+  .dlh-pe__dusk-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .dlh-pe__dusk-media {
+    gap: 12px;
+  }
+
+  .dlh-pe__dusk-fig {
+    border-radius: 16px;
+  }
+
+  .dlh-pe__dusk-fig--2 {
+    margin-top: 36px;
+  }
+
+  .dlh-pe__dusk-fig figcaption {
+    padding: 40px 12px 12px;
+  }
+
+  .dlh-pe__dusk-label {
+    font-size: 18px;
+  }
+
+  .dlh-pe__dusk-caption {
+    font-size: 11.5px;
+  }
+
+  .dlh-pe--dusk .dlh-pe__incl-card {
+    grid-template-columns: 1fr;
+    padding: 24px 22px;
+  }
+
+  .dlh-pe--dusk .dlh-pe__incl-group + .dlh-pe__incl-group {
+    margin-top: 22px;
+    padding-top: 20px;
+    padding-left: 0;
+    border-top: 1px solid rgba(255, 255, 255, .12);
+    border-left: 0;
+  }
+}
+
+@media (max-width: 560px) {
+  .dlh-pe--dusk .dlh-pe__incl-list--yes {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dlh-pe__dusk-img {
+    transition: none;
+  }
+
+  .dlh-pe__dusk-fig:hover .dlh-pe__dusk-img {
+    transform: none;
+  }
+}

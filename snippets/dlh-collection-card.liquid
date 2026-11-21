@@ -1,0 +1,100 @@
+{%- doc -%}
+  Experience card for the collection page (sections/dlh-collection-experiences.liquid).
+  Every text parameter is optional: without them the card falls back to the product data.
+
+  @param {object} product - Shopify product
+  @param {string} [name] - Display name, defaults to the product title
+  @param {string} [when] - Short moment or category label shown on the photo (e.g. "Sunrise")
+  @param {string} [meta] - Small line above the title (e.g. "Private 4x4 · up to 6 guests")
+  @param {string} [tagline] - One sentence, defaults to the start of the product description
+  @param {string} [highlights] - Short highlights separated by "|||"
+  @param {string} [badge] - Badge shown on the photo
+  @param {string} [price_prefix] - Text before the price (e.g. "From")
+  @param {string} [price_source] - "min" (default) or "max" variant price
+  @param {string} [price_unit] - Text after the price (e.g. "/ adult")
+  @param {string} [cta_label] - Call to action label
+  @param {string} [sizes] - sizes attribute of the photo
+  @param {string} [attributes] - block.shopify_attributes
+{%- enddoc -%}
+
+{%- liquid
+  assign card_name = name | default: product.title
+  assign card_price = product.price_min
+  if price_source == 'max'
+    assign card_price = product.price_max
+  endif
+
+  assign card_tagline = tagline
+  if card_tagline == blank
+    assign card_tagline = product.description | strip_html | strip_newlines | truncate: 120
+  endif
+
+  assign card_highlights = highlights | split: '|||'
+  assign card_sizes = sizes | default: '(min-width: 1100px) 33vw, (min-width: 750px) 50vw, 100vw'
+-%}
+
+<article class="dlh-cx__card" {{ attributes }}>
+  <div class="dlh-cx__card-media">
+    {%- if product.featured_image != blank -%}
+      {{
+        product.featured_image
+        | image_url: width: 1200
+        | image_tag:
+          class: 'dlh-cx__card-img',
+          loading: 'lazy',
+          widths: '360, 540, 720, 960, 1200',
+          sizes: card_sizes,
+          alt: card_name
+      }}
+    {%- else -%}
+      <div class="dlh-cx__card-placeholder"></div>
+    {%- endif -%}
+
+    {%- if when != blank -%}
+      <span class="dlh-cx__when">{{ when | escape }}</span>
+    {%- endif -%}
+    {%- if badge != blank -%}
+      <span class="dlh-cx__badge">{{ badge | escape }}</span>
+    {%- endif -%}
+  </div>
+
+  <div class="dlh-cx__card-body">
+    {%- if meta != blank -%}
+      <p class="dlh-cx__card-meta">{{ meta | escape }}</p>
+    {%- endif -%}
+
+    <h3 class="dlh-cx__card-title">
+      <a href="{{ product.url }}" class="dlh-cx__card-link">{{ card_name | escape }}</a>
+    </h3>
+
+    {%- if card_tagline != blank -%}
+      <p class="dlh-cx__card-tagline">{{ card_tagline | escape }}</p>
+    {%- endif -%}
+
+    {%- if card_highlights.size > 0 -%}
+      <ul class="dlh-cx__card-highlights" role="list">
+        {%- for highlight in card_highlights -%}
+          {%- assign highlight_text = highlight | strip -%}
+          {%- if highlight_text != blank -%}
+            <li>{{ highlight_text | escape }}</li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+
+    <div class="dlh-cx__card-footer">
+      <p class="dlh-cx__price">
+        {%- if price_prefix != blank -%}
+          <span class="dlh-cx__price-label">{{ price_prefix | escape }}</span>
+        {%- endif -%}
+        <span class="dlh-cx__price-value">{{ card_price | money_without_trailing_zeros }}</span>
+        {%- if price_unit != blank -%}
+          <span class="dlh-cx__price-unit">{{ price_unit | escape }}</span>
+        {%- endif -%}
+      </p>
+      {%- if cta_label != blank -%}
+        <span class="dlh-cx__card-cta" aria-hidden="true">{{ cta_label | escape }} <span>→</span></span>
+      {%- endif -%}
+    </div>
+  </div>
+</article>

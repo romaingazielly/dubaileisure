@@ -1,0 +1,737 @@
+{
+  "sections": {
+    "main": {
+      "type": "dlh-pdp-safari",
+      "blocks": {
+        "fact_1": {
+          "type": "fact",
+          "settings": {
+            "icon": "heritage",
+            "label": "Evening experience",
+            "detail": "Dunes, sunset, dinner and shows"
+          }
+        },
+        "fact_2": {
+          "type": "fact",
+          "settings": {
+            "icon": "pickup",
+            "label": "Hotel pickup & drop-off",
+            "detail": "Included, anywhere in Dubai"
+          }
+        },
+        "fact_3": {
+          "type": "fact",
+          "settings": {
+            "icon": "cancel",
+            "label": "Free cancellation",
+            "detail": "Up to 24 hours before"
+          }
+        },
+        "fact_4": {
+          "type": "fact",
+          "settings": {
+            "icon": "group",
+            "label": "Family friendly",
+            "detail": "From age 3, child price for ages 3-10"
+          }
+        },
+        "trust_1": {
+          "type": "trust_item",
+          "settings": {
+            "icon": "shield",
+            "label": "DET licensed & insured"
+          }
+        },
+        "trust_2": {
+          "type": "trust_item",
+          "settings": {
+            "icon": "award",
+            "label": "Desert specialists since 2004"
+          }
+        },
+        "trust_3": {
+          "type": "trust_item",
+          "settings": {
+            "icon": "instant",
+            "label": "Instant confirmation"
+          }
+        },
+        "trust_4": {
+          "type": "trust_item",
+          "settings": {
+            "icon": "cancel",
+            "label": "Free cancel · 24h"
+          }
+        },
+        "upsell_henna": {
+          "type": "upsell",
+          "settings": {
+            "product": "henna-tattoo",
+            "title": "Henna tattoo",
+            "description": "",
+            "price_suffix": "per person",
+            "max_quantity": 10,
+            "show_image": true
+          }
+        },
+        "upsell_falcon": {
+          "type": "upsell",
+          "settings": {
+            "product": "hold-an-emirati-falcon",
+            "title": "Hold an Emirati falcon",
+            "description": "",
+            "price_suffix": "per person",
+            "max_quantity": 10,
+            "show_image": true
+          }
+        },
+        "reass_1": {
+          "type": "reassurance",
+          "settings": {
+            "text": "Secure payment"
+          }
+        },
+        "reass_2": {
+          "type": "reassurance",
+          "settings": {
+            "text": "Free cancellation"
+          }
+        },
+        "reass_3": {
+          "type": "reassurance",
+          "settings": {
+            "text": "Instant confirmation"
+          }
+        }
+      },
+      "block_order": [
+        "fact_1",
+        "fact_2",
+        "fact_3",
+        "fact_4",
+        "trust_1",
+        "trust_2",
+        "trust_3",
+        "trust_4",
+        "upsell_henna",
+        "upsell_falcon",
+        "reass_1",
+        "reass_2",
+        "reass_3"
+      ],
+      "settings": {
+        "category_text": "Desert Safari · Dubai Red Dunes",
+        "title_accent": "",
+        "badge_text": "Bestseller",
+        "rating": "4.9",
+        "review_count": "1,247 verified reviews",
+        "summary": "Dune bashing in the red dunes, a golden sunset, a camel ride, then a BBQ dinner with live shows under the stars. Hotel pickup and drop-off included.",
+        "price_prefix": "From",
+        "price_unit": "per adult",
+        "price_note": "Taxes & fees included",
+        "date_label": "Pick your date",
+        "guests_label": "Guests",
+        "guests_note": "",
+        "default_guests": 2,
+        "max_guests": 20,
+        "primary_label": "Book now",
+        "show_add_to_cart": true,
+        "whatsapp_url": ""
+      }
+    },
+    "highlights": {
+      "type": "dlh-pdp-highlights",
+      "blocks": {
+        "highlight_1": {
+          "type": "highlight",
+          "settings": {
+            "icon": "pickup",
+            "title": "30 minutes of dune bashing",
+            "description": "A thrilling 4x4 ride across the Red Dunes with an experienced safari driver."
+          }
+        },
+        "highlight_2": {
+          "type": "highlight",
+          "settings": {
+            "icon": "heritage",
+            "title": "Sunset in the desert",
+            "description": "Sandboarding, golden views and photos you will keep for a long time."
+          }
+        },
+        "highlight_3": {
+          "type": "highlight",
+          "settings": {
+            "icon": "camp",
+            "title": "A real desert camp",
+            "description": "Arabic coffee, sweets, a short camel ride, henna art and a falcon photo."
+          }
+        },
+        "highlight_4": {
+          "type": "highlight",
+          "settings": {
+            "icon": "fire",
+            "title": "BBQ dinner and live shows",
+            "description": "Buffet dinner with vegetarian options, Tanoura dance, belly dance and fire show."
+          }
+        }
+      },
+      "block_order": [
+        "highlight_1",
+        "highlight_2",
+        "highlight_3",
+        "highlight_4"
+      ],
+      "settings": {
+        "eyebrow": "Why You'll Love It",
+        "heading": "One evening.",
+        "heading_accent": "The whole desert.",
+        "lede": "Everything is taken care of by Dubai Leisure Holidays, from your hotel door to the last show of the night.",
+        "padding-block-start": 40,
+        "padding-block-end": 64
+      }
+    },
+    "experience": {
+      "type": "dlh-pdp-experience",
+      "blocks": {
+        "included_1": {
+          "type": "included",
+          "settings": {
+            "text": "Pickup and drop-off anywhere in Dubai"
+          }
+        },
+        "included_2": {
+          "type": "included",
+          "settings": {
+            "text": "Around 30 minutes of dune bashing in the Red Dunes"
+          }
+        },
+        "included_3": {
+          "type": "included",
+          "settings": {
+            "text": "Sandboarding, short camel ride and falcon photo"
+          }
+        },
+        "included_4": {
+          "type": "included",
+          "settings": {
+            "text": "Welcome snacks, Arabic coffee and sweets"
+          }
+        },
+        "included_5": {
+          "type": "included",
+          "settings": {
+            "text": "Unlimited soft drinks, tea and coffee"
+          }
+        },
+        "included_6": {
+          "type": "included",
+          "settings": {
+            "text": "BBQ buffet dinner with vegetarian options"
+          }
+        },
+        "included_7": {
+          "type": "included",
+          "settings": {
+            "text": "Tanoura dance, belly dance and fire show"
+          }
+        },
+        "included_8": {
+          "type": "included",
+          "settings": {
+            "text": "Henna art, shisha lounge and full camp access"
+          }
+        },
+        "included_9": {
+          "type": "included",
+          "settings": {
+            "text": "Clean, separate washrooms"
+          }
+        },
+        "excluded_1": {
+          "type": "excluded",
+          "settings": {
+            "text": "Quad bike and dune buggy rides (optional extras)"
+          }
+        },
+        "excluded_2": {
+          "type": "excluded",
+          "settings": {
+            "text": "Longer private camel ride (optional extra)"
+          }
+        },
+        "excluded_3": {
+          "type": "excluded",
+          "settings": {
+            "text": "Personal expenses"
+          }
+        },
+        "know_1": {
+          "type": "know",
+          "settings": {
+            "title": "What to wear",
+            "text": "<p>Loose, comfortable clothes and closed shoes. Bring a light layer: the desert gets cooler after sunset. Covered shoulders and knees are recommended at the camp.</p>"
+          }
+        },
+        "know_2": {
+          "type": "know",
+          "settings": {
+            "title": "Children and seniors",
+            "text": "<p>We welcome guests from age 3 to 80+. Dune bashing is optional: you can skip it and join us directly at the camp.</p>"
+          }
+        },
+        "know_3": {
+          "type": "know",
+          "settings": {
+            "title": "Health and safety",
+            "text": "<p>Dune bashing is a bumpy ride. It is not recommended for pregnant guests or guests with back, neck or heart problems. Every vehicle has seatbelts, a trained driver and a first-aid kit.</p>"
+          }
+        },
+        "know_4": {
+          "type": "know",
+          "settings": {
+            "title": "Food and allergies",
+            "text": "<p>The BBQ buffet includes halal meats, vegetarian and vegan dishes and gluten-free mains. Tell us about any allergy when you book.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "included_1",
+        "included_2",
+        "included_3",
+        "included_4",
+        "included_5",
+        "included_6",
+        "included_7",
+        "included_8",
+        "included_9",
+        "excluded_1",
+        "excluded_2",
+        "excluded_3",
+        "know_1",
+        "know_2",
+        "know_3",
+        "know_4"
+      ],
+      "settings": {
+        "desc_layout": "dusk",
+        "desc_image_1": "shopify://shop_images/dlh-safari-sunset.webp",
+        "desc_image_1_asset": "dlh-safari-sunset.webp",
+        "desc_image_1_label": "Sunset",
+        "desc_image_1_caption": "Dune bashing, sandboarding & desert experience",
+        "desc_image_2": "shopify://shop_images/dlh-safari-starlight.webp",
+        "desc_image_2_asset": "dlh-safari-starlight.webp",
+        "desc_image_2_label": "Starlight",
+        "desc_image_2_caption": "BBQ dinner, Tanoura and fire show",
+        "desc_eyebrow": "The Experience",
+        "desc_heading": "An evening in the dunes.",
+        "desc_heading_accent": "From sunset to starlight.",
+        "description": "<p>Escape to the golden dunes for an unforgettable Arabian desert adventure. Experience the thrill of dune bashing as expert drivers navigate the sweeping sands, followed by a scenic photo stop with breathtaking views of the desert landscape.</p><p>Try sandboarding down the dunes and enjoy a traditional camel ride before the desert transforms at sunset. Continue your evening at a welcoming desert camp, where a delicious barbecue dinner awaits under the stars.</p><p>As you dine, enjoy captivating live entertainment including Tanoura dance, belly dance, and an exciting fire show: an immersive evening of adventure, culture, and authentic Arabian hospitality.</p>",
+        "tl_eyebrow": "Your Evening",
+        "tl_heading": "Eight moments.",
+        "tl_heading_accent": "One unforgettable evening.",
+        "tl_lede": "From the moment we pick you up to the last show under the stars, here is how your evening unfolds.",
+        "know_eyebrow": "Before You Go",
+        "know_heading": "Good to know.",
+        "know_heading_accent": ""
+      }
+    },
+    "reviews": {
+      "type": "guest-reviews",
+      "blocks": {
+        "guest_review_JM": {
+          "type": "guest_review",
+          "settings": {
+            "rating": 5,
+            "quote": "Absolutely spectacular evening. The dune bashing was thrilling, the buffet was outstanding, and the fire show had our kids speechless. Worth every dirham.",
+            "author": "James M.",
+            "meta": "London, UK · TripAdvisor",
+            "avatar_initials": ""
+          },
+          "blocks": {}
+        },
+        "guest_review_SA": {
+          "type": "guest_review",
+          "settings": {
+            "rating": 5,
+            "quote": "The sunrise safari was magical — cool breeze, golden dunes, and Arabic coffee at dawn. Our guide was incredibly knowledgeable about Bedouin culture.",
+            "author": "Sara A.",
+            "meta": "Paris, France · Google",
+            "avatar_initials": ""
+          },
+          "blocks": {}
+        },
+        "guest_review_RC": {
+          "type": "guest_review",
+          "settings": {
+            "rating": 5,
+            "quote": "Took the dune buggy add-on and it was the highlight of our Dubai trip. Professional, safe, and outrageously fun. We're coming back next year!",
+            "author": "Ravi C.",
+            "meta": "Mumbai, India · TripAdvisor",
+            "avatar_initials": ""
+          },
+          "blocks": {}
+        },
+        "guest_review_KL": {
+          "type": "guest_review",
+          "settings": {
+            "rating": 5,
+            "quote": "Seamless from pickup to drop-off. The henna artist was amazing with our daughters. The belly dance show was mesmerising. Highly, highly recommend.",
+            "author": "Kim L.",
+            "meta": "Sydney, Australia · Google",
+            "avatar_initials": ""
+          },
+          "blocks": {}
+        },
+        "guest_review_TP": {
+          "type": "guest_review",
+          "settings": {
+            "rating": 5,
+            "quote": "We're a family of five including grandparents. Everyone had an incredible time — the team was thoughtful, attentive, and genuinely warm. True Arabian hospitality.",
+            "author": "Thomas P.",
+            "meta": "New York, USA · TripAdvisor",
+            "avatar_initials": ""
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "guest_review_JM",
+        "guest_review_SA",
+        "guest_review_RC",
+        "guest_review_KL",
+        "guest_review_TP"
+      ],
+      "name": "Guest reviews",
+      "settings": {
+        "section_id": "reviews",
+        "eyebrow": "Guest Stories",
+        "heading": "Voices from the",
+        "heading_accent": "dunes",
+        "show_rating_block": true,
+        "rating_score": "4.9",
+        "review_count": "1,247 verified reviews",
+        "review_sources": "TripAdvisor · Google",
+        "card_width": 360,
+        "card_gap": 20,
+        "scroll_seconds": 60,
+        "pause_on_hover": true,
+        "color_scheme": "scheme-2",
+        "section_width": "full-width",
+        "padding-block-start": 72,
+        "padding-block-end": 72
+      }
+    },
+    "faq": {
+      "type": "dlh-faq",
+      "blocks": {
+        "faq_1": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How do I get picked up from my hotel?",
+            "answer": "A Bedouin-trained driver will arrive at your hotel lobby 15 minutes before the scheduled time, in a clearly marked Toyota Land Cruiser. You'll receive their name and photo by WhatsApp the day before."
+          }
+        },
+        "faq_2": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Is the desert safari safe for kids and seniors?",
+            "answer": "Yes. We host guests from age 3 to 80+. Dune bashing is optional — families with young children or seniors can skip it and join us directly at the camp. Every vehicle has seatbelts, a trained driver, and first-aid equipment."
+          }
+        },
+        "faq_3": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What should I wear?",
+            "answer": "Loose, comfortable clothing and closed-toe shoes for daytime. Light layers for evening — the desert cools sharply after sunset. Cultural dress (shoulders and knees covered) is recommended for the camp."
+          }
+        },
+        "faq_4": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Can I book a fully private experience?",
+            "answer": "Absolutely. Our Private Overnight Camp and Private Heritage Trek are bookable year-round. For bespoke multi-day itineraries, reach out via WhatsApp and we'll design it with you."
+          }
+        },
+        "faq_5": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What is your cancellation policy?",
+            "answer": "Free cancellation up to 24 hours before your experience. No-questions-asked refund to your original payment method within 3 business days."
+          }
+        },
+        "faq_6": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Is the food vegetarian/halal/allergy-friendly?",
+            "answer": "Our BBQ buffet includes halal meats, full vegetarian and vegan options, and gluten-free mains. Please flag allergies at booking and we'll confirm arrangements with the camp chef."
+          }
+        }
+      },
+      "block_order": [
+        "faq_1",
+        "faq_2",
+        "faq_3",
+        "faq_4",
+        "faq_5",
+        "faq_6"
+      ],
+      "settings": {
+        "section_id": "faq",
+        "eyebrow": "Questions",
+        "heading": "Your questions,",
+        "heading_accent": "answered.",
+        "subheading": "Can't find what you're looking for? Our team replies on WhatsApp in under 10 minutes, 24/7.",
+        "button_label": "Ask on WhatsApp",
+        "button_url": "",
+        "color_scheme": "scheme-2",
+        "section_width": "page-width",
+        "padding-block-start": 72,
+        "padding-block-end": 72
+      }
+    },
+    "recommendations": {
+      "type": "product-recommendations",
+      "blocks": {
+        "text_cbcgyb": {
+          "type": "text",
+          "name": "t:names.header",
+          "settings": {
+            "text": "<h3>You may also like </h3>",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "h4",
+            "font": "var(--font-primary--family)",
+            "font_size": "",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "static-product-card": {
+          "type": "_product-card",
+          "name": "t:names.product_card",
+          "static": true,
+          "settings": {
+            "product_card_gap": 8,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 8,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "product_card_gallery_DNizbJ": {
+              "type": "_product-card-gallery",
+              "name": "t:names.product_card_media",
+              "settings": {
+                "image_ratio": "adapt",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "product_title_M7MJkb": {
+              "type": "product-title",
+              "name": "t:names.product_title",
+              "settings": {
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 4,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "price_gLWgA6": {
+              "type": "price",
+              "settings": {
+                "show_sale_price_first": true,
+                "show_installments": false,
+                "show_tax_info": false,
+                "type_preset": "h6",
+                "width": "100%",
+                "alignment": "left",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "color": "var(--color-foreground)",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "product_card_gallery_DNizbJ",
+            "product_title_M7MJkb",
+            "price_gLWgA6"
+          ]
+        }
+      },
+      "block_order": [
+        "text_cbcgyb"
+      ],
+      "name": "t:names.product_recommendations",
+      "settings": {
+        "product": "{{ closest.product }}",
+        "recommendation_type": "related",
+        "layout_type": "grid",
+        "carousel_on_mobile": false,
+        "max_products": 4,
+        "columns": 4,
+        "mobile_columns": "2",
+        "columns_gap": 12,
+        "rows_gap": 24,
+        "icons_style": "arrow",
+        "icons_shape": "none",
+        "section_width": "page-width",
+        "gap": 28,
+        "color_scheme": "scheme-1",
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      }
+    },
+    "timeline": {
+      "type": "timeline-steps",
+      "blocks": {
+        "step_yNykXf": {
+          "type": "step",
+          "name": "1",
+          "settings": {
+            "title": "Hotel Pickup/Residence",
+            "description": "Transfers from Dubai\nShared or Private.",
+            "illustration": "car"
+          }
+        },
+        "step_GhE4xA": {
+          "type": "step",
+          "settings": {
+            "title": "Desert Activities",
+            "description": "Quadbike & Dune Buggy, falcon photo",
+            "illustration": "quad"
+          }
+        },
+        "step_gz4rG9": {
+          "type": "step",
+          "settings": {
+            "title": "Dune Bashing",
+            "description": "30 minutes of Dune bashing in the Red Dunes",
+            "illustration": "dunes"
+          }
+        },
+        "step_sunsetStop": {
+          "type": "step",
+          "settings": {
+            "title": "Sunset Stop",
+            "description": "Enjoy sandboarding, sunset views and memorable desert photos.",
+            "illustration": "sunset"
+          }
+        },
+        "step_campWelcome": {
+          "type": "step",
+          "settings": {
+            "title": "Welcome to Our Desert Camp",
+            "description": "Enjoy a traditional Arabian welcome with Arabic coffee - Gahwa, Sweet - Luqaimat, and a short camel ride",
+            "illustration": "tent"
+          }
+        },
+        "step_rGXa4C": {
+          "type": "step",
+          "settings": {
+            "title": "BBQ Dinner",
+            "description": "International BBQ buffet dinner (vegetarian options available)",
+            "illustration": "grill"
+          }
+        },
+        "step_NwiJtD": {
+          "type": "step",
+          "settings": {
+            "title": "Live Shows",
+            "description": "Tanoura dance, belly dance, fire show",
+            "illustration": "flame"
+          }
+        },
+        "step_YX396a": {
+          "type": "step",
+          "settings": {
+            "title": "Hotel/Residence Drop-off",
+            "description": "Relax as we drive you back to your hotel after an unforgettable evening.",
+            "illustration": "moon"
+          }
+        }
+      },
+      "block_order": [
+        "step_yNykXf",
+        "step_GhE4xA",
+        "step_gz4rG9",
+        "step_sunsetStop",
+        "step_campWelcome",
+        "step_rGXa4C",
+        "step_NwiJtD",
+        "step_YX396a"
+      ],
+      "name": "Timeline steps",
+      "settings": {
+        "eyebrow": "Your Evening – Step by Step",
+        "heading": "Eight Moments,",
+        "heading_accent": "One Unforgettable Evening.",
+        "subheading": "From the moment we pick you up to the last show under the stars, <strong>Dubai Leisure Holidays</strong> looks after every detail, so you can simply enjoy an unforgettable desert adventure.",
+        "accent_color": "#c41e3a",
+        "show_glow": true,
+        "max_width": 1440,
+        "color_scheme": "",
+        "section_width": "full-width",
+        "padding-block-start": 56,
+        "padding-block-end": 56
+      }
+    }
+  },
+  "order": [
+    "main",
+    "highlights",
+    "timeline",
+    "experience",
+    "reviews",
+    "faq",
+    "recommendations"
+  ]
+}

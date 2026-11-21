@@ -8,226 +8,458 @@
  * ------------------------------------------------------------
  */{
   "sections": {
-    "section": {
-      "type": "section",
+    "hero": {
+      "type": "dlh-collection-hero",
       "blocks": {
-        "text_tqQTNE": {
-          "type": "text",
-          "name": "Title",
+        "stat_rating": {
+          "type": "stat",
           "settings": {
-            "text": "<h1>{{ closest.collection.title }}</h1>",
-            "width": "fit-content",
-            "max_width": "normal",
-            "alignment": "left",
-            "type_preset": "h2",
-            "font": "var(--font-primary--family)",
-            "font_size": "",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "color": "",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
+            "value": "4.9/5",
+            "label": "1,247 verified reviews"
+          }
+        },
+        "stat_since": {
+          "type": "stat",
+          "settings": {
+            "value": "Since 2004",
+            "label": "Dubai desert specialists"
+          }
+        },
+        "stat_cancel": {
+          "type": "stat",
+          "settings": {
+            "value": "Free",
+            "label": "Cancellation up to 24h before"
+          }
+        }
+      },
+      "block_order": [
+        "stat_rating",
+        "stat_since",
+        "stat_cancel"
+      ],
+      "settings": {
+        "crumb_home_label": "Home",
+        "crumb_current_label": "Experiences",
+        "eyebrow": "Desert experiences · Dubai Red Dunes",
+        "heading": "Every way to live",
+        "heading_accent": "the Dubai desert.",
+        "lede": "Sunset safaris, sunrise drives, dune buggies, quad bikes, hot air balloon flights and private camel rides. Hand-picked by our team, Dubai desert specialists since 2004.",
+        "button_label": "Browse the experiences",
+        "button_url": "",
+        "image": "shopify://shop_images/desert-safari-dune-bashing.png",
+        "min_height": 560,
+        "flagship_product": "desert-safari",
+        "flagship_name": "Sunset Desert Safari",
+        "flagship_label": "Our signature experience",
+        "flagship_price_prefix": "From",
+        "flagship_price_source": "max",
+        "flagship_price_unit": "per adult",
+        "show_count": true,
+        "count_label": "Desert experiences",
+        "color_scheme": "scheme-5"
+      }
+    },
+    "experiences": {
+      "type": "dlh-collection-experiences",
+      "blocks": {
+        "group_safaris": {
+          "type": "group",
+          "settings": {
+            "nav_label": "Desert safaris",
+            "anchor": "safaris",
+            "eyebrow": "By time of day",
+            "heading": "Desert safaris,",
+            "heading_accent": "first light to starlight.",
+            "intro": "Three ways to cross the Red Dunes in a 4x4. Choose your light: sunrise, morning or sunset."
+          }
+        },
+        "exp_sunset": {
+          "type": "experience",
+          "settings": {
+            "product": "desert-safari",
+            "when": "Evening",
+            "meta": "Sunset to starlight",
+            "tagline": "Dune bashing in the red dunes, a golden sunset, a camel ride, then a BBQ dinner with live shows under the stars.",
+            "highlights": "30 minutes of dune bashing in the Red Dunes\nSandboarding and a camel ride at sunset\nBBQ buffet dinner with vegetarian options\nTanoura dance, belly dance and fire show\nHotel pickup and drop-off included",
+            "best_for": "A first time in the desert",
+            "price_source": "max",
+            "price_unit": "per adult",
+            "badge": ""
+          }
+        },
+        "exp_sunrise": {
+          "type": "experience",
+          "settings": {
+            "product": "sunrise-desert-safari",
+            "when": "Sunrise",
+            "meta": "Private 4x4 · up to 6 guests",
+            "tagline": "Watch the first light turn the dunes gold, in the calm before the city wakes up.",
+            "highlights": "30 min dune bashing\nSandboarding\nCamel ride",
+            "best_for": "Early risers and photographers",
+            "price_source": "max",
+            "price_unit": "/ adult",
+            "badge": ""
+          }
+        },
+        "exp_morning": {
+          "type": "experience",
+          "settings": {
+            "product": "private-camel-trek-desert-escape",
+            "when": "Morning",
+            "meta": "Private 4x4 · up to 6 guests",
+            "tagline": "Thirty minutes of full-throttle dune bashing, then sandboarding and a camel ride, far from the crowds.",
+            "highlights": "30 min dune bashing\nSandboarding\nCamel ride",
+            "best_for": "A private morning with your group",
+            "price_source": "min",
+            "price_unit": "",
+            "badge": ""
+          }
+        },
+        "group_drive": {
+          "type": "group",
+          "settings": {
+            "nav_label": "Self-drive",
+            "anchor": "self-drive",
+            "eyebrow": "Adventure",
+            "heading": "Take the wheel",
+            "heading_accent": "in the red dunes.",
+            "intro": "Buggies and quad bikes in Al Badayer, off the Dubai-Hatta road, for those who would rather drive than ride."
+          }
+        },
+        "exp_buggy": {
+          "type": "experience",
+          "settings": {
+            "product": "dune-buggy",
+            "when": "Self-drive",
+            "meta": "1, 2 or 4 seats · 30 to 120 min",
+            "tagline": "Climb and drop down 30-foot red dunes at the wheel of your own buggy, solo or with your co-pilots.",
+            "highlights": "Al Badayer red dunes\nPhoto stops\nSandboarding",
+            "best_for": "Drivers who want the wheel",
+            "price_source": "min",
+            "price_unit": "/ 30 min",
+            "badge": ""
+          }
+        },
+        "exp_quad": {
+          "type": "experience",
+          "settings": {
+            "product": "quad-bike",
+            "when": "Self-drive",
+            "meta": "Single or double seater · 30 or 60 min",
+            "tagline": "Follow your instructor across the dunes on a Yamaha Raptor 700cc and make the desert your playground.",
+            "highlights": "Yamaha Raptor 700cc\nInstructor-led\nAl Badayer red dunes",
+            "best_for": "A quick shot of adrenaline",
+            "price_source": "min",
+            "price_unit": "/ 30 min",
+            "badge": ""
+          }
+        },
+        "pointer_drive": {
+          "type": "pointer",
+          "settings": {
+            "eyebrow": "Pair it with the evening",
+            "text": "Riding a quad or a buggy? Stay for the sunset, the BBQ dinner and the live shows."
+          }
+        },
+        "group_moments": {
+          "type": "group",
+          "settings": {
+            "nav_label": "Signature moments",
+            "anchor": "signature-moments",
+            "eyebrow": "Sky, lens and camel",
+            "heading": "Signature",
+            "heading_accent": "desert moments.",
+            "intro": "A sunrise flight, a cinematic photoshoot or a private camel ride: the extras that make a trip."
+          }
+        },
+        "exp_balloon": {
+          "type": "experience",
+          "settings": {
+            "product": "hot-air-balloon-dubai",
+            "when": "Sunrise flight",
+            "meta": "40 to 70 min in the air",
+            "tagline": "Float 2,000 to 4,000 feet above the Arabian desert while the sunrise sets the dunes alight.",
+            "highlights": "Hotel pickup included\nRefreshments before the flight\nFlight certificate",
+            "best_for": "A view you only get once",
+            "price_source": "min",
+            "price_unit": "/ adult",
+            "badge": ""
+          }
+        },
+        "exp_dress": {
+          "type": "experience",
+          "settings": {
+            "product": "flying-dress-photoshoot",
+            "when": "Photoshoot",
+            "meta": "Solo, duo or group",
+            "tagline": "A flowing gown, the wind and the Red Dunes as your backdrop, for portraits that look like cinema.",
+            "highlights": "Photos and videos\nDelivered in 48 hours\nRed Dunes",
+            "best_for": "Portraits worth framing",
+            "price_source": "min",
+            "price_unit": "",
+            "badge": ""
+          }
+        },
+        "exp_camel": {
+          "type": "experience",
+          "settings": {
+            "product": "optional-private-camel-ride",
+            "when": "Add-on",
+            "meta": "10 to 60 min · up to 2 guests per camel",
+            "tagline": "Go deeper into the desert at a camel's pace, on a private ride for one or two.",
+            "highlights": "Private ride\n5 durations",
+            "best_for": "Adding to any safari",
+            "price_source": "min",
+            "price_unit": "/ 10 min",
+            "badge": ""
+          }
+        },
+        "pointer_start": {
+          "type": "pointer",
+          "settings": {
+            "eyebrow": "Not sure where to start?",
+            "text": "Begin with our signature evening: the dunes, the sunset, the dinner and the shows, all in one booking."
+          }
+        }
+      },
+      "block_order": [
+        "group_safaris",
+        "exp_sunset",
+        "exp_sunrise",
+        "exp_morning",
+        "group_drive",
+        "exp_buggy",
+        "exp_quad",
+        "pointer_drive",
+        "group_moments",
+        "exp_balloon",
+        "exp_dress",
+        "exp_camel",
+        "pointer_start"
+      ],
+      "settings": {
+        "flagship_product": "desert-safari",
+        "flagship_name": "Sunset Desert Safari",
+        "flagship_badge": "Our signature experience",
+        "flagship_rating": "4.9",
+        "flagship_review_count": "1,247 verified reviews",
+        "flagship_price_source": "max",
+        "flagship_price_unit": "per adult",
+        "flagship_cta_label": "View this experience",
+        "flagship_note": "Child price for ages 3-10 · Taxes & fees included",
+        "flagship_image_1_asset": "dlh-safari-sunset.webp",
+        "flagship_image_1_label": "Sunset",
+        "flagship_image_2_asset": "dlh-safari-starlight.webp",
+        "flagship_image_2_label": "Starlight",
+        "nav_label": "Jump to",
+        "price_prefix": "From",
+        "card_cta_label": "Explore",
+        "more_heading": "More experiences",
+        "show_compare": true,
+        "compare_nav_label": "Compare them all",
+        "compare_eyebrow": "At a glance",
+        "compare_heading": "Which one",
+        "compare_heading_accent": "is for you?",
+        "compare_intro": "Every experience side by side, with its moment of the day and its starting price.",
+        "compare_col_name": "Experience",
+        "compare_col_when": "When",
+        "compare_col_for": "Good for",
+        "compare_col_price": "Price",
+        "color_scheme": "scheme-1",
+        "padding-block-start": 40,
+        "padding-block-end": 96
+      }
+    },
+    "reviews": {
+      "type": "guest-reviews",
+      "blocks": {
+        "guest_review_JM": {
+          "type": "guest_review",
+          "settings": {
+            "rating": 5,
+            "quote": "Absolutely spectacular evening. The dune bashing was thrilling, the buffet was outstanding, and the fire show had our kids speechless. Worth every dirham.",
+            "author": "James M.",
+            "meta": "London, UK · TripAdvisor",
+            "avatar_initials": ""
           },
           "blocks": {}
         },
-        "text_twGGkJ": {
-          "type": "text",
-          "name": "Description",
+        "guest_review_SA": {
+          "type": "guest_review",
           "settings": {
-            "text": "{{ closest.collection.description }}",
-            "width": "fit-content",
-            "max_width": "normal",
-            "alignment": "left",
-            "type_preset": "rte",
-            "font": "var(--font-primary--family)",
-            "font_size": "",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "color": "",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
+            "rating": 5,
+            "quote": "The sunrise safari was magical — cool breeze, golden dunes, and Arabic coffee at dawn. Our guide was incredibly knowledgeable about Bedouin culture.",
+            "author": "Sara A.",
+            "meta": "Paris, France · Google",
+            "avatar_initials": ""
+          },
+          "blocks": {}
+        },
+        "guest_review_RC": {
+          "type": "guest_review",
+          "settings": {
+            "rating": 5,
+            "quote": "Took the dune buggy add-on and it was the highlight of our Dubai trip. Professional, safe, and outrageously fun. We're coming back next year!",
+            "author": "Ravi C.",
+            "meta": "Mumbai, India · TripAdvisor",
+            "avatar_initials": ""
+          },
+          "blocks": {}
+        },
+        "guest_review_KL": {
+          "type": "guest_review",
+          "settings": {
+            "rating": 5,
+            "quote": "Seamless from pickup to drop-off. The henna artist was amazing with our daughters. The belly dance show was mesmerising. Highly, highly recommend.",
+            "author": "Kim L.",
+            "meta": "Sydney, Australia · Google",
+            "avatar_initials": ""
+          },
+          "blocks": {}
+        },
+        "guest_review_TP": {
+          "type": "guest_review",
+          "settings": {
+            "rating": 5,
+            "quote": "We're a family of five including grandparents. Everyone had an incredible time — the team was thoughtful, attentive, and genuinely warm. True Arabian hospitality.",
+            "author": "Thomas P.",
+            "meta": "New York, USA · TripAdvisor",
+            "avatar_initials": ""
           },
           "blocks": {}
         }
       },
       "block_order": [
-        "text_tqQTNE",
-        "text_twGGkJ"
+        "guest_review_JM",
+        "guest_review_SA",
+        "guest_review_RC",
+        "guest_review_KL",
+        "guest_review_TP"
       ],
-      "name": "Collection heading",
+      "name": "Guest reviews",
       "settings": {
-        "content_direction": "column",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "flex-start",
-        "vertical_alignment": "center",
-        "align_baseline": false,
-        "horizontal_alignment_flex_direction_column": "flex-start",
-        "vertical_alignment_flex_direction_column": "center",
-        "gap": 12,
-        "section_width": "page-width",
-        "section_height": "",
-        "section_height_custom": 50,
-        "color_scheme": "scheme-1",
-        "background_media": "none",
-        "video_position": "cover",
-        "background_image_position": "cover",
-        "border": "none",
-        "border_width": 1,
-        "border_opacity": 100,
-        "border_radius": 0,
-        "toggle_overlay": false,
-        "overlay_color": "#00000026",
-        "overlay_style": "solid",
-        "gradient_direction": "to top",
-        "padding-block-start": 48,
-        "padding-block-end": 48
+        "section_id": "reviews",
+        "eyebrow": "Guest Stories",
+        "heading": "Voices from the",
+        "heading_accent": "dunes",
+        "show_rating_block": true,
+        "rating_score": "4.9",
+        "review_count": "1,247 verified reviews",
+        "review_sources": "TripAdvisor · Google",
+        "card_width": 360,
+        "card_gap": 20,
+        "scroll_seconds": 60,
+        "pause_on_hover": true,
+        "color_scheme": "scheme-2",
+        "section_width": "full-width",
+        "padding-block-start": 96,
+        "padding-block-end": 88
       }
     },
-    "main": {
-      "type": "main-collection",
+    "faq": {
+      "type": "dlh-faq",
       "blocks": {
-        "filters": {
-          "type": "filters",
-          "static": true,
+        "faq_first": {
+          "type": "faq_item",
           "settings": {
-            "enable_filtering": true,
-            "filter_style": "horizontal",
-            "filter_width": "centered",
-            "text_label_case": "default",
-            "show_swatch_label": false,
-            "show_filter_label": false,
-            "enable_sorting": true,
-            "enable_grid_density": true,
-            "inherit_color_scheme": true,
-            "color_scheme": "",
-            "padding-block-start": 8,
-            "padding-block-end": 8,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0,
-            "facets_margin_bottom": 8,
-            "facets_margin_right": 20
-          },
-          "blocks": {}
+            "question": "Which experience should I pick for a first visit?",
+            "answer": "Start with the Sunset Desert Safari. In one evening you get the dune bashing, the sunset, sandboarding, a camel ride, a BBQ dinner and the live shows, with hotel pickup and drop-off included."
+          }
         },
-        "product-card": {
-          "type": "_product-card",
-          "static": true,
+        "faq_addons": {
+          "type": "faq_item",
           "settings": {
-            "product_card_gap": 4,
-            "inherit_color_scheme": true,
-            "color_scheme": "",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "card-gallery": {
-              "type": "_product-card-gallery",
-              "settings": {
-                "image_ratio": "adapt",
-                "border": "none",
-                "border_width": 1,
-                "border_opacity": 100,
-                "border_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "product_title_4nY4eT": {
-              "type": "product-title",
-              "name": "t:names.product_title",
-              "settings": {
-                "width": "100%",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "rte",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "var(--color-foreground)",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 4,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "price_EzJzMm": {
-              "type": "price",
-              "settings": {
-                "show_sale_price_first": true,
-                "show_installments": false,
-                "show_tax_info": false,
-                "type_preset": "h6",
-                "width": "100%",
-                "alignment": "left",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "color": "var(--color-foreground)",
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "card-gallery",
-            "product_title_4nY4eT",
-            "price_EzJzMm"
-          ]
+            "question": "Can I add a quad bike or a dune buggy to my safari?",
+            "answer": "Yes. Quad bike and dune buggy rides are optional extras on the Sunset Desert Safari. You can also book them on their own, from 30 minutes."
+          }
+        },
+        "faq_private": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Which experiences are private?",
+            "answer": "The Sunrise and Morning Desert Safaris run in a private 4x4 for up to 6 guests. The camel ride is a private ride for up to 2 guests per camel, and the Flying Dress Photoshoot is booked for you alone, as a duo or as a group."
+          }
+        },
+        "faq_kids": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Is the desert safari safe for kids and seniors?",
+            "answer": "Yes. We host guests from age 3 to 80+. Dune bashing is optional — families with young children or seniors can skip it and join us directly at the camp. Every vehicle has seatbelts, a trained driver, and first-aid equipment."
+          }
+        },
+        "faq_wear": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What should I wear?",
+            "answer": "Loose, comfortable clothing and closed-toe shoes for daytime. Light layers for evening — the desert cools sharply after sunset. Cultural dress (shoulders and knees covered) is recommended for the camp."
+          }
+        },
+        "faq_cancel": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What is your cancellation policy?",
+            "answer": "Free cancellation up to 24 hours before your experience. No-questions-asked refund to your original payment method within 3 business days."
+          }
         }
       },
+      "block_order": [
+        "faq_first",
+        "faq_addons",
+        "faq_private",
+        "faq_kids",
+        "faq_wear",
+        "faq_cancel"
+      ],
       "settings": {
-        "layout_type": "grid",
-        "product_card_size": "medium",
-        "mobile_product_card_size": "small",
-        "product_grid_width": "centered",
-        "full_width_on_mobile": true,
-        "columns_gap_horizontal": 16,
-        "columns_gap_vertical": 24,
-        "padding-inline-start": 0,
-        "padding-inline-end": 0,
+        "section_id": "faq",
+        "eyebrow": "Questions",
+        "heading": "Choosing your",
+        "heading_accent": "desert experience",
+        "subheading": "Hesitating between two experiences? Tell us about your trip and we will point you to the right one.",
+        "button_label": "Contact us",
+        "button_url": "shopify://pages/contact",
+        "color_scheme": "scheme-2",
+        "section_width": "page-width",
+        "padding-block-start": 96,
+        "padding-block-end": 96
+      }
+    },
+    "final_cta": {
+      "type": "dlh-final-cta",
+      "blocks": {
+        "dunes": { "type": "moment", "settings": { "title": "Feel the rush", "detail": "4x4 dune bashing" } },
+        "sunset": { "type": "moment", "settings": { "title": "Chase the sunset", "detail": "Golden-hour views" } },
+        "camp": { "type": "moment", "settings": { "title": "Stay for the stars", "detail": "BBQ & live shows" } }
+      },
+      "block_order": ["dunes", "sunset", "camp"],
+      "settings": {
+        "eyebrow": "Our signature experience",
+        "experience_name": "Evening Desert Safari",
+        "product": "desert-safari",
+        "reassurance": "Hotel pickup included · Free cancellation up to 24 hours · Instant confirmation",
+        "featured_image_asset": "dlh-safari-sunset.webp",
+        "featured_image_alt": "4x4 safari vehicles crossing golden desert dunes at sunset",
+        "image_eyebrow": "Beyond the skyline",
+        "image_caption": "A different side of Dubai.",
+        "heading": "The dunes are",
+        "heading_accent": "waiting.",
+        "subheading": "Leave the skyline behind. Chase the sunset across the red dunes, then settle into a desert camp for BBQ and live shows under the stars.",
+        "primary_label": "Book evening desert safari",
+        "primary_url": "shopify://products/desert-safari",
+        "secondary_label": "See all experiences",
+        "secondary_url": "#experiences",
         "color_scheme": "scheme-1",
-        "padding-block-start": 0,
-        "padding-block-end": 32
+        "padding-block-start": 88,
+        "padding-block-end": 88
       }
     }
   },
   "order": [
-    "section",
-    "main"
+    "hero",
+    "experiences",
+    "reviews",
+    "faq",
+    "final_cta"
   ]
 }

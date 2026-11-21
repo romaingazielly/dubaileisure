@@ -1,0 +1,242 @@
+{{ 'dlh-camp-gallery.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  Photo mosaic of the camp. Each photo comes from the image picker or, failing that, from a theme asset
+  (same fallback as dlh-pdp-experience). Desktop: 12-column mosaic. Below 990px: one swipeable strip.
+{%- endcomment -%}
+
+<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+<div
+  class="section section--full-width color-{{ section.settings.color_scheme }} dlh-cg spacing-style"
+  style="{% render 'spacing-style', settings: section.settings %}"
+>
+  <div class="dlh-cg__inner" {{ section.shopify_attributes }}>
+    <div class="dlh-cg__header">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="dlh-cg__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {%- endif -%}
+      {%- if section.settings.heading != blank or section.settings.heading_accent != blank -%}
+        <h2 class="dlh-cg__heading">
+          {{- section.settings.heading | escape -}}
+          {%- if section.settings.heading_accent != blank %}
+            <span class="dlh-cg__heading-accent">{{ section.settings.heading_accent | escape }}</span>
+          {%- endif -%}
+        </h2>
+      {%- endif -%}
+      {%- if section.settings.subheading != blank -%}
+        <p class="dlh-cg__sub">{{ section.settings.subheading }}</p>
+      {%- endif -%}
+    </div>
+  </div>
+
+  {%- if section.blocks.size > 0 -%}
+    <div class="dlh-cg__scroll">
+      <ul class="dlh-cg__grid" role="list">
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign photo = block.settings.image
+            assign photo_asset = block.settings.image_asset
+            assign layout = block.settings.layout
+
+            comment
+              Displayed width per layout, for the browser to pick the right file in the srcset.
+              Below 990px the strip has a fixed height, so widths are given in px.
+            endcomment
+            case layout
+              when 'feature'
+                assign photo_sizes = '(min-width: 1520px) 714px, (min-width: 990px) 48vw, 480px'
+              when 'tall'
+                assign photo_sizes = '(min-width: 1520px) 351px, (min-width: 990px) 24vw, 240px'
+              else
+                assign photo_sizes = '(min-width: 1520px) 351px, (min-width: 990px) 24vw, 420px'
+            endcase
+
+            assign photo_width = 1280
+            assign photo_height = 853
+            if layout == 'tall'
+              assign photo_width = 853
+              assign photo_height = 1280
+            endif
+          -%}
+          {%- if photo != blank or photo_asset != blank -%}
+            <li class="dlh-cg__tile dlh-cg__tile--{{ layout }}" {{ block.shopify_attributes }}>
+              <figure class="dlh-cg__figure">
+                {%- if photo != blank -%}
+                  {%- assign photo_alt = photo.alt | default: block.settings.title | escape -%}
+                  {{
+                    photo
+                    | image_url: width: 1600
+                    | image_tag:
+                      class: 'dlh-cg__img',
+                      loading: 'lazy',
+                      decoding: 'async',
+                      widths: '360, 540, 720, 960, 1280, 1600',
+                      sizes: photo_sizes,
+                      alt: photo_alt
+                  }}
+                {%- else -%}
+                  {%- comment -%}
+                    asset_img_url returns a placeholder for these files; the CDN does resize a theme asset
+                    when a width is added to its URL (asset_url already carries the ?v= query).
+                  {%- endcomment -%}
+                  {%- assign photo_src = photo_asset | asset_url -%}
+                  <img
+                    class="dlh-cg__img"
+                    src="{{ photo_src }}"
+                    srcset="
+                      {{ photo_src }}&amp;width=480 480w,
+                      {{ photo_src }}&amp;width=800 800w,
+                      {{ photo_src }} {{ photo_width }}w
+                    "
+                    sizes="{{ photo_sizes }}"
+                    alt="{{ block.settings.title | escape }}"
+                    width="{{ photo_width }}"
+                    height="{{ photo_height }}"
+                    loading="lazy"
+                    decoding="async"
+                  >
+                {%- endif -%}
+                {%- if block.settings.title != blank or block.settings.caption != blank -%}
+                  <figcaption class="dlh-cg__caption">
+                    {%- if block.settings.title != blank -%}
+                      <span class="dlh-cg__title">{{ block.settings.title | escape }}</span>
+                    {%- endif -%}
+                    {%- if block.settings.caption != blank -%}
+                      <span class="dlh-cg__text">{{ block.settings.caption | escape }}</span>
+                    {%- endif -%}
+                  </figcaption>
+                {%- endif -%}
+              </figure>
+            </li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+    </div>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Camp gallery",
+  "tag": "section",
+  "class": "section-wrapper",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "max_blocks": 16,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Header"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Our Desert Camp"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Where your evening"
+    },
+    {
+      "type": "text",
+      "id": "heading_accent",
+      "label": "Heading accent (2nd line)",
+      "default": "unfolds."
+    },
+    {
+      "type": "inline_richtext",
+      "id": "subheading",
+      "label": "Subheading",
+      "info": "Bold text is highlighted in gold."
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-5"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 96
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 96
+    }
+  ],
+  "blocks": [
+    {
+      "type": "photo",
+      "name": "Photo",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Photo"
+        },
+        {
+          "type": "text",
+          "id": "image_asset",
+          "label": "Photo (theme asset file name)",
+          "info": "Used when no photo is picked above, e.g. dlh-camp-stage.webp"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "info": "Also used as the image description for screen readers."
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "Caption"
+        },
+        {
+          "type": "select",
+          "id": "layout",
+          "label": "Size in the mosaic",
+          "info": "Large: twice as wide and twice as high. Tall: twice as high, best with a portrait photo.",
+          "options": [
+            { "value": "standard", "label": "Standard" },
+            { "value": "feature", "label": "Large" },
+            { "value": "tall", "label": "Tall" }
+          ],
+          "default": "standard"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Camp gallery",
+      "category": "t:categories.storytelling",
+      "blocks": [
+        { "type": "photo", "settings": { "image_asset": "dlh-camp-stage.webp", "title": "The main stage", "caption": "Open-air seating around the show floor", "layout": "feature" } },
+        { "type": "photo", "settings": { "image_asset": "dlh-camp-entrance.webp", "title": "Camp entrance" } },
+        { "type": "photo", "settings": { "image_asset": "dlh-camp-tents.webp", "title": "Tented courtyards", "layout": "tall" } },
+        { "type": "photo", "settings": { "image_asset": "dlh-camp-bbq.webp", "title": "Live BBQ grill" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
