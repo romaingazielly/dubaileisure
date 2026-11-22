@@ -435,8 +435,8 @@
             "rating": 5,
             "quote": "Absolutely spectacular evening. The dune bashing was thrilling, the buffet was outstanding, and the fire show had our kids speechless. Worth every dirham.",
             "author": "James M.",
-            "meta": "London, UK · TripAdvisor",
-            "avatar_initials": ""
+            "meta": "London, UK",
+            "source": "tripadvisor"
           },
           "blocks": {}
         },
@@ -446,8 +446,8 @@
             "rating": 5,
             "quote": "The sunrise safari was magical — cool breeze, golden dunes, and Arabic coffee at dawn. Our guide was incredibly knowledgeable about Bedouin culture.",
             "author": "Sara A.",
-            "meta": "Paris, France · Google",
-            "avatar_initials": ""
+            "meta": "Paris, France",
+            "source": "google"
           },
           "blocks": {}
         },
@@ -457,8 +457,8 @@
             "rating": 5,
             "quote": "Took the dune buggy add-on and it was the highlight of our Dubai trip. Professional, safe, and outrageously fun. We're coming back next year!",
             "author": "Ravi C.",
-            "meta": "Mumbai, India · TripAdvisor",
-            "avatar_initials": ""
+            "meta": "Mumbai, India",
+            "source": "tripadvisor"
           },
           "blocks": {}
         },
@@ -468,8 +468,8 @@
             "rating": 5,
             "quote": "Seamless from pickup to drop-off. The henna artist was amazing with our daughters. The belly dance show was mesmerising. Highly, highly recommend.",
             "author": "Kim L.",
-            "meta": "Sydney, Australia · Google",
-            "avatar_initials": ""
+            "meta": "Sydney, Australia",
+            "source": "google"
           },
           "blocks": {}
         },
@@ -479,8 +479,8 @@
             "rating": 5,
             "quote": "We're a family of five including grandparents. Everyone had an incredible time — the team was thoughtful, attentive, and genuinely warm. True Arabian hospitality.",
             "author": "Thomas P.",
-            "meta": "New York, USA · TripAdvisor",
-            "avatar_initials": ""
+            "meta": "New York, USA",
+            "source": "tripadvisor"
           },
           "blocks": {}
         }
@@ -612,24 +612,101 @@
       ],
       "settings": {
         "eyebrow": "Your Dubai trip deserves this",
-        "experience_name": "Evening Desert Safari",
-        "product": "desert-safari",
-        "reassurance": "Hotel pickup included · Free cancellation up to 24 hours · Instant confirmation",
-        "featured_image_asset": "dlh-safari-sunset.webp",
-        "featured_image_alt": "4x4 safari vehicles crossing golden desert dunes at sunset",
-        "image_eyebrow": "Beyond the skyline",
-        "image_caption": "A different side of Dubai.",
         "heading": "The dunes are",
         "heading_accent": "waiting.",
         "subheading": "Leave the skyline behind. Chase the sunset across the red dunes, then settle into a desert camp for BBQ and live shows under the stars.",
+        "experience_name": "Evening Desert Safari",
+        "reassurance": "Hotel pickup included · Free cancellation up to 24 hours · Instant confirmation",
+        "product": "desert-safari",
         "primary_label": "Book evening desert safari",
         "primary_url": "shopify://products/desert-safari",
         "secondary_label": "Questions? Explore the FAQs",
         "secondary_url": "#faq",
         "color_scheme": "scheme-1",
+        "featured_image_asset": "dlh-safari-sunset.webp",
+        "featured_image_alt": "4x4 safari vehicles crossing golden desert dunes at sunset",
+        "image_eyebrow": "Beyond the skyline",
+        "image_caption": "A different side of Dubai.",
         "image_asset": "dlh-camp-evening.webp",
         "image_veil": 85,
         "image_position": 75,
+        "padding-block-start": 112,
+        "padding-block-end": 112
+      }
+    },
+    "dlh_signature_safari": {
+      "type": "dlh-signature-safari",
+      "blocks": {
+        "dunes": {
+          "type": "scene",
+          "settings": {
+            "label": "Golden hour",
+            "title": "The dunes",
+            "detail": "30 minutes of 4x4 dune bashing across the Red Dunes, then sandboarding.",
+            "tone": "gold",
+            "image_asset": "dlh-safari-sunset.webp",
+            "image_alt": "4x4 safari vehicles crossing golden dunes at sunset"
+          }
+        },
+        "camp": {
+          "type": "scene",
+          "settings": {
+            "label": "Sunset",
+            "title": "The camp",
+            "detail": "Arabic coffee, fresh luqaimat and a short camel ride as the sky turns pink.",
+            "tone": "dusk",
+            "image_asset": "dlh-camp-evening.webp",
+            "image_alt": "Desert camp tents lit up at dusk"
+          }
+        },
+        "feast": {
+          "type": "scene",
+          "settings": {
+            "label": "Nightfall",
+            "title": "The feast",
+            "detail": "BBQ buffet dinner with halal, vegetarian and vegan options.",
+            "tone": "twilight",
+            "image_asset": "dlh-camp-bbq.webp",
+            "image_alt": "Live BBQ grill at the desert camp"
+          }
+        },
+        "show": {
+          "type": "scene",
+          "settings": {
+            "label": "Under the stars",
+            "title": "The show",
+            "detail": "Tanoura, belly dance and a fire show in the open-air arena.",
+            "tone": "night",
+            "image_asset": "dlh-safari-starlight.webp",
+            "image_alt": "Fire show at the desert camp under the Milky Way"
+          }
+        }
+      },
+      "block_order": [
+        "dunes",
+        "camp",
+        "feast",
+        "show"
+      ],
+      "settings": {
+        "eyebrow": "Our signature experience",
+        "heading_before": "Desert",
+        "heading_accent": "Sunset",
+        "heading_after": "Safari",
+        "rating": "4.9",
+        "review_count": "1,247 verified reviews",
+        "lede": "The evening our guests talk about long after their trip. Golden-hour dune bashing, a sunset over the Red Dunes, then dinner and live shows at our desert camp under the stars.",
+        "tabs_label": "Your evening, scene by scene",
+        "product": "desert-safari",
+        "price_prefix": "From",
+        "price_fallback": "",
+        "price_unit": "per adult",
+        "primary_label": "Book your evening",
+        "primary_url": "shopify://products/desert-safari",
+        "secondary_label": "",
+        "secondary_url": "",
+        "reassurance": "Hotel pickup & drop-off · Free cancellation up to 24h · Instant confirmation",
+        "color_scheme": "scheme-5",
         "padding-block-start": 112,
         "padding-block-end": 112
       }
@@ -1131,6 +1208,7 @@
         "image_36ccVQ",
         "group_h6DK66"
       ],
+      "disabled": true,
       "name": "Warm Arabian Welcome",
       "settings": {
         "content_direction": "row",
@@ -1301,6 +1379,7 @@
         "group_qPcefJ",
         "image_tPmVUy"
       ],
+      "disabled": true,
       "name": "Roots in the sands of time",
       "settings": {
         "content_direction": "row",
@@ -1329,83 +1408,6 @@
         "padding-block-start": 40,
         "padding-block-end": 40
       }
-    },
-    "dlh_signature_safari": {
-      "type": "dlh-signature-safari",
-      "blocks": {
-        "dunes": {
-          "type": "scene",
-          "settings": {
-            "label": "Golden hour",
-            "title": "The dunes",
-            "detail": "30 minutes of 4x4 dune bashing across the Red Dunes, then sandboarding.",
-            "tone": "gold",
-            "image_asset": "dlh-safari-sunset.webp",
-            "image_alt": "4x4 safari vehicles crossing golden dunes at sunset"
-          }
-        },
-        "camp": {
-          "type": "scene",
-          "settings": {
-            "label": "Sunset",
-            "title": "The camp",
-            "detail": "Arabic coffee, fresh luqaimat and a short camel ride as the sky turns pink.",
-            "tone": "dusk",
-            "image_asset": "dlh-camp-evening.webp",
-            "image_alt": "Desert camp tents lit up at dusk"
-          }
-        },
-        "feast": {
-          "type": "scene",
-          "settings": {
-            "label": "Nightfall",
-            "title": "The feast",
-            "detail": "BBQ buffet dinner with halal, vegetarian and vegan options.",
-            "tone": "twilight",
-            "image_asset": "dlh-camp-bbq.webp",
-            "image_alt": "Live BBQ grill at the desert camp"
-          }
-        },
-        "show": {
-          "type": "scene",
-          "settings": {
-            "label": "Under the stars",
-            "title": "The show",
-            "detail": "Tanoura, belly dance and a fire show in the open-air arena.",
-            "tone": "night",
-            "image_asset": "dlh-safari-starlight.webp",
-            "image_alt": "Fire show at the desert camp under the Milky Way"
-          }
-        }
-      },
-      "block_order": [
-        "dunes",
-        "camp",
-        "feast",
-        "show"
-      ],
-      "settings": {
-        "eyebrow": "Our signature experience",
-        "heading_before": "Desert",
-        "heading_accent": "Sunset",
-        "heading_after": "Safari",
-        "rating": "4.9",
-        "review_count": "1,247 verified reviews",
-        "lede": "The evening our guests talk about long after their trip. Golden-hour dune bashing, a sunset over the Red Dunes, then dinner and live shows at our desert camp under the stars.",
-        "tabs_label": "Your evening, scene by scene",
-        "product": "desert-safari",
-        "price_prefix": "From",
-        "price_fallback": "",
-        "price_unit": "per adult",
-        "primary_label": "Book your evening",
-        "primary_url": "shopify://products/desert-safari",
-        "secondary_label": "",
-        "secondary_url": "",
-        "reassurance": "Hotel pickup & drop-off · Free cancellation up to 24h · Instant confirmation",
-        "color_scheme": "scheme-5",
-        "padding-block-start": 112,
-        "padding-block-end": 112
-      }
     }
   },
   "order": [
@@ -1417,8 +1419,8 @@
     "dlh_camp_gallery",
     "guest_reviews_home_k8mN2p",
     "dlh_faq",
-    "dlh_final_cta",
     "dlh_signature_safari",
+    "dlh_final_cta",
     "section_FQQqfN",
     "section_6xMaEE",
     "section_QawMUr"

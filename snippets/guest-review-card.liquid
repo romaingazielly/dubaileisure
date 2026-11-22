@@ -17,19 +17,18 @@
     assign rating = 1
   endif
 
-  assign initials = block.settings.avatar_initials | strip
-  if initials == blank and author != blank
-    assign initials = author | strip | slice: 0, 1 | upcase
-  endif
+  assign initials = author | strip | slice: 0, 1 | upcase
 
-  assign source_label = ''
-  if meta contains 'TripAdvisor'
-    assign source_label = 'TripAdvisor'
-  elsif meta contains 'Google'
-    assign source_label = 'Google'
-  elsif meta contains 'GetYourGuide'
-    assign source_label = 'GetYourGuide'
-  endif
+  case block.settings.source
+    when 'tripadvisor'
+      assign source_label = 'TripAdvisor'
+    when 'google'
+      assign source_label = 'Google'
+    when 'getyourguide'
+      assign source_label = 'GetYourGuide'
+    else
+      assign source_label = ''
+  endcase
 
   assign show_attrs = show_shopify_attributes
   if show_attrs == nil
@@ -50,7 +49,15 @@
       {% endfor %}
     </span>
     {% if source_label != blank %}
-      <span class="guest-review-card__source">{{ source_label }}</span>
+      <span class="guest-review-card__source">
+        {%- case source_label -%}
+          {%- when 'TripAdvisor' -%}
+            <svg class="guest-review-card__source-logo" width="16" height="16" viewBox="0 0 2400 2400" aria-hidden="true" focusable="false"><circle cx="1200" cy="1200" r="1200" fill="#34E0A1"/><path fill="#000" transform="translate(400 686.2) scale(0.8753)" d="M619,679.47c0,89.5-72.57,162.07-162.07,162.07s-162.07-72.57-162.07-162.07,72.57-162.07,162.07-162.07,162.07,72.57,162.07,162.07ZM1370.4,517.4c-89.49,0-162.07,72.57-162.07,162.07s72.58,162.07,162.07,162.07,162.06-72.57,162.06-162.07c-.02-89.45-72.52-161.97-161.97-162.02l-.09-.04ZM1827.34,679.47c0,252.22-204.65,456.69-456.93,456.69-115.09.17-225.95-43.24-310.29-121.55l-146.24,159.11-146.31-159.29c-84.32,78.4-195.24,121.88-310.38,121.73C205.08,1136.16.5,931.68.5,679.47c-.18-128.48,53.93-251.07,148.97-337.52L0,179.34h332.06c351.35-239.11,813.15-239.11,1164.48,0h331.2l-149.43,162.61c95.07,86.43,149.19,209.02,149.03,337.52ZM766.12,679.47c0-170.69-138.39-309.07-309.07-309.07s-309.07,138.39-309.07,309.07,138.39,309.07,309.07,309.07,309.05-138.34,309.07-309.03v-.05ZM1256.82,218.03c-219.53-91.45-466.48-91.45-686.01,0,195.13,74.69,343.06,249.13,343.06,452.52,0-203.37,147.91-377.84,342.98-452.5l-.02-.02ZM1679.54,679.44c0-170.69-138.39-309.07-309.07-309.07s-309.08,138.39-309.08,309.07,138.38,309.07,309.08,309.07,309.07-138.39,309.07-309.07Z"/></svg>
+          {%- when 'Google' -%}
+            <svg class="guest-review-card__source-logo" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/><path d="M1 1h22v22H1z" fill="none"/></svg>
+        {%- endcase -%}
+        {{- source_label -}}
+      </span>
     {% endif %}
   </div>
 

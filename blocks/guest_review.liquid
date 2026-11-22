@@ -17,7 +17,7 @@
     {
       "type": "textarea",
       "id": "quote",
-      "label": "Quote",
+      "label": "Review",
       "default": "Absolutely spectacular evening. The dune bashing was thrilling, the buffet was outstanding, and the fire show had our kids speechless."
     },
     {
@@ -27,17 +27,23 @@
       "default": "James M."
     },
     {
-      "type": "text",
-      "id": "meta",
-      "label": "Secondary line",
-      "info": "e.g. city and review source",
-      "default": "London, UK · TripAdvisor"
+      "type": "select",
+      "id": "source",
+      "label": "Source",
+      "options": [
+        { "value": "tripadvisor", "label": "TripAdvisor" },
+        { "value": "google", "label": "Google" },
+        { "value": "getyourguide", "label": "GetYourGuide" },
+        { "value": "none", "label": "None" }
+      ],
+      "default": "tripadvisor"
     },
     {
       "type": "text",
-      "id": "avatar_initials",
-      "label": "Avatar initials",
-      "info": "Optional — generated from the name when empty"
+      "id": "meta",
+      "label": "Location",
+      "info": "e.g. London, UK",
+      "default": "London, UK"
     }
   ],
   "presets": [
@@ -47,7 +53,8 @@
       "settings": {
         "quote": "Absolutely spectacular evening. The dune bashing was thrilling, the buffet was outstanding, and the fire show had our kids speechless.",
         "author": "James M.",
-        "meta": "London, UK · TripAdvisor"
+        "meta": "London, UK",
+        "source": "tripadvisor"
       }
     }
   ]

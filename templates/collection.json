@@ -280,8 +280,8 @@
             "rating": 5,
             "quote": "Absolutely spectacular evening. The dune bashing was thrilling, the buffet was outstanding, and the fire show had our kids speechless. Worth every dirham.",
             "author": "James M.",
-            "meta": "London, UK · TripAdvisor",
-            "avatar_initials": ""
+            "meta": "London, UK",
+            "source": "tripadvisor"
           },
           "blocks": {}
         },
@@ -291,8 +291,8 @@
             "rating": 5,
             "quote": "The sunrise safari was magical — cool breeze, golden dunes, and Arabic coffee at dawn. Our guide was incredibly knowledgeable about Bedouin culture.",
             "author": "Sara A.",
-            "meta": "Paris, France · Google",
-            "avatar_initials": ""
+            "meta": "Paris, France",
+            "source": "google"
           },
           "blocks": {}
         },
@@ -302,8 +302,8 @@
             "rating": 5,
             "quote": "Took the dune buggy add-on and it was the highlight of our Dubai trip. Professional, safe, and outrageously fun. We're coming back next year!",
             "author": "Ravi C.",
-            "meta": "Mumbai, India · TripAdvisor",
-            "avatar_initials": ""
+            "meta": "Mumbai, India",
+            "source": "tripadvisor"
           },
           "blocks": {}
         },
@@ -313,8 +313,8 @@
             "rating": 5,
             "quote": "Seamless from pickup to drop-off. The henna artist was amazing with our daughters. The belly dance show was mesmerising. Highly, highly recommend.",
             "author": "Kim L.",
-            "meta": "Sydney, Australia · Google",
-            "avatar_initials": ""
+            "meta": "Sydney, Australia",
+            "source": "google"
           },
           "blocks": {}
         },
@@ -324,8 +324,8 @@
             "rating": 5,
             "quote": "We're a family of five including grandparents. Everyone had an incredible time — the team was thoughtful, attentive, and genuinely warm. True Arabian hospitality.",
             "author": "Thomas P.",
-            "meta": "New York, USA · TripAdvisor",
-            "avatar_initials": ""
+            "meta": "New York, USA",
+            "source": "tripadvisor"
           },
           "blocks": {}
         }
